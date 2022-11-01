@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class SaldoHistory extends Model {
     /**
@@ -13,16 +11,19 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  SaldoHistory.init({
-    amount: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER,
-    description: DataTypes.STRING,
-    balance: DataTypes.INTEGER,
-    TransactionId: DataTypes.INTEGER,
-    category: DataTypes.ENUM
-  }, {
-    sequelize,
-    modelName: 'SaldoHistory',
-  });
+  SaldoHistory.init(
+    {
+      amount: DataTypes.INTEGER,
+      UserId: DataTypes.INTEGER,
+      description: DataTypes.STRING,
+      balance: DataTypes.INTEGER,
+      TransactionId: DataTypes.INTEGER,
+      category: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "SaldoHistory",
+    }
+  );
   return SaldoHistory;
 };
