@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       averageRating: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,

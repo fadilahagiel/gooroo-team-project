@@ -34,11 +34,7 @@ module.exports = {
         onDelete: 'cascade'
       },
       category: {
-        type: Sequelize.ENUM,
-        values: [
-          'Debit',
-          'Kredit',
-        ],
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       averageRating: {
-        type: Sequelize.INTEGER
+        type: Sequelize.DECIMAL
       },
       status: {
         type: Sequelize.STRING
