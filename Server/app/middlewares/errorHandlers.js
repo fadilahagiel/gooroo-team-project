@@ -7,7 +7,7 @@ const errorHandlers = async (err, req, res, next) => {
         message = err.errors[0].message
     } else if (err.name == 'reponse_required') {
         code = 400
-        message = 'testimoni & raring are required'
+        message = 'testimoni & rating are required'
     } else if (err.name == 'error_login') {
         code = 401
         message = "invalid email/password"
