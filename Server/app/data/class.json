@@ -1,0 +1,13 @@
+[
+    {
+        "TeacherId": 1,
+        "name": "Matematika Class",
+        "price": 10000,
+        "quota": 5,
+        "averageRating": 7,
+        "status": "onProgress",
+        "SubjectId": 1,
+        "description": "belajar matematika",
+        "url": "link.com"
+    }
+]
