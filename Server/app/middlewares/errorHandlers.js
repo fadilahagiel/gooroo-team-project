@@ -1,5 +1,4 @@
 const errorHandlers = async (err, req, res, next) => {
-
   console.log(err);
   let code = 500;
   let message = "Internal Server Error";
@@ -24,9 +23,11 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "forbidden") {
     code = 403;
     message = "forbidden";
+  } else if (err.name == "wishlist not found") {
+    code = 404;
+    message = `Wishlist not found`;
   }
-  res.status(code).json({ error: true, message });
+  res.status(code).json({ message });
 };
-
 
 module.exports = errorHandlers;
