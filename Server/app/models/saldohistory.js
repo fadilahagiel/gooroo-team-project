@@ -19,7 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     balance: DataTypes.INTEGER,
     TransactionId: DataTypes.INTEGER,
-    category: DataTypes.ENUM
+    category: {
+      type: DataTypes.STRING,
+    }
   }, {
     sequelize,
     modelName: 'SaldoHistory',

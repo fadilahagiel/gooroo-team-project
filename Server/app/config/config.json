@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "fadilahagiel",
+    "password": "ceban1234",
     "database": "gooroo_db",
     "host": "localhost",
     "dialect": "postgres"

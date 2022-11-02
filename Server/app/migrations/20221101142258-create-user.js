@@ -18,11 +18,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.ENUM,
-        values: [
-          'Student',
-          'Teacher',
-        ],
+        type: Sequelize.STRING,
       },
       saldo: {
         type: Sequelize.INTEGER
