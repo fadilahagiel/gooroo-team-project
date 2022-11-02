@@ -1,4 +1,5 @@
 const errorHandlers = async (err, req, res, next) => {
+
   console.log(err);
   let code = 500;
   let message = "Internal Server Error";
@@ -26,5 +27,6 @@ const errorHandlers = async (err, req, res, next) => {
   }
   res.status(code).json({ error: true, message });
 };
+
 
 module.exports = errorHandlers;

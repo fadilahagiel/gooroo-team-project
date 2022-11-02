@@ -12,18 +12,16 @@ module.exports = (sequelize, DataTypes) => {
       Teacher.belongsTo(models.User, { foreignKey: "UserId" });
     }
   }
-  Teacher.init(
-    {
-      fullName: DataTypes.STRING,
-      UserId: DataTypes.INTEGER,
-      bio: DataTypes.STRING,
-      image: DataTypes.STRING,
-      averageRating: DataTypes.DECIMAL,
-    },
-    {
-      sequelize,
-      modelName: "Teacher",
-    }
-  );
+
+  Teacher.init({
+    fullName: DataTypes.STRING,
+    UserId: DataTypes.INTEGER,
+    bio: DataTypes.STRING,
+    image: DataTypes.STRING,
+    averageRating: DataTypes.DECIMAL
+  }, {
+    sequelize,
+    modelName: 'Teacher',
+  });
   return Teacher;
 };
