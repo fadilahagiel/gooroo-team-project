@@ -11,17 +11,42 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Transaction.belongsTo(models.Student, { foreignKey: "StudentId" })
+      Transaction.belongsTo(models.Class, { foreignKey: "ClassId" })
     }
   }
   Transaction.init({
-    ClassId: DataTypes.INTEGER,
-    StudentId: DataTypes.INTEGER,
-    status: DataTypes.STRING,
-    rating: DataTypes.INTEGER,
-    testimoni: DataTypes.STRING
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    ClassId: {
+      type: DataTypes.INTEGER,
+    },
+    StudentId: {
+      type: DataTypes.INTEGER
+    },
+    status: {
+      type: DataTypes.STRING
+    },
+    rating: {
+      type: DataTypes.INTEGER
+    },
+    testimoni: {
+      type: DataTypes.STRING
+    }
   }, {
     sequelize,
     modelName: 'Transaction',
+    hooks: {
+      beforeCreate(transaction) {
+        transaction.status = 'unpaid',
+        transaction.rating = 0,
+        transaction.testimoni = null
+      }
+    }
   });
   return Transaction;
 };

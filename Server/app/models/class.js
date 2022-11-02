@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Wishlist,
         foreignKey: "ClassId",
       });
+
+      Class.belongsToMany(models.Student, { through: models.Transaction, foreignKey: "ClassId" })
+
     }
   }
   Class.init(

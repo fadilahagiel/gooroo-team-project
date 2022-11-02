@@ -1,0 +1,30 @@
+[
+    {
+        "username": "budi",
+        "email": "budi@mail.com",
+        "password": "12345",
+        "role": "student",
+        "saldo": 50000
+    },
+    {
+        "username": "ahmad",
+        "email": "ahmad@mail.com",
+        "password": "12345",
+        "role": "teacher",
+        "saldo": 0
+    },
+    {
+        "username": "sri",
+        "email": "sri@mail.com",
+        "password": "12345",
+        "role": "teacher",
+        "saldo": 10000
+    },
+    {
+        "username": "yanto",
+        "email": "yanto@mail.com",
+        "password": "12345",
+        "role": "teacher",
+        "saldo": 10000
+    }
+]
