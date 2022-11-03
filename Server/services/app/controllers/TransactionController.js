@@ -28,6 +28,7 @@ class Controller{
         }
     }
 
+
     static async collectTransaction(req, res, next) {
         const t = await sequelize.transaction()
         try {
@@ -67,6 +68,7 @@ class Controller{
             next(error)
         }
     }
+
 
     static async studentResponse(req, res, next) {
         try {
