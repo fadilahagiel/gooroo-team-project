@@ -37,7 +37,11 @@ class Controller{
             const classFound = await Class.findOne({ where: { id: transactions[0].ClassId } }, { transaction: t })
             if (!classFound) {
                 throw { name: 'invalid_credentials' }
-            }            
+            }
+            if (classFound.status == 'collected') {
+                throw { name: 'already collected' }
+            }
+            await Class.update({ status: 'collected' }, { where: { id: transactions[0].ClassId } }, { transaction: t })
             const profit = classFound.price * transactions.length
             const teacherFound = await Teacher.findOne({ where: { id: classFound.TeacherId } }, { transaction: t })
             if (!teacherFound) {
