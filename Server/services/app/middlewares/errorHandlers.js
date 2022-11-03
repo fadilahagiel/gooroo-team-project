@@ -1,9 +1,4 @@
 const errorHandlers = async (err, req, res, next) => {
-<<<<<<< HEAD
-
-=======
->>>>>>> 64366f568b7c55280ee505107e2ede44820a01c1
-  console.log(err);
   let code = 500;
   let message = "Internal Server Error";
   if (
@@ -27,22 +22,6 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "forbidden") {
     code = 403;
     message = "forbidden";
-<<<<<<< HEAD
-  } else if (error.name == "class not found") {
-    code = 404;
-    message = `Class not found`;
-  } else if (error.name == "already") {
-    code = 400;
-    message = "You already add this class to your wishlist";
-  } else if (error.name == "already collected") {
-    code = 400;
-    message = "You already collected this class's profit";
-  }
-  
-  res.status(code).json({ message });
-};
-
-=======
   } else if (err.name == "class not found") {
     code = 404;
     message = `Class not found`;
@@ -53,9 +32,8 @@ const errorHandlers = async (err, req, res, next) => {
     code = 400;
     message = "You already collected this class's profit";
   }
-
   res.status(code).json({ message });
 };
->>>>>>> 64366f568b7c55280ee505107e2ede44820a01c1
+
 
 module.exports = errorHandlers;

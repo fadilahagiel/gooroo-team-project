@@ -19,7 +19,6 @@ class Controller{
                 throw { name: 'invalid_credentials' }
             }
             await User.decrement({ saldo: classFound.price }, { where: { id: studentFound.UserId } }, { transaction: t })
-            // await User.increment({ saldo: classFound.price }, { where: { id: teacherFound.UserId } }, { transaction: t })
             const transactionCreated = await Transaction.create({ ClassId, StudentId, }, { transaction: t })
             await t.commit()
             res.status(201).json(transactionCreated)
@@ -29,7 +28,8 @@ class Controller{
         }
     }
 
-    static async collectingTransaction(req, res, next) {
+
+    static async collectTransaction(req, res, next) {
         const t = await sequelize.transaction()
         try {
             const ClassId  = req.params.classId
@@ -49,12 +49,26 @@ class Controller{
             }
             await User.increment({saldo: profit}, { where: { id: teacherFound.UserId } })
             await t.commit()
-            res.status(200).json({profit})
+            res.status(200).json({message: `You earned ${profit} from ${classFound.name}`})
         } catch (error) {
             await t.rollback()
             next(error)
         }
     }
+
+    static async findOneTransaction(req, res, next) {
+        try {
+            const { id } = req.params
+            const transactionFound = await Transaction.findOne({ where: { id }, include: [Student, Class] })
+            if (!transactionFound) {
+                throw { name: 'invalid_credentials' }
+            }
+            res.status(200).json(transactionFound)
+        } catch (error) {
+            next(error)
+        }
+    }
+
 
     static async studentResponse(req, res, next) {
         try {

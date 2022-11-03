@@ -15,7 +15,6 @@ class UserController {
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;
-      // console.log(req.body);
       const user = await User.findOne({ where: { email } });
       console.log(user);
       if (!user) {
@@ -31,7 +30,7 @@ class UserController {
       };
       const access_token = createToken(payload);
       res.status(200).json({
-        access_token: access_token,
+        access_token: access_toke
         username: user.username,
         id: user.id,
       });
