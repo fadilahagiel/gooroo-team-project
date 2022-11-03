@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       Teacher.belongsTo(models.User, { foreignKey: "UserId" });
     }
   }
-<<<<<<< HEAD
   Teacher.init(
     {
       fullName: DataTypes.STRING,
@@ -26,17 +25,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Teacher",
     }
   );
-=======
-  Teacher.init({
-    fullName: DataTypes.STRING,
-    UserId: DataTypes.INTEGER,
-    bio: DataTypes.STRING,
-    image: DataTypes.STRING,
-    averageRating: DataTypes.DECIMAL
-  }, {
-    sequelize,
-    modelName: 'Teacher',
-  });
->>>>>>> e9fb868d591a564d73dbba174b1f4e068e744c70
   return Teacher;
 };
