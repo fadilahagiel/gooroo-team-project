@@ -26,6 +26,9 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "wishlist not found") {
     code = 404;
     message = `Wishlist not found`;
+  } else if (error.name == "already") {
+    code = 400;
+    message = "You already add this class to your wishlist";
   }
   res.status(code).json({ message });
 };
