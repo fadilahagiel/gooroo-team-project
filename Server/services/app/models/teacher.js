@@ -14,11 +14,21 @@ module.exports = (sequelize, DataTypes) => {
   }
   Teacher.init(
     {
-      fullName: DataTypes.STRING,
-      UserId: DataTypes.INTEGER,
-      bio: DataTypes.STRING,
-      image: DataTypes.STRING,
-      averageRating: DataTypes.DECIMAL,
+      fullName: {
+        type: DataTypes.STRING,
+      },
+      UserId: {
+        type: DataTypes.STRING,
+      },
+      bio: {
+        type: DataTypes.STRING,
+      },
+      image: {
+        type: DataTypes.STRING,
+      },
+      averageRating: {
+        type: DataTypes.DECIMAL,
+      },
     },
     {
       sequelize,

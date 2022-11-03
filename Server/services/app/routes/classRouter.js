@@ -1,6 +1,6 @@
-const ClassController = require('../controllers/ClassController')
-const router = require('express').Router()
+const ClassController = require("../controllers/ClassController");
+const router = require("express").Router();
 
-router.post('/', ClassController.postClass)
+router.post("/", ClassController.postClass);
 
-module.exports = router
+module.exports = router;
