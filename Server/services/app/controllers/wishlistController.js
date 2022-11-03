@@ -28,7 +28,34 @@ class Controller {
         .status(201)
         .json({ message: `Success add ${findClass.name} to wishlist` });
     } catch (error) {
-      console.log(error);
+      next(error);
+    }
+  }
+
+  static async getWishlist(req, res, next) {
+    try {
+      const wishlist = await Wishlist.findAll({
+        where: {
+          StudentId: 1,
+        },
+        include: [Class],
+      });
+      res.status(200).json(wishlist);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async deleteWishlist(req, res, next) {
+    try {
+      const { WishlistId } = req.params;
+      const wishlist = await Wishlist.findOne({ where: { id: WishlistId } });
+      if (!wishlist) {
+        throw { name: "wishlist not found" };
+      }
+      await Wishlist.destroy({ where: { id: WishlistId } });
+      res.status(200).json({ message: `Success delete wishlist` });
+    } catch (error) {
       next(error);
     }
   }

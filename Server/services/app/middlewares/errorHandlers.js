@@ -1,4 +1,5 @@
 const errorHandlers = async (err, req, res, next) => {
+
   let code = 500;
   let message = "Internal Server Error";
   if (
@@ -31,9 +32,14 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "already collected") {
     code = 400;
     message = "You already collected this class's profit";
+  } else if (err.name == "wishlist not found") {
+    code = 404;
+    message = `Wishlist not found`;
+  } else if (err.name == "already") {
+    code = 400;
+    message = "You already add this class to your wishlist";
   }
   res.status(code).json({ message });
 };
-
 
 module.exports = errorHandlers;
