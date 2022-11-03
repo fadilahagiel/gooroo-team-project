@@ -24,13 +24,13 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "forbidden") {
     code = 403;
     message = "forbidden";
-  } else if (error.name == "class not found") {
+  } else if (err.name == "class not found") {
     code = 404;
     message = `Class not found`;
-  } else if (error.name == "already") {
+  } else if (err.name == "already") {
     code = 400;
     message = "You already add this class to your wishlist";
-  } else if (error.name == "already collected") {
+  } else if (err.name == "already collected") {
     code = 400;
     message = "You already collected this class's profit";
   }
