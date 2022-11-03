@@ -30,7 +30,7 @@ class UserController {
       };
       const access_token = createToken(payload);
       res.status(200).json({
-        access_token: access_toke
+        access_token: access_token,
         username: user.username,
         id: user.id,
       });
