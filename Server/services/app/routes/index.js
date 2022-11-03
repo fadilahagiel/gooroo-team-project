@@ -9,7 +9,7 @@ router.use("/users", userRouter);
 router.use("/wishlist", wishlistRouter)
 router.use('/transactions', TransactionRouter)
 router.use('/teachers', TeacherRouter)
-router.use('/class', classRouter)
+router.use('/classes', classRouter)
 
 module.exports = router
 
