@@ -1,6 +1,4 @@
 const errorHandlers = async (err, req, res, next) => {
-
-  console.log(err);
   let code = 500;
   let message = "Internal Server Error";
   if (
@@ -34,7 +32,6 @@ const errorHandlers = async (err, req, res, next) => {
     code = 400;
     message = "You already collected this class's profit";
   }
-  
   res.status(code).json({ message });
 };
 

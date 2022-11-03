@@ -9,13 +9,12 @@ const authentication = require("../middlewares/authentication");
 
 router.use("/users", userRouter);
 
-//authentication
 router.use(authentication);
 
 router.use("/wishlist", wishlistRouter);
 router.use("/transactions", TransactionRouter);
 router.use("/teachers", TeacherRouter);
 router.use("/students", StudentRouter);
-router.use("/class", classRouter);
+router.use("/classes", classRouter);
 
 module.exports = router;
