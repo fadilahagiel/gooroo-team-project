@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class SaldoHistory extends Model {
     /**
@@ -14,18 +12,20 @@ module.exports = (sequelize, DataTypes) => {
       SaldoHistory.belongsTo(models.User, {foreignKey: "UserId"})
     }
   }
-  SaldoHistory.init({
-    amount: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER,
-    description: DataTypes.STRING,
-    balance: DataTypes.INTEGER,
-    TransactionId: DataTypes.INTEGER,
-    category: {
-      type: DataTypes.STRING,
+  SaldoHistory.init(
+    {
+      amount: DataTypes.INTEGER,
+      UserId: DataTypes.INTEGER,
+      description: DataTypes.STRING,
+      balance: DataTypes.INTEGER,
+      TransactionId: DataTypes.INTEGER,
+      category: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "SaldoHistory",
     }
-  }, {
-    sequelize,
-    modelName: 'SaldoHistory',
-  });
+  );
+
   return SaldoHistory;
 };

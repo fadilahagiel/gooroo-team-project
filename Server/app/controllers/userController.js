@@ -29,9 +29,9 @@ class UserController {
         id: user.id,
         role: user.role,
       };
-      const token = createToken(payload);
+      const access_token = createToken(payload);
       res.status(200).json({
-        token: token,
+        access_token: access_token,
         username: user.username,
         id: user.id,
       });

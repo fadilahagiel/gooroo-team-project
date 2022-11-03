@@ -1,11 +1,19 @@
-const TransactionRouter  = require('./transactionRouter')
-const TeacherRouter = require('./teacherRouter')
 const router = require("express").Router();
+const wishlistRouter = require("./wishlistRouter");
+const TransactionRouter = require("./transactionRouter");
+const TeacherRouter = require("./teacherRouter");
 const userRouter = require("./userRouter");
+const classRouter = require("./classRouter");
+const authentication = require("../middlewares/authentication");
 
 router.use("/users", userRouter);
 
-router.use('/transactions', TransactionRouter)
-router.use('/teachers', TeacherRouter)
+//authentication
+router.use(authentication);
 
-module.exports = router
+router.use("/wishlist", wishlistRouter);
+router.use("/transactions", TransactionRouter);
+router.use("/teachers", TeacherRouter);
+router.use("/class", classRouter);
+
+module.exports = router;
