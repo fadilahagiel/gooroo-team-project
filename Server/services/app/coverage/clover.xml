@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1667571556709" clover="3.2.0">
-  <project timestamp="1667571556709" name="All files">
-    <metrics statements="463" coveredstatements="285" conditionals="95" coveredconditionals="37" methods="55" coveredmethods="39" elements="613" coveredelements="361" complexity="0" loc="463" ncloc="463" packages="6" files="31" classes="31"/>
+<coverage generated="1667576663256" clover="3.2.0">
+  <project timestamp="1667576663256" name="All files">
+    <metrics statements="473" coveredstatements="297" conditionals="103" coveredconditionals="43" methods="55" coveredmethods="40" elements="631" coveredelements="380" complexity="0" loc="473" ncloc="473" packages="6" files="31" classes="31"/>
     <package name="app">
       <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="app.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\app.js">
@@ -21,9 +21,9 @@
       </file>
     </package>
     <package name="app.controllers">
-      <metrics statements="228" coveredstatements="86" conditionals="50" coveredconditionals="15" methods="23" coveredmethods="9"/>
+      <metrics statements="231" coveredstatements="83" conditionals="54" coveredconditionals="14" methods="23" coveredmethods="9"/>
       <file name="ClassController.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\controllers\ClassController.js">
-        <metrics statements="45" coveredstatements="39" conditionals="6" coveredconditionals="5" methods="6" coveredmethods="6"/>
+        <metrics statements="45" coveredstatements="36" conditionals="6" coveredconditionals="4" methods="6" coveredmethods="6"/>
         <line num="8" count="3" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
@@ -43,15 +43,15 @@
         <line num="52" count="1" type="stmt"/>
         <line num="53" count="1" type="stmt"/>
         <line num="55" count="0" type="stmt"/>
-        <line num="60" count="2" type="stmt"/>
-        <line num="61" count="2" type="stmt"/>
-        <line num="62" count="2" type="stmt"/>
-        <line num="69" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="70" count="1" type="stmt"/>
+        <line num="60" count="1" type="stmt"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="69" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="70" count="0" type="stmt"/>
         <line num="72" count="1" type="stmt"/>
         <line num="77" count="1" type="stmt"/>
-        <line num="81" count="1" type="stmt"/>
-        <line num="82" count="1" type="stmt"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
         <line num="87" count="2" type="stmt"/>
         <line num="88" count="2" type="stmt"/>
         <line num="89" count="2" type="stmt"/>
@@ -64,10 +64,10 @@
         <line num="107" count="1" type="stmt"/>
         <line num="108" count="1" type="stmt"/>
         <line num="113" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="114" count="1" type="stmt"/>
-        <line num="116" count="0" type="stmt"/>
-        <line num="124" count="0" type="stmt"/>
-        <line num="126" count="1" type="stmt"/>
+        <line num="114" count="0" type="stmt"/>
+        <line num="116" count="1" type="stmt"/>
+        <line num="124" count="1" type="stmt"/>
+        <line num="126" count="0" type="stmt"/>
         <line num="131" count="3" type="stmt"/>
       </file>
       <file name="ScheduleController.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\controllers\ScheduleController.js">
@@ -102,27 +102,29 @@
         <line num="72" count="3" type="stmt"/>
       </file>
       <file name="StudentController.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\controllers\StudentController.js">
-        <metrics statements="17" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="19" coveredstatements="2" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
-        <line num="7" count="0" type="stmt"/>
+        <line num="7" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="8" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
-        <line num="15" count="0" type="stmt"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
         <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="23" count="0" type="stmt"/>
         <line num="24" count="0" type="stmt"/>
-        <line num="26" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="26" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="27" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
-        <line num="34" count="3" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
       </file>
       <file name="TeacherController.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\controllers\TeacherController.js">
-        <metrics statements="25" coveredstatements="2" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <metrics statements="26" coveredstatements="2" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="5" count="0" type="stmt"/>
         <line num="6" count="0" type="stmt"/>
@@ -131,23 +133,24 @@
         <line num="9" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
-        <line num="13" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
         <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
+        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="19" count="0" type="stmt"/>
-        <line num="20" count="0" type="stmt"/>
-        <line num="27" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
         <line num="29" count="0" type="stmt"/>
-        <line num="33" count="0" type="stmt"/>
-        <line num="34" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
         <line num="35" count="0" type="stmt"/>
         <line num="36" count="0" type="stmt"/>
-        <line num="37" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="37" count="0" type="stmt"/>
         <line num="38" count="0" type="stmt"/>
+        <line num="39" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="40" count="0" type="stmt"/>
-        <line num="44" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
-        <line num="51" count="3" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="53" count="3" type="stmt"/>
       </file>
       <file name="TransactionController.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\controllers\TransactionController.js">
         <metrics statements="59" coveredstatements="17" conditionals="20" coveredconditionals="3" methods="4" coveredmethods="1"/>
@@ -288,33 +291,33 @@
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="5" count="4" type="stmt"/>
-        <line num="8" count="12" type="stmt"/>
+        <line num="8" count="15" type="stmt"/>
         <line num="11" count="3" type="stmt"/>
       </file>
     </package>
     <package name="app.middlewares">
-      <metrics statements="73" coveredstatements="38" conditionals="36" coveredconditionals="16" methods="4" coveredmethods="2"/>
+      <metrics statements="79" coveredstatements="52" conditionals="40" coveredconditionals="23" methods="4" coveredmethods="3"/>
       <file name="authentication.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\middlewares\authentication.js">
         <metrics statements="16" coveredstatements="14" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
-        <line num="5" count="12" type="stmt"/>
-        <line num="6" count="12" type="stmt"/>
-        <line num="7" count="12" type="cond" truecount="1" falsecount="1"/>
+        <line num="5" count="15" type="stmt"/>
+        <line num="6" count="15" type="stmt"/>
+        <line num="7" count="15" type="cond" truecount="1" falsecount="1"/>
         <line num="8" count="0" type="stmt"/>
-        <line num="10" count="12" type="stmt"/>
-        <line num="11" count="8" type="stmt"/>
-        <line num="12" count="8" type="cond" truecount="1" falsecount="1"/>
+        <line num="10" count="15" type="stmt"/>
+        <line num="11" count="10" type="stmt"/>
+        <line num="12" count="10" type="cond" truecount="1" falsecount="1"/>
         <line num="13" count="0" type="stmt"/>
-        <line num="15" count="8" type="stmt"/>
-        <line num="20" count="8" type="stmt"/>
-        <line num="22" count="4" type="stmt"/>
-        <line num="23" count="4" type="stmt"/>
+        <line num="15" count="10" type="stmt"/>
+        <line num="20" count="10" type="stmt"/>
+        <line num="22" count="5" type="stmt"/>
+        <line num="23" count="5" type="stmt"/>
         <line num="27" count="3" type="stmt"/>
       </file>
       <file name="authorization.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\middlewares\authorization.js">
-        <metrics statements="16" coveredstatements="4" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <metrics statements="22" coveredstatements="16" conditionals="8" coveredconditionals="6" methods="2" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
         <line num="4" count="0" type="stmt"/>
@@ -324,40 +327,46 @@
         <line num="9" count="0" type="stmt"/>
         <line num="11" count="0" type="stmt"/>
         <line num="15" count="3" type="stmt"/>
-        <line num="16" count="0" type="stmt"/>
-        <line num="17" count="0" type="stmt"/>
-        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="19" count="0" type="stmt"/>
-        <line num="21" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="27" count="3" type="stmt"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="22" count="4" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="25" count="4" type="cond" truecount="4" falsecount="0"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="28" count="2" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
       </file>
       <file name="errorHandlers.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\middlewares\errorHandlers.js">
-        <metrics statements="41" coveredstatements="20" conditionals="28" coveredconditionals="14" methods="1" coveredmethods="1"/>
+        <metrics statements="41" coveredstatements="22" conditionals="28" coveredconditionals="15" methods="1" coveredmethods="1"/>
         <line num="1" count="3" type="stmt"/>
-        <line num="2" count="15" type="stmt"/>
-        <line num="3" count="15" type="stmt"/>
-        <line num="4" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="2" count="17" type="stmt"/>
+        <line num="3" count="17" type="stmt"/>
+        <line num="4" count="17" type="cond" truecount="2" falsecount="0"/>
         <line num="8" count="5" type="stmt"/>
         <line num="9" count="5" type="stmt"/>
-        <line num="10" count="10" type="cond" truecount="1" falsecount="1"/>
+        <line num="10" count="12" type="cond" truecount="1" falsecount="1"/>
         <line num="11" count="0" type="stmt"/>
         <line num="12" count="0" type="stmt"/>
-        <line num="13" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="12" type="cond" truecount="2" falsecount="0"/>
         <line num="14" count="3" type="stmt"/>
         <line num="15" count="3" type="stmt"/>
-        <line num="16" count="7" type="cond" truecount="4" falsecount="0"/>
-        <line num="17" count="4" type="stmt"/>
-        <line num="18" count="4" type="stmt"/>
-        <line num="19" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="16" count="9" type="cond" truecount="4" falsecount="0"/>
+        <line num="17" count="5" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="19" count="4" type="cond" truecount="1" falsecount="1"/>
         <line num="20" count="0" type="stmt"/>
         <line num="21" count="0" type="stmt"/>
-        <line num="22" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="24" count="0" type="stmt"/>
-        <line num="25" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="26" count="3" type="stmt"/>
-        <line num="27" count="3" type="stmt"/>
+        <line num="22" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="25" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
         <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="29" count="0" type="stmt"/>
         <line num="30" count="0" type="stmt"/>
@@ -373,7 +382,7 @@
         <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="41" count="0" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
-        <line num="44" count="15" type="stmt"/>
+        <line num="44" count="17" type="stmt"/>
         <line num="47" count="3" type="stmt"/>
       </file>
     </package>
@@ -488,17 +497,18 @@
       </file>
     </package>
     <package name="app.routes">
-      <metrics statements="62" coveredstatements="62" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="63" coveredstatements="63" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="classRouter.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\routes\classRouter.js">
-        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
-        <line num="4" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
         <line num="7" count="3" type="stmt"/>
         <line num="8" count="3" type="stmt"/>
-        <line num="10" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
       </file>
       <file name="index.js" path="D:\Belajar Coding\Hacktiv8\Phase 3\gooroo-team-project\Server\services\app\routes\index.js">
         <metrics statements="19" coveredstatements="19" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

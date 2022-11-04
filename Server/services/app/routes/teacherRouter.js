@@ -2,7 +2,8 @@ const TeacherController = require("../controllers/TeacherController");
 const router = require("express").Router();
 
 router.get("/", TeacherController.showBestTeacher);
-router.post("/detail", TeacherController.detail);
-router.put("/detail/:id", TeacherController.editDetail);
+router.post("/", TeacherController.postTeacher);
+router.put("/", TeacherController.editTeacher);
+router.get("/detail", TeacherController.showBestTeacher);
 
 module.exports = router;

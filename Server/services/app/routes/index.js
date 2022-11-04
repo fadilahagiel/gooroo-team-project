@@ -16,7 +16,7 @@ router.use(authentication);
 router.use("/wishlist", wishlistRouter);
 router.use("/transactions", TransactionRouter);
 router.use("/teachers", AuthTeacher, TeacherRouter);
-router.use("/students", AuthStudent, StudentRouter);
+router.use("/students", StudentRouter);
 router.use("/classes", classRouter);
 router.use("/schedule", scheduleRouter);
 

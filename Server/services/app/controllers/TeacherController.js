@@ -1,4 +1,4 @@
-const { Class, Transaction, Student, Teacher } = require("../models");
+const { Class, Transaction, Student, Teacher, User } = require("../models");
 
 class Controller {
   static async showBestTeacher(req, res, next) {
@@ -9,32 +9,54 @@ class Controller {
       const teachers = await Teacher.findAll(option);
       res.status(200).json(teachers);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
-  static async detail(req, res, next) {
+
+  static async showOneTeacher(req, res, next) {
     try {
-      const { id } = req.user;
+      const { id } = req.user
+      const teacher = await Teacher.findOne({ where: { id } })
+      if (!teacher) {
+        throw { name: "invalid_credentials" };
+      }
+      res.status(200).json(teacher);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async postTeacher(req, res, next) {
+    try {
+      const { id, role } = req.user;
+      if (role !== 'teacher') {
+        throw { name: "forbidden"}
+      }
+
+      const teacherFound = await Teacher.findOne({ where: { UserId: id } })
+      if (teacherFound) {
+        throw { name: "You already made a profile" };
+      }
+
       const { fullName, bio, image } = req.body;
-      const newProfile = await Teacher.create({
+      const teacher = await Teacher.create({
         fullName,
         UserId: id,
         bio,
         image,
         averageRating: 0,
       });
-      res.status(200).json(newProfile);
+      res.status(201).json(teacher);
     } catch (error) {
       next();
     }
   }
-  static async editDetail(req, res, next) {
+  static async editTeacher(req, res, next) {
     try {
-      const detailId = +req.params.id;
+      const { id, role } = req.user;
       const { fullName, bio, image } = req.body;
-      const detailStudent = await Teacher.findByPk(detailId);
-      if (!detailStudent) {
+      const teacher = await Teacher.findOne({where: {UserId:id}});
+      if (!teacher) {
         throw { name: "invalid_credentials" };
       }
       await Teacher.update(

@@ -267,53 +267,6 @@ describe("POST /classes", () => {
 
 });
 
-describe("DELETE /classes/:ClassId", () => {
-    test("200 success DELETE class", (done) => {
-        request(app)
-            .delete(`/classes/1`)
-            .set("access_token", validTokenTeacher)
-            .then((response) => {
-                const { body, status } = response;
-                expect(status).toBe(200);
-                expect(body).toHaveProperty("message", 'Success delete class Matematich Class');
-                done();
-            })
-            .catch((err) => {
-                done(err);
-            });
-    });
-
-    test("200 failed DELETE class, invalid token", (done) => {
-        request(app)
-            .delete(`/classes/1`)
-            .set("access_token", 'salah')
-            .then((response) => {
-                const { body, status } = response;
-                expect(status).toBe(401);
-                expect(body).toHaveProperty("message", 'invalid_token');
-                done();
-            })
-            .catch((err) => {
-                done(err);
-            });
-    });
-
-    test("200 failed DELETE class, class not found", (done) => {
-        request(app)
-            .delete(`/classes/99`)
-            .set("access_token", validTokenTeacher)
-            .then((response) => {
-                const { body, status } = response;
-                expect(status).toBe(404);
-                expect(body).toHaveProperty("message", 'Class not found');
-                done();
-            })
-            .catch((err) => {
-                done(err);
-            });
-    });
-
-});
 
 describe("UPDATE /classes/:ClassId", () => {
     test("201 success UPDATE class", (done) => {
@@ -338,5 +291,111 @@ describe("UPDATE /classes/:ClassId", () => {
                 done(err);
             });
     });
+    test("201 failed UPDATE class invalid token", (done) => {
+        request(app)
+            .put(`/classes/1`)
+            .set("access_token", "salah")
+            .send({
+                "name": "kelas edit",
+                "price": 10000,
+                "quota": 5,
+                "SubjectId": 1,
+                "description": "baru nihhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+                "url": "ini link",
+            })
+            .then((response) => {
+                const { body, status } = response;
+                expect(status).toBe(401);
+                expect(body).toHaveProperty("message", "invalid_token");
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+    test("201 failed UPDATE class role is not teacher", (done) => {
+        request(app)
+            .put(`/classes/1`)
+            .set("access_token", validTokenStudent)
+            .send({
+                "name": "kelas edit",
+                "price": 10000,
+                "quota": 5,
+                "SubjectId": 1,
+                "description": "baru nihhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+                "url": "ini link",
+            })
+            .then((response) => {
+                const { body, status } = response;
+                expect(status).toBe(403);
+                expect(body).toHaveProperty("message", "forbidden");
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
 
 });
+
+describe("DELETE /classes/:ClassId", () => {
+    test("200 failed DELETE class, invalid token", (done) => {
+        request(app)
+            .delete(`/classes/1`)
+            .set("access_token", 'salah')
+            .then((response) => {
+                const { body, status } = response;
+                expect(status).toBe(401);
+                expect(body).toHaveProperty("message", 'invalid_token');
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+    test("200 failed DELETE class, role is not teacher", (done) => {
+        request(app)
+            .delete(`/classes/1`)
+            .set("access_token", validTokenStudent)
+            .then((response) => {
+                const { body, status } = response;
+                expect(status).toBe(403);
+                expect(body).toHaveProperty("message", 'forbidden');
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+
+    test("200 failed DELETE class, class not found", (done) => {
+        request(app)
+            .delete(`/classes/99`)
+            .set("access_token", validTokenTeacher)
+            .then((response) => {
+                const { body, status } = response;
+                expect(status).toBe(404);
+                expect(body).toHaveProperty("message", 'Class not found');
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+
+    test("200 success DELETE class", (done) => {
+        request(app)
+            .delete(`/classes/1`)
+            .set("access_token", validTokenTeacher)
+            .then((response) => {
+                const { body, status } = response;
+                expect(status).toBe(200);
+                expect(body).toHaveProperty("message", expect.any(String));
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+});
+
