@@ -45,7 +45,6 @@ const resolver = {
   Query: {
     getWishlist: async (_, args) => {
       try {
-        // const wishlistCache = await redis.get(`app:wishlists`);
         const { access_token } = args;
         const { data } = await axios({
           method: "get",
