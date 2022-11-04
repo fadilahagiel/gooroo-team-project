@@ -5,13 +5,11 @@ const authentication = async (req, res, next) => {
   try {
     const { access_token } = req.headers;
     if (!access_token) {
-      console.log("masuk token");
       throw { name: "invalid_token" };
     }
     const payload = verifyToken(access_token);
     const user = await User.findByPk(payload.id);
     if (!user) {
-      console.log("masuk user");
       throw { name: "invalid_token" };
     }
     req.user = {
