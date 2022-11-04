@@ -29,7 +29,23 @@ class Controller {
       next();
     }
   }
+  static async editDetail(req, res, next) {
+    try {
+      const detailId = +req.params.id;
+      const { fullName, bio, image } = req.body;
+      const detailStudent = await Teacher.findByPk(detailId);
+      if (!detailStudent) {
+        throw { name: "invalid_credentials" };
+      }
+      await Teacher.update(
+        { fullName, bio, image },
+        { where: { id: detailId } }
+      );
+      res.status(200).json({ message: `Teacher profile has been updated` });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;
-

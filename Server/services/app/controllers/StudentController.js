@@ -15,6 +15,20 @@ class StudentController {
       next();
     }
   }
+  static async editDetail(req, res, next) {
+    try {
+      const detailId = +req.params.id;
+      const { fullName, image } = req.body;
+      const detailStudent = await Student.findByPk(detailId);
+      if (!detailStudent) {
+        throw { name: "invalid_credentials" };
+      }
+      await Student.update({ fullName, image }, { where: { id: detailId } });
+      res.status(200).json({ message: `Student profile has been updated` });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = StudentController;
