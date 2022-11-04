@@ -13,9 +13,11 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Wishlist,
         foreignKey: "ClassId",
       });
-
-      Class.belongsToMany(models.Student, { through: models.Transaction, foreignKey: "ClassId" })
-
+      Class.belongsToMany(models.Student, {
+        through: models.Transaction,
+        foreignKey: "ClassId",
+      });
+      Class.hasMany(models.Schedule, { foreignKey: "ClassId" });
     }
   }
   Class.init(
@@ -41,8 +43,8 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: `Price is required` },
           min: {
             args: [10000],
-            msg: "Minimal Price is Rp 10,000 !"
-          }
+            msg: "Minimal Price is Rp 10,000 !",
+          },
         },
       },
       quota: {
@@ -53,8 +55,8 @@ module.exports = (sequelize, DataTypes) => {
           notNull: { msg: `Quota is required` },
           min: {
             args: [1],
-            msg: "Minimal Quota is 1 !"
-          }
+            msg: "Minimal Quota is 1 !",
+          },
         },
       },
       averageRating: DataTypes.INTEGER,
@@ -78,11 +80,11 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Class",
       hooks: {
-        beforeCreate(Class){
-          Class.averageRating = 0
-          Class.status = 'upcoming'
-        }
-      }
+        beforeCreate(Class) {
+          Class.averageRating = 0;
+          Class.status = "upcoming";
+        },
+      },
     }
   );
   return Class;

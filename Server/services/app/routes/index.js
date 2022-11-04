@@ -6,6 +6,7 @@ const userRouter = require("./userRouter");
 const classRouter = require("./classRouter");
 const StudentRouter = require("./studentRouter");
 const authentication = require("../middlewares/authentication");
+const StudentRouter = require('./studentRouter')
 
 router.use("/users", userRouter);
 
