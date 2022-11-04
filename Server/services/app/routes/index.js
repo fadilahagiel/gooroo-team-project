@@ -6,7 +6,7 @@ const userRouter = require("./userRouter");
 const classRouter = require("./classRouter");
 const StudentRouter = require("./studentRouter");
 const authentication = require("../middlewares/authentication");
-const StudentRouter = require('./studentRouter')
+const scheduleRouter = require("./scheduleRouter");
 
 router.use("/users", userRouter);
 
@@ -17,5 +17,6 @@ router.use("/transactions", TransactionRouter);
 router.use("/teachers", TeacherRouter);
 router.use("/students", StudentRouter);
 router.use("/classes", classRouter);
+router.use("/schedule", scheduleRouter);
 
 module.exports = router;
