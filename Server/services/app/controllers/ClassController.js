@@ -41,6 +41,7 @@ class Controller {
       await t.commit();
       res.status(201).json({ message: `Berhasil membuat kelas ${name}` });
     } catch (error) {
+      console.log(error);
       await t.rollback();
       next(error);
     }
@@ -63,8 +64,7 @@ class Controller {
           where: {
             id: ClassId,
           },
-        },
-        { include: [Schedule] }
+        }
       );
       if (!findClass) {
         throw { name: "class not found" };
@@ -78,6 +78,7 @@ class Controller {
         .status(200)
         .json({ message: `Success delete class ${findClass.name}` });
     } catch (error) {
+      console.log(error, 'ini error');
       next(error);
     }
   }

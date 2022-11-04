@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      averageRating: DataTypes.INTEGER,
+      averageRating: DataTypes.DECIMAL,
       status: DataTypes.STRING,
       SubjectId: DataTypes.INTEGER,
       description: {

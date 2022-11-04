@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.57% </span>
+                <span class="strong">48.78% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>12/38</span>
+                <span class='fraction'>20/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.07% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>6/26</span>
+                <span class='fraction'>14/28</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">31.57% </span>
+                <span class="strong">48.78% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/38</span>
+                <span class='fraction'>20/41</span>
             </div>
         
             
@@ -108,31 +108,35 @@
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -149,12 +153,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const errorHandlers = async (err, req, res, next) =&gt; {
-&nbsp;
   let code = 500;
   let message = "Internal Server Error";
   if (
@@ -169,19 +172,19 @@
   } else if (err.name == "invalid_login") {
     code = 401;
     message = "invalid email/password";
-  } else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>if (err.name == "invalid_token" || err.name == "JsonWebTokenError") {</span>
-<span class="cstat-no" title="statement not covered" >    code = 401;</span>
-<span class="cstat-no" title="statement not covered" >    message = "invalid_token";</span>
-  } else <span class="cstat-no" title="statement not covered" >if (err.name == "invalid_credentials") {</span>
+  } else if (err.name == "invalid_token" || err.name == "JsonWebTokenError") {
+    code = 401;
+    message = "invalid_token";
+  } else <span class="missing-if-branch" title="if path not taken" >I</span>if (err.name == "invalid_credentials") {
 <span class="cstat-no" title="statement not covered" >    code = 404;</span>
 <span class="cstat-no" title="statement not covered" >    message = "error not found";</span>
-  } else <span class="cstat-no" title="statement not covered" >if (err.name == "forbidden") {</span>
+  } else <span class="missing-if-branch" title="if path not taken" >I</span>if (err.name == "forbidden") {
 <span class="cstat-no" title="statement not covered" >    code = 403;</span>
 <span class="cstat-no" title="statement not covered" >    message = "forbidden";</span>
-  } else <span class="cstat-no" title="statement not covered" >if (err.name == "class not found") {</span>
-<span class="cstat-no" title="statement not covered" >    code = 404;</span>
-<span class="cstat-no" title="statement not covered" >    message = `Class not found`;</span>
-  } else <span class="cstat-no" title="statement not covered" >if (err.name == "already") {</span>
+  } else if (err.name == "class not found") {
+    code = 404;
+    message = `Class not found`;
+  } else <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>if (err.name == "already") {</span>
 <span class="cstat-no" title="statement not covered" >    code = 400;</span>
 <span class="cstat-no" title="statement not covered" >    message = "You already add this class to your wishlist";</span>
   } else <span class="cstat-no" title="statement not covered" >if (err.name == "already collected") {</span>
@@ -193,6 +196,9 @@
   } else <span class="cstat-no" title="statement not covered" >if (err.name == "already") {</span>
 <span class="cstat-no" title="statement not covered" >    code = 400;</span>
 <span class="cstat-no" title="statement not covered" >    message = "You already add this class to your wishlist";</span>
+  } else <span class="cstat-no" title="statement not covered" >if (err.name == "already_have") {</span>
+<span class="cstat-no" title="statement not covered" >    code = 400;</span>
+<span class="cstat-no" title="statement not covered" >    message = "You already made a profile";</span>
   }
   res.status(code).json({ message });
 };
@@ -205,7 +211,7 @@ module.exports = errorHandlers;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-11-04T09:48:00.160Z
+                at 2022-11-04T14:19:16.532Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
