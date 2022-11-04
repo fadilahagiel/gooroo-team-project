@@ -20,6 +20,28 @@ class Controller {
     }
   }
 
+  static async deleteSchedule(req, res, next) {
+    try {
+      const { ScheduleId } = req.params;
+      const findSchedule = await Schedule.findOne({
+        where: {
+          id: ScheduleId,
+        },
+      });
+      if (!findSchedule) {
+        throw { name: "schedule not found" };
+      }
+      await Schedule.destroy({
+        where: {
+          id: ScheduleId,
+        },
+      });
+      res.status(200).json({ message: `Success delete schedule` });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async updateSchedule(req, res, next) {
     try {
       const { ScheduleId } = req.params;
