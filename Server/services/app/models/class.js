@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Transaction,
         foreignKey: "ClassId",
       });
+      Class.belongsTo(models.Subject, { foreignKey: "SubjectId" });
       Class.hasMany(models.Schedule, { foreignKey: "ClassId" });
     }
   }

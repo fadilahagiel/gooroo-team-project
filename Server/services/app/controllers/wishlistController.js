@@ -1,11 +1,12 @@
-const { Wishlist, Class } = require("../models");
+const { Wishlist, Class, Subject, Student } = require("../models");
 
 class Controller {
   static async addWishlist(req, res, next) {
     try {
       const { ClassId } = req.params;
-
-      const StudentId = 1; //Hardcode studentId=1
+      const { id } = req.user;
+      const findStudent = await Student.findOne({ where: { UserId: id } });
+      const StudentId = findStudent.id;
       const findClass = await Class.findOne({
         where: {
           id: ClassId,
@@ -34,14 +35,22 @@ class Controller {
 
   static async getWishlist(req, res, next) {
     try {
+      const { id } = req.user;
+      const findStudent = await Student.findOne({ where: { UserId: id } });
       const wishlist = await Wishlist.findAll({
         where: {
-          StudentId: 1,
+          StudentId: findStudent.id,
         },
-        include: [Class],
+        include: {
+          model: Class,
+          include: {
+            model: Subject,
+          },
+        },
       });
       res.status(200).json(wishlist);
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }

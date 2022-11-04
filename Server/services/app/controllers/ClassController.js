@@ -62,14 +62,11 @@ class Controller {
   static async deleteClass(req, res, next) {
     try {
       const { ClassId } = req.params;
-      const findClass = await Class.findOne(
-        {
-          where: {
-            id: ClassId,
-          },
+      const findClass = await Class.findOne({
+        where: {
+          id: ClassId,
         },
-        { include: [Schedule] }
-      );
+      });
       if (!findClass) {
         throw { name: "class not found" };
       }
