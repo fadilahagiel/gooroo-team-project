@@ -6,5 +6,6 @@ router.get("/", ClassController.getClass);
 router.get("/:ClassId", ClassController.getOneClass);
 router.delete("/:ClassId", ClassController.deleteClass);
 router.put("/:ClassId", ClassController.updateClass);
+router.get("/buyClass/:price", ClassController.buyClass);
 
 module.exports = router;
