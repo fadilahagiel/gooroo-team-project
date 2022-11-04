@@ -35,6 +35,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Teacher",
     }
   );
-
   return Teacher;
 };
