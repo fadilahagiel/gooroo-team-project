@@ -13,8 +13,7 @@ class Controller {
     try {
       const { name, price, quota, SubjectId, description, schedules, url } =
         req.body;
-      // const UserId = req.user.id
-      const UserId = 2;
+      const UserId = req.user.id;
       const teacherFound = await Teacher.findOne(
         { where: { UserId } },
         { transaction: t }
@@ -49,7 +48,7 @@ class Controller {
 
   static async getClass(req, res, next) {
     try {
-      const allClass = await Class.findAll({ include: [Schedule] });
+      const allClass = await Class.findAll();
       res.status(200).json(allClass);
     } catch (error) {
       next(error);
@@ -90,6 +89,7 @@ class Controller {
         where: {
           id: ClassId,
         },
+        include: [Schedule] 
       });
       if (!findClass) {
         throw { name: "class not found" };
