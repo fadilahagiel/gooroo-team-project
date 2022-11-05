@@ -77,7 +77,6 @@ const transactions = [
     {
         "ClassId": 1,
         "StudentId": 1,
-        "status": "unpaid",
         "rating": 8,
         "testimoni": null,
         "createdAt": new Date(),

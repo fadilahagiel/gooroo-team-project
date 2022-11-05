@@ -12,7 +12,7 @@ class StudentController {
       const ClassId  = req.params.classId
       const transactions = await Transaction.findAll({ where: { ClassId }, include: Student });
       const students = transactions.map((el) => {
-        return { name: el.Student.fullName }
+        return { name: el.Student }
       })
       res.status(200).json(students)
     } catch (error) {
@@ -29,7 +29,7 @@ class StudentController {
 
       const studentFound = await Student.findOne({ where: { UserId: id } })
       if (studentFound) {
-        throw { name: "You already made a profile" };
+        throw { name: "already_have" };
       }
       const { fullName, image } = req.body;
       const student = await Student.create({
@@ -44,13 +44,14 @@ class StudentController {
   }
   static async editStudent(req, res, next) {
     try {
+
       const { id, role } = req.user;
       const { fullName, image } = req.body;
       const student = await Student.findOne({where: {UserId: id}});
       if (!student) {
         throw { name: "invalid_credentials" };
       }
-      await Student.update({ fullName, image }, { where: { id: detailId } });
+      await Student.update({ fullName, image }, { where: { UserId: id } });
       res.status(200).json({ message: `Student profile has been updated` });
     } catch (error) {
       next(error);

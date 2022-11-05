@@ -22,9 +22,6 @@ module.exports = {
           key: 'id'
         }
       },
-      status: {
-        type: Sequelize.STRING
-      },
       rating: {
         type: Sequelize.DECIMAL
       },

@@ -28,9 +28,6 @@ module.exports = (sequelize, DataTypes) => {
     StudentId: {
       type: DataTypes.INTEGER
     },
-    status: {
-      type: DataTypes.STRING
-    },
     rating: {
       type: DataTypes.DECIMAL
     },
@@ -42,7 +39,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Transaction',
     hooks: {
       beforeCreate(transaction) {
-        transaction.status = 'unpaid',
         transaction.rating = 0,
         transaction.testimoni = null
       }

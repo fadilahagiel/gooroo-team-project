@@ -111,7 +111,7 @@ afterAll(async () => {
 
 //! enter class
 
-describe('POST /transactions', () => {
+describe.skip('POST /transactions', () => {
     test(`201 success enter class`, (done) => {
         request(app)
             .post('/transactions/1')
@@ -123,7 +123,6 @@ describe('POST /transactions', () => {
                 expect(body).toHaveProperty("id", expect.any(Number));
                 expect(body).toHaveProperty("ClassId", 1);
                 expect(body).toHaveProperty("StudentId", expect.any(Number));
-                expect(body).toHaveProperty("status", "unpaid");
                 done();
             })
             .catch((err) => {

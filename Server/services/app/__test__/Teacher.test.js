@@ -86,7 +86,7 @@ let payloadNewTeacher = { id: 3 }
 let validTokenNewTeacher = createToken(payloadNewTeacher)
 
 describe("show one teacher Test", () => {
-    test("200 Success show one teacher", (done) => {
+    test("Success show one teacher", (done) => {
         request(app)
             .get("/teachers/detail")
             .set("access_token", validTokenTeacher)
@@ -105,7 +105,7 @@ describe("show one teacher Test", () => {
             });
     });
 
-    test("200 failed show one teacher, teacher not found", (done) => {
+    test("failed show one teacher, teacher not found", (done) => {
         request(app)
             .get("/teachers/detail")
             .set("access_token", validTokenStudent)
@@ -118,7 +118,7 @@ describe("show one teacher Test", () => {
             });
     });
 
-    test("200 failed show one teacher, invalid token", (done) => {
+    test("failed show one teacher, invalid token", (done) => {
         request(app)
             .get("/teachers/detail")
             .set("access_token", "token salah")
@@ -133,7 +133,7 @@ describe("show one teacher Test", () => {
 });
 
 describe("Post teacher Test", () => {
-    test("200 Success post teacher", (done) => {
+    test("Success post teacher", (done) => {
         request(app)
             .post("/teachers")
             .send(newTeacher)
@@ -152,7 +152,7 @@ describe("Post teacher Test", () => {
             });
     });
 
-    test("200 failed post teacher, already created", (done) => {
+    test("failed post teacher, already created", (done) => {
         request(app)
             .post("/teachers")
             .send(newTeacher)
@@ -166,7 +166,7 @@ describe("Post teacher Test", () => {
             });
     });
 
-    test("200 failed post teacher, role is not teacher", (done) => {
+    test("failed post teacher, role is not teacher", (done) => {
         request(app)
             .post("/teachers")
             .send(newTeacher)
@@ -201,7 +201,7 @@ describe("Edit teacher Test", () => {
             });
     });
 
-    test("200 failed post teacher, already created", (done) => {
+    test("200 failed edit teacher, teacher not found", (done) => {
         request(app)
             .put("/teachers")
             .send(newTeacher)
