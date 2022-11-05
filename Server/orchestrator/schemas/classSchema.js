@@ -6,19 +6,35 @@ const typeDefs = `#graphql
         message: String
     }
 
+    type Class {
+        name: String
+        price: Int
+        quota: Int
+        averageRating: Int
+        status: String
+        SubjectId: Int
+        description: String
+        url: String
+    }
+
     input ClassInput {
-        name: String!,
+        name: String!
         price: Int!
         quota: Int!
         SubjectId: Int!
         description: String!
         schedules: [schedule]!
         url: String!
+        Schedules: [schedule]
     }
 
     input schedule {
         startDate: String,
         endDate: String
+    }
+
+    type Query {
+        getClass(): [Class]
     }
 
     type Mutation {
@@ -27,6 +43,15 @@ const typeDefs = `#graphql
 `
 
 const resolver = {
+    Quary: {
+        getClass: async () => {
+            try {
+                
+            } catch (error) {
+                next(error)
+            }
+        }  
+    },
     Mutation: {
         addClass: async (_, args) => {
             try {
