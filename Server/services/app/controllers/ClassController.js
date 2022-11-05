@@ -15,6 +15,9 @@ class Controller {
   static async postClass(req, res, next) {
     const t = await sequelize.transaction();
     try {
+      if (req.user.role != "teacher") {
+        throw { name: "forbidden" };
+      }
       const { name, price, quota, SubjectId, description, schedules, url } =
         req.body;
       // const UserId = req.user.id

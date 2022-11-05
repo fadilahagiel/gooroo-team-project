@@ -44,7 +44,6 @@ const typeDefs = `#graphql
         bio: String
         image: String
         averageRating: String
-      
     }
     
     input ClassInput {
@@ -55,6 +54,15 @@ const typeDefs = `#graphql
         description: String!
         schedules: [schedule]!
         url: String!
+    }
+
+    input InputEditClass{
+        name: String
+        price: Int
+        quota: Int
+        SubjectId: Int
+        description: String
+        url:String
     }
 
     input schedule {
@@ -70,6 +78,7 @@ const typeDefs = `#graphql
     type Mutation {
         addClass(ClassInput:ClassInput, access_token: String): message
         deleteClass(access_token: String, ClassId: ID): message
+        updateClass(ClassId: ID, editClass: InputEditClass, access_token: String):message
     }  
 `;
 
@@ -136,6 +145,24 @@ const resolver = {
         });
         return data;
       } catch (error) {
+        return error.response.data;
+      }
+    },
+    updateClass: async (_, args) => {
+      try {
+        const { ClassId, editClass, access_token } = args;
+        console.log(ClassId, editClass);
+        const { data } = await axios({
+          method: "put",
+          url: `${urlBase}/classes/${ClassId}`,
+          headers: {
+            access_token,
+          },
+          data: editClass,
+        });
+        return data;
+      } catch (error) {
+        console.log(error);
         return error.response.data;
       }
     },
