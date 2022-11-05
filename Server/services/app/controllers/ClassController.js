@@ -41,7 +41,6 @@ class Controller {
       await t.commit();
       res.status(201).json({ message: `Berhasil membuat kelas ${name}` });
     } catch (error) {
-      console.log(error);
       await t.rollback();
       next(error);
     }
@@ -53,6 +52,20 @@ class Controller {
       res.status(200).json(allClass);
     } catch (error) {
       next(error);
+    }
+  }
+
+  static async getMyClasses(req, res, next) {
+    try {
+      const { id } = req.user
+      const teacher = await Teacher.findOne({ where: { UserId: id } })
+      if (!teacher) {
+        throw { name: "invalid_credentials" };
+      }
+      const classes = await Class.findAll({ where: { TeacherId: teacher.id } })
+      res.status(200).json(classes)
+    } catch (error) {
+      next(error)
     }
   }
 

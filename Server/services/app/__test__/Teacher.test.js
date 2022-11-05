@@ -24,7 +24,16 @@ const users = [
         "saldo": 30000,
         "createdAt": new Date(),
         "updatedAt": new Date()
-    }
+    },
+    {
+        "username": "juned",
+        "email": "juned@mail.com",
+        "password": "12345",
+        "role": "teacher",
+        "saldo": 20000,
+        "createdAt": new Date(),
+        "updatedAt": new Date()
+    },
 ];
 
 const teachers = [
@@ -38,6 +47,12 @@ const teachers = [
         "updatedAt": new Date()
     },
 ]
+
+const newTeacher = {
+    "fullName": "zianurr",
+    "bio": "kerennnnn",
+    "image": "foto.img"
+}
 
 const students = [
     {
@@ -61,106 +76,144 @@ afterAll(async () => {
     await queryInterface.bulkDelete('Students', null, { truncate: true, restartIdentity: true, cascade: true })
 })
 
-describe("Detail Teacher Test", () => {
-    describe("GET /teachers/detail - create new user", () => {
-        test("201 Success register - should create new User", (done) => {
-            request(app)
-                .post("/users/register")
-                .send(user1)
-                .end((err, res) => {
-                    if (err) return done(err);
-                    const { body, status } = res;
+let payloadTeacher = { id: 2 }
+let validTokenTeacher = createToken(payloadTeacher)
 
-                    expect(status).toBe(201);
-                    expect(body).toHaveProperty("id", expect.any(Number));
-                    expect(body).toHaveProperty("email", user1.email);
-                    return done();
-                });
-        });
+let payloadStudent = { id: 1 }
+let validTokenStudent = createToken(payloadStudent)
 
-        // test("400 Failed register - should return error if email is null", (done) => {
-        //     request(app)
-        //         .post("/users/register")
-        //         .send({
-        //             password: "qweqwe",
-        //             username: "name"
-        //         })
-        //         .end((err, res) => {
-        //             if (err) return done(err);
-        //             const { body, status } = res;
+let payloadNewTeacher = { id: 3 }
+let validTokenNewTeacher = createToken(payloadNewTeacher)
 
-        //             expect(status).toBe(400);
-        //             expect(body).toHaveProperty("message", "please input email");
-        //             return done();
-        //         });
-        // });
+describe("show one teacher Test", () => {
+    test("200 Success show one teacher", (done) => {
+        request(app)
+            .get("/teachers/detail")
+            .set("access_token", validTokenTeacher)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
 
-        // test("400 Failed register - should return error if email is already exists", (done) => {
-        //     request(app)
-        //         .post("/users/register")
-        //         .send(user1)
-        //         .end((err, res) => {
-        //             if (err) return done(err);
-        //             const { body, status } = res;
-
-        //             expect(status).toBe(400);
-        //             expect(body).toHaveProperty("message", "email alrady exist");
-        //             return done();
-        //         });
-        // });
-
-        // test("400 Failed register - should return error if wrong email format", (done) => {
-        //     request(app)
-        //         .post("/users/register")
-        //         .send({
-        //             email: "random",
-        //             username: "Sample User",
-        //             password: "qweqwe",
-        //         })
-        //         .end((err, res) => {
-        //             if (err) return done(err);
-        //             const { body, status } = res;
-
-        //             expect(status).toBe(400);
-        //             expect(body).toHaveProperty("message", "must be email format");
-        //             return done();
-        //         });
-        // });
-
-        // test("400 Failed register - should return error if password is null", (done) => {
-        //     request(app)
-        //         .post("/users/register")
-        //         .send({
-        //             email: "random",
-        //             username: "Sample User",
-        //         })
-        //         .end((err, res) => {
-        //             if (err) return done(err);
-        //             const { body, status } = res;
-
-        //             expect(status).toBe(400);
-        //             expect(body).toHaveProperty("message", "please input password");
-        //             return done();
-        //         });
-        // });
-
-        // test("400 Failed register - should return error if password is null", (done) => {
-        //     request(app)
-        //         .post("/users/register")
-        //         .send({
-        //             email: "random",
-        //             password: "123456",
-        //         })
-        //         .end((err, res) => {
-        //             if (err) return done(err);
-        //             const { body, status } = res;
-
-        //             expect(status).toBe(400);
-        //             expect(body).toHaveProperty("message", "please input username");
-        //             return done();
-        //         });
-        // });
+                expect(status).toBe(200);
+                expect(body).toHaveProperty("id", expect.any(Number));
+                expect(body).toHaveProperty("fullName", expect.any(String));
+                expect(body).toHaveProperty("UserId", expect.any(Number));
+                expect(body).toHaveProperty("bio", expect.any(String));
+                expect(body).toHaveProperty("image", expect.any(String));
+                expect(body).toHaveProperty("averageRating", expect.any(String));
+                return done();
+            });
     });
 
+    test("200 failed show one teacher, teacher not found", (done) => {
+        request(app)
+            .get("/teachers/detail")
+            .set("access_token", validTokenStudent)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(404);
+                expect(body).toHaveProperty("message", "error not found");
+                return done();
+            });
+    });
+
+    test("200 failed show one teacher, invalid token", (done) => {
+        request(app)
+            .get("/teachers/detail")
+            .set("access_token", "token salah")
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(401);
+                expect(body).toHaveProperty("message", "invalid_token");
+                return done();
+            });
+    });
+});
+
+describe("Post teacher Test", () => {
+    test("200 Success post teacher", (done) => {
+        request(app)
+            .post("/teachers")
+            .send(newTeacher)
+            .set("access_token", validTokenNewTeacher)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(201);
+                expect(body).toHaveProperty("id", expect.any(Number));
+                expect(body).toHaveProperty("fullName", expect.any(String));
+                expect(body).toHaveProperty("UserId", expect.any(Number));
+                expect(body).toHaveProperty("bio", expect.any(String));
+                expect(body).toHaveProperty("image", expect.any(String));
+                expect(body).toHaveProperty("averageRating", expect.any(String));
+                return done();
+            });
+    });
+
+    test("200 failed post teacher, already created", (done) => {
+        request(app)
+            .post("/teachers")
+            .send(newTeacher)
+            .set("access_token", validTokenNewTeacher)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(400);
+                expect(body).toHaveProperty("message", "You already made a profile");
+                return done();
+            });
+    });
+
+    test("200 failed post teacher, role is not teacher", (done) => {
+        request(app)
+            .post("/teachers")
+            .send(newTeacher)
+            .set("access_token", validTokenStudent)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(403);
+                expect(body).toHaveProperty("message", "forbidden");
+                return done();
+            });
+    });
 
 });
+
+describe("Edit teacher Test", () => {
+    test("200 Success edit teacher", (done) => {
+        request(app)
+            .put("/teachers")
+            .send({
+                fullName: "edited",
+                bio: "edited",
+                image: "image.jpg"
+            })
+            .set("access_token", validTokenTeacher)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(200);
+                expect(body).toHaveProperty("message", "Teacher profile has been updated");
+                return done();
+            });
+    });
+
+    test("200 failed post teacher, already created", (done) => {
+        request(app)
+            .put("/teachers")
+            .send(newTeacher)
+            .set("access_token", validTokenStudent)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(404);
+                expect(body).toHaveProperty("message", "error not found");
+                return done();
+            });
+    });
+
+});
+

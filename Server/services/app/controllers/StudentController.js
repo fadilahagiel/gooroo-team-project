@@ -9,28 +9,13 @@ class StudentController {
       if (!teacherFound) {
         throw { name: "invalid_credentials" };
       }
-      const { classId } = req.params
-      const classFound = await Class.findOne({
-        where: {
-          id: classId,
-        },
-        include: {
-          model: Transaction,
-          as: 'Transactions'
-        },
-      });
-      if (!classFound) {
-        throw { name: "invalid_credentials" };
-      }
-      console.log(classFound);
-      // const students = await Student.findAll({
-      //   where: {
-      //     UserId: id,
-      //     Class
-      // }})
-      res.status(200).json(classFound)
+      const ClassId  = req.params.classId
+      const transactions = await Transaction.findAll({ where: { ClassId }, include: Student });
+      const students = transactions.map((el) => {
+        return { name: el.Student.fullName }
+      })
+      res.status(200).json(students)
     } catch (error) {
-      console.log(error);
       next(error)
     }
   }

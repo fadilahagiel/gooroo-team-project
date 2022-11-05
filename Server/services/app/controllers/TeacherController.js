@@ -16,7 +16,7 @@ class Controller {
   static async showOneTeacher(req, res, next) {
     try {
       const { id } = req.user
-      const teacher = await Teacher.findOne({ where: { id } })
+      const teacher = await Teacher.findOne({ where: { UserId:id } })
       if (!teacher) {
         throw { name: "invalid_credentials" };
       }
@@ -34,8 +34,9 @@ class Controller {
       }
 
       const teacherFound = await Teacher.findOne({ where: { UserId: id } })
+
       if (teacherFound) {
-        throw { name: "You already made a profile" };
+        throw { name: "already_have" };
       }
 
       const { fullName, bio, image } = req.body;
@@ -48,7 +49,7 @@ class Controller {
       });
       res.status(201).json(teacher);
     } catch (error) {
-      next();
+      next(error);
     }
   }
   static async editTeacher(req, res, next) {
@@ -59,9 +60,10 @@ class Controller {
       if (!teacher) {
         throw { name: "invalid_credentials" };
       }
+      
       await Teacher.update(
         { fullName, bio, image },
-        { where: { id: detailId } }
+        { where: { UserId:id } }
       );
       res.status(200).json({ message: `Teacher profile has been updated` });
     } catch (error) {
