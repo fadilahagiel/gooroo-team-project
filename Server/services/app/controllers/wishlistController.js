@@ -1,12 +1,18 @@
-const { Wishlist, Class, Student } = require("../models");
+
+const { Wishlist, Class, Subject, Student } = require("../models");
+
 
 class Controller {
   static async addWishlist(req, res, next) {
     try {
+      if (req.user.role != "student") {
+        throw { name: "forbidden" };
+      }
       const { ClassId } = req.params;
-      const { id } = req.user
-      const studentFound = await Student.findOne({where: {UserId: id}})
-      const StudentId = studentFound.id; 
+
+      const { id } = req.user;
+      const findStudent = await Student.findOne({ where: { UserId: id } });
+      const StudentId = findStudent.id;
       const findClass = await Class.findOne({
         where: {
           id: ClassId,
@@ -35,14 +41,19 @@ class Controller {
 
   static async getWishlist(req, res, next) {
     try {
-      const { id } = req.user
-      const studentFound = await Student.findOne({ where: { UserId: id } })
-      const StudentId = studentFound.id; 
+
+      const { id } = req.user;
+      const findStudent = await Student.findOne({ where: { UserId: id } });
       const wishlist = await Wishlist.findAll({
         where: {
-          StudentId,
+          StudentId: findStudent.id,
         },
-        include: [Class],
+        include: {
+          model: Class,
+          include: {
+            model: Subject,
+          },
+        },
       });
       res.status(200).json(wishlist);
     } catch (error) {

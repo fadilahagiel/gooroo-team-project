@@ -1,6 +1,6 @@
-const axios = require('axios');
-const redis = require('../config/redis');
-
+const axios = require("axios");
+const redis = require("../config/redis");
+const urlBase = "http://localhost:3000";
 const typeDefs = `#graphql
     type Transaction {
         id: ID
@@ -37,72 +37,72 @@ const typeDefs = `#graphql
         collectTransaction(id:ID): Message
         studentResponse(id:ID, studentResponse: studentResponse): Message
     }
-`
+`;
 
 const resolver = {
-    Query: {
-        getTransaction: async (_, args) => {
-            try {
-                const { id } = args
-                const transactionCache = await redis.get(`app:transactions:${id}`)
-                if (transactionCache) {
-                    return JSON.parse(transactionCache)
-                }
-                const { data } = await axios({
-                    method: 'GET',
-                    url: `http://localhost:3000/transactions/${id}`
-                })
-                await redis.set(`app:transactions:${id}`, JSON.stringify(data))
-                return data
-            } catch (error) {
-                return error.response.data
-            }
+  Query: {
+    getTransaction: async (_, args) => {
+      try {
+        const { id } = args;
+        const transactionCache = await redis.get(`app:transactions:${id}`);
+        if (transactionCache) {
+          return JSON.parse(transactionCache);
         }
+        const { data } = await axios({
+          method: "GET",
+          url: `${urlBase}/transactions/${id}`,
+        });
+        await redis.set(`app:transactions:${id}`, JSON.stringify(data));
+        return data;
+      } catch (error) {
+        return error.response.data;
+      }
     },
-    Mutation: {
-        addTransaction: async (_, args) => {
-            try {
-                const { id } = args
-                const { data } = await axios({
-                    method: 'POST',
-                    url: `http://localhost:3000/transactions/${id}`
-                })
-                await redis.del("app:transactions")
-                return data
-            } catch (error) {
-                return error.response.data
-            }
-        },
-        collectTransaction: async (_, args) => {
-            try {
-                const { id } = args
+  },
+  Mutation: {
+    addTransaction: async (_, args) => {
+      try {
+        const { id } = args;
+        const { data } = await axios({
+          method: "POST",
+          url: `${urlBase}/transactions/${id}`,
+        });
+        await redis.del("app:transactions");
+        return data;
+      } catch (error) {
+        return error.response.data;
+      }
+    },
+    collectTransaction: async (_, args) => {
+      try {
+        const { id } = args;
 
-                const { data } = await axios({
-                    method: 'PATCH',
-                    url: `http://localhost:3000/transactions/${id}`
-                })
-                await redis.del("app:transactions")
-                return data
-            } catch (error) {
-                return error.response.data
-            }
-        },
-        studentResponse: async (_, args) => {
-            try {
-                const { id } = args
-                const { studentResponse } = args
-                const { data } = await axios({
-                    url: `http://localhost:3000/transactions/${id}`,
-                    method: 'PUT',
-                    data: studentResponse
-                })
-                await redis.del("app:transactions")
-                return data
-            } catch (error) {
-                return error.response.data
-            }
-        }
-    }
-}
+        const { data } = await axios({
+          method: "PATCH",
+          url: `${urlBase}/transactions/${id}`,
+        });
+        await redis.del("app:transactions");
+        return data;
+      } catch (error) {
+        return error.response.data;
+      }
+    },
+    studentResponse: async (_, args) => {
+      try {
+        const { id } = args;
+        const { studentResponse } = args;
+        const { data } = await axios({
+          url: `${urlBase}/transactions/${id}`,
+          method: "PUT",
+          data: studentResponse,
+        });
+        await redis.del("app:transactions");
+        return data;
+      } catch (error) {
+        return error.response.data;
+      }
+    },
+  },
+};
 
-module.exports = {typeDefs, resolver}
+module.exports = { typeDefs, resolver };

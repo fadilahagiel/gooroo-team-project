@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   User.beforeCreate((user) => {
     user.password = hashPass(user.password);
-    user.saldo = 0
+    user.saldo = 0;
   });
   return User;
 };
