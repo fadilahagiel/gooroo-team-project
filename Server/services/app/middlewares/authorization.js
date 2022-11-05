@@ -1,9 +1,23 @@
-const { Teacher, Student, Class } = require("../models");
+const { Teacher, Student, Class, Wishlist } = require("../models");
 
 const AuthStudent = async (req, res, next) => {
   try {
+    const { WishlistId } = req.params;
+    const findWishlist = await Wishlist.findOne({
+      where: {
+        id: WishlistId,
+      },
+    });
+    if (!findWishlist) {
+      throw { name: "wishlist not found" };
+    }
+    const findStudent = await Student.findOne({
+      where: {
+        UserId: req.user.id,
+      },
+    });
     const { role } = req.user;
-    if (role != "student") {
+    if (role != "student" || findWishlist.StudentId !== findStudent.id) {
       throw { name: "forbidden" };
     }
     next();
