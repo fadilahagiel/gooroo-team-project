@@ -1,4 +1,6 @@
+
 const { Wishlist, Class, Subject, Student } = require("../models");
+
 
 class Controller {
   static async addWishlist(req, res, next) {
@@ -7,6 +9,7 @@ class Controller {
         throw { name: "forbidden" };
       }
       const { ClassId } = req.params;
+
       const { id } = req.user;
       const findStudent = await Student.findOne({ where: { UserId: id } });
       const StudentId = findStudent.id;
@@ -38,6 +41,7 @@ class Controller {
 
   static async getWishlist(req, res, next) {
     try {
+
       const { id } = req.user;
       const findStudent = await Student.findOne({ where: { UserId: id } });
       const wishlist = await Wishlist.findAll({

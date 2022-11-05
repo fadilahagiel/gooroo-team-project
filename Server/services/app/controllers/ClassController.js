@@ -20,8 +20,7 @@ class Controller {
       }
       const { name, price, quota, SubjectId, description, schedules, url } =
         req.body;
-      // const UserId = req.user.id
-      const UserId = 2;
+      const UserId = req.user.id;
       const teacherFound = await Teacher.findOne(
         { where: { UserId } },
         { transaction: t }
@@ -65,6 +64,20 @@ class Controller {
     }
   }
 
+  static async getMyClasses(req, res, next) {
+    try {
+      const { id } = req.user
+      const teacher = await Teacher.findOne({ where: { UserId: id } })
+      if (!teacher) {
+        throw { name: "invalid_credentials" };
+      }
+      const classes = await Class.findAll({ where: { TeacherId: teacher.id } })
+      res.status(200).json(classes)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   static async deleteClass(req, res, next) {
     try {
       const { ClassId } = req.params;
@@ -85,6 +98,7 @@ class Controller {
         .status(200)
         .json({ message: `Success delete class ${findClass.name}` });
     } catch (error) {
+      console.log(error, 'ini error');
       next(error);
     }
   }

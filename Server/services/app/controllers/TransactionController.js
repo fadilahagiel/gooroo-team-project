@@ -5,12 +5,13 @@ class Controller{
         const t = await sequelize.transaction()
         try {
             const ClassId = req.params.classId
-            const StudentId = 1
+            const UserId = req.user.id
+            const StudentFound = await Student.findOne({where: {UserId}})
             const classFound = await Class.findOne({ where: { id: ClassId } }, { transaction: t })
             if (!classFound) {
                 throw { name: 'invalid_credentials'}
             }
-            const studentFound = await Student.findOne({ where: { id: StudentId } }, { transaction: t })
+            const studentFound = await Student.findOne({ where: { id: StudentFound.id } }, { transaction: t })
             if (!studentFound) {
                 throw { name: 'invalid_credentials' }
             }
@@ -19,7 +20,7 @@ class Controller{
                 throw { name: 'invalid_credentials' }
             }
             await User.decrement({ saldo: classFound.price }, { where: { id: studentFound.UserId } }, { transaction: t })
-            const transactionCreated = await Transaction.create({ ClassId, StudentId, }, { transaction: t })
+            const transactionCreated = await Transaction.create({ ClassId, StudentId: StudentFound.id, }, { transaction: t })
             await t.commit()
             res.status(201).json(transactionCreated)
         } catch (error) {
