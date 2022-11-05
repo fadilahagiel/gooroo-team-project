@@ -9,7 +9,7 @@ class StudentController {
       if (!teacherFound) {
         throw { name: "invalid_credentials" };
       }
-      const ClassId  = req.params.classId
+      const {ClassId}  = req.params
       const transactions = await Transaction.findAll({ where: { ClassId }, include: Student });
       const students = transactions.map((el) => {
         return { name: el.Student }

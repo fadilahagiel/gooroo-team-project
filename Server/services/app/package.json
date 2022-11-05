@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand --forceExit"
+    "test": "jest --runInBand --forceExit --coverage"
   },
   "keywords": [],
   "author": "",

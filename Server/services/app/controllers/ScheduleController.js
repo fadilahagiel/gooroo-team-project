@@ -10,9 +10,6 @@ class Controller {
           id: ClassId,
         },
       });
-      if (!findClass) {
-        throw { name: "class not found" };
-      }
       await Schedule.create({ ClassId, startDate, endDate });
       res.status(201).json({ message: "Success add new schedule" });
     } catch (error) {
@@ -23,13 +20,17 @@ class Controller {
   static async deleteSchedule(req, res, next) {
     try {
       const { ScheduleId } = req.params;
+      const {role} = req.user
+      if (role !== 'teacher') {
+        throw{name: "forbidden"}
+      }
       const findSchedule = await Schedule.findOne({
         where: {
           id: ScheduleId,
         },
       });
       if (!findSchedule) {
-        throw { name: "schedule not found" };
+        throw { name: "invalid_credentials" };
       }
       await Schedule.destroy({
         where: {
@@ -45,6 +46,10 @@ class Controller {
   static async updateSchedule(req, res, next) {
     try {
       const { ScheduleId } = req.params;
+      const { role } = req.user
+      if (role !== 'teacher') {
+        throw { name: "forbidden" }
+      }
       const { startDate, endDate } = req.body;
       const findSchedule = await Schedule.findOne({
         where: {
@@ -52,8 +57,9 @@ class Controller {
         },
       });
       if (!findSchedule) {
-        throw { name: "schedule not found" };
+        throw { name: "invalid_credentials" };
       }
+      
       await Schedule.update(
         { startDate, endDate },
         {
@@ -64,6 +70,7 @@ class Controller {
       );
       res.status(200).json({ message: `Schedule has been update` });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
