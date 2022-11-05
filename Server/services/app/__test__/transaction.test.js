@@ -245,7 +245,7 @@ describe(`GET one transaction /transactions/:id`, () => {
             });
     })
     
-    test(`failed GET one transactionm not found`, (done) => {
+    test(`failed GET one transaction, not found`, (done) => {
         request(app)
             .get('/transactions/99')
             .set("access_token", teacherToken)
@@ -263,6 +263,102 @@ describe(`GET one transaction /transactions/:id`, () => {
     test(`failed GET one transaction invalid token`, (done) => {
         request(app)
             .get('/transactions/1')
+            .set("access_token", "salah")
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(401);
+                expect(body).toHaveProperty("message", "invalid_token");
+                return done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+
+})
+
+describe(`PUT transaction, student response /transactions/:id`, () => {
+    test(`success PUT transaction`, (done) => {
+        request(app)
+            .put('/transactions/1')
+            .send({
+                rating: 8,
+                testimoni: "seru"
+            })
+            .set("access_token", validToken)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(200);
+                expect(body).toHaveProperty("message", "Berhasil memberi testimoni");
+                return done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+
+    test(`success PUT transaction`, (done) => {
+        request(app)
+            .put('/transactions/1')
+            .send({
+                rating: 8,
+            })
+            .set("access_token", validToken)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(400);
+                expect(body).toHaveProperty("message", "testimoni & raring are required");
+                return done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+
+    test(`failed PUT transaction, not found`, (done) => {
+        request(app)
+            .put('/transactions/99')
+            .send({
+                rating: 8,
+                testimoni: "seru"
+            })
+            .set("access_token", validToken)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(404);
+                expect(body).toHaveProperty("message", "error not found");
+                return done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+
+    test(`failed PUT transaction, forbidden`, (done) => {
+        request(app)
+            .put('/transactions/1')
+            .send({
+                rating: 8,
+                testimoni: "seru"
+            })
+            .set("access_token", teacherToken)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(403);
+                expect(body).toHaveProperty("message", "forbidden");
+                return done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+    test(`failed PUT transaction, invalid token`, (done) => {
+        request(app)
+            .put('/transactions/1')
+            .send({
+                rating: 8,
+                testimoni: "seru"
+            })
             .set("access_token", "salah")
             .then((response) => {
                 const { body, status } = response
