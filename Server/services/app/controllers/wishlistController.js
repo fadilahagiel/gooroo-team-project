@@ -3,6 +3,9 @@ const { Wishlist, Class, Subject, Student } = require("../models");
 class Controller {
   static async addWishlist(req, res, next) {
     try {
+      if (req.user.role != "student") {
+        throw { name: "forbidden" };
+      }
       const { ClassId } = req.params;
       const { id } = req.user;
       const findStudent = await Student.findOne({ where: { UserId: id } });
@@ -50,7 +53,6 @@ class Controller {
       });
       res.status(200).json(wishlist);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }

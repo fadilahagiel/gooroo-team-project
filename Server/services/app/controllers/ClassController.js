@@ -4,6 +4,7 @@ const {
   Student,
   Teacher,
   Schedule,
+  Subject,
   sequelize,
   User,
 } = require("../models");
@@ -14,6 +15,9 @@ class Controller {
   static async postClass(req, res, next) {
     const t = await sequelize.transaction();
     try {
+      if (req.user.role != "teacher") {
+        throw { name: "forbidden" };
+      }
       const { name, price, quota, SubjectId, description, schedules, url } =
         req.body;
       // const UserId = req.user.id
@@ -52,7 +56,9 @@ class Controller {
 
   static async getClass(req, res, next) {
     try {
-      const allClass = await Class.findAll();
+      const allClass = await Class.findAll({
+        include: [Teacher, Subject],
+      });
       res.status(200).json(allClass);
     } catch (error) {
       next(error);
@@ -90,7 +96,7 @@ class Controller {
         where: {
           id: ClassId,
         },
-        include: Schedule,
+        include: [Schedule, Teacher, Subject],
       });
       if (!findClass) {
         throw { name: "class not found" };

@@ -38,6 +38,7 @@ type Query {
 
 type Mutation{
     addWishlist(ClassId: Int, access_token:String): message
+    deleteWishlist(WishlistId:ID, access_token:String):message
 }
 `;
 
@@ -45,7 +46,6 @@ const resolver = {
   Query: {
     getWishlist: async (_, args) => {
       try {
-        // const wishlistCache = await redis.get(`app:wishlists`);
         const { access_token } = args;
         const { data } = await axios({
           method: "get",
@@ -68,6 +68,22 @@ const resolver = {
         const { data } = await axios({
           method: "post",
           url: `${urlBase}/wishlist/${ClassId}`,
+          headers: {
+            access_token,
+          },
+        });
+        return data;
+      } catch (error) {
+        return error.response.data;
+      }
+    },
+    deleteWishlist: async (_, args) => {
+      try {
+        const { WishlistId } = args;
+        const { access_token } = args;
+        const { data } = await axios({
+          method: "delete",
+          url: `${urlBase}/wishlist/${WishlistId}`,
           headers: {
             access_token,
           },
