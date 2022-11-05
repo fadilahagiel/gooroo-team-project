@@ -4,21 +4,18 @@ class Controller{
     static async enterClass(req, res, next) {
         const t = await sequelize.transaction()
         try {
-            const ClassId = req.params.classId
+            if (req.user.role != "student") {
+                throw { name: "forbidden" };
+            }
+            const {ClassId} = req.params
             const UserId = req.user.id
-            const StudentFound = await Student.findOne({where: {UserId}})
+            const StudentFound = await Student.findOne({ where: { UserId } }, { transaction: t })
             const classFound = await Class.findOne({ where: { id: ClassId } }, { transaction: t })
             if (!classFound) {
                 throw { name: 'invalid_credentials'}
             }
             const studentFound = await Student.findOne({ where: { id: StudentFound.id } }, { transaction: t })
-            if (!studentFound) {
-                throw { name: 'invalid_credentials' }
-            }
-            const teacherFound = await Teacher.findOne({ where: { id: classFound.TeacherId } }, { transaction: t })
-            if (!teacherFound) {
-                throw { name: 'invalid_credentials' }
-            }
+            
             await User.decrement({ saldo: classFound.price }, { where: { id: studentFound.UserId } }, { transaction: t })
             const transactionCreated = await Transaction.create({ ClassId, StudentId: StudentFound.id, }, { transaction: t })
             await t.commit()
@@ -33,21 +30,15 @@ class Controller{
     static async collectTransaction(req, res, next) {
         const t = await sequelize.transaction()
         try {
-            const ClassId  = req.params.classId
+            const {ClassId}  = req.params
             const transactions = await Transaction.findAll({ where: { ClassId } }, { transaction: t })
             const classFound = await Class.findOne({ where: { id: transactions[0].ClassId } }, { transaction: t })
-            if (!classFound) {
-                throw { name: 'invalid_credentials' }
-            }
             if (classFound.status == 'collected') {
                 throw { name: 'already collected' }
             }
             await Class.update({ status: 'collected' }, { where: { id: transactions[0].ClassId } }, { transaction: t })
             const profit = classFound.price * transactions.length
             const teacherFound = await Teacher.findOne({ where: { id: classFound.TeacherId } }, { transaction: t })
-            if (!teacherFound) {
-                throw { name: 'invalid_credentials' }
-            }
             await User.increment({saldo: profit}, { where: { id: teacherFound.UserId } })
             await t.commit()
             res.status(200).json({message: `You earned ${profit} from ${classFound.name}`})

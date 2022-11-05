@@ -12,7 +12,7 @@ router.use("/users", userRouter);
 
 router.use(authentication);
 
-router.use("/wishlist", wishlistRouter);
+router.use("/wishlists", wishlistRouter);
 router.use("/transactions", TransactionRouter);
 router.use("/teachers", TeacherRouter);
 router.use("/students", StudentRouter);
