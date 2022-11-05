@@ -335,6 +335,29 @@ describe("UPDATE /classes/:ClassId", () => {
             });
     });
 
+    test("201 failed UPDATE class, class not found", (done) => {
+        request(app)
+            .put(`/classes/99`)
+            .set("access_token", validTokenTeacher)
+            .send({
+                "name": "kelas edit",
+                "price": 10000,
+                "quota": 5,
+                "SubjectId": 1,
+                "description": "baru nihhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+                "url": "ini link",
+            })
+            .then((response) => {
+                const { body, status } = response;
+                expect(status).toBe(404);
+                expect(body).toHaveProperty("message", "Class not found");
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+
 });
 
 describe("DELETE /classes/:ClassId", () => {
