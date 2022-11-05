@@ -1,5 +1,4 @@
 const errorHandlers = async (err, req, res, next) => {
-
   let code = 500;
   let message = "Internal Server Error";
   if (
@@ -38,6 +37,9 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "already") {
     code = 400;
     message = "You already add this class to your wishlist";
+  } else if (err.name == "already_have") {
+    code = 400;
+    message = "You already made a profile";
   }
   res.status(code).json({ message });
 };

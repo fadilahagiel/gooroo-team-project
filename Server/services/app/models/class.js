@@ -17,7 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Transaction,
         foreignKey: "ClassId",
       });
+      Class.belongsTo(models.Subject, { foreignKey: "SubjectId" });
       Class.hasMany(models.Schedule, { foreignKey: "ClassId" });
+      Class.belongsTo(models.Teacher,{foreignKey:"TeacherId"})
     }
   }
   Class.init(
@@ -59,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      averageRating: DataTypes.INTEGER,
+      averageRating: DataTypes.DECIMAL,
       status: DataTypes.STRING,
       SubjectId: DataTypes.INTEGER,
       description: {

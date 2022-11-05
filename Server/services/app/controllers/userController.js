@@ -7,7 +7,7 @@ class UserController {
     try {
       const { username, email, password, role } = req.body;
       const newUser = await User.create({ username, email, password, role });
-      res.status(200).json({ id: newUser.id, email: newUser.email });
+      res.status(201).json({ id: newUser.id, email: newUser.email });
     } catch (error) {
       next(error);
     }
@@ -15,8 +15,10 @@ class UserController {
   static async login(req, res, next) {
     try {
       const { email, password } = req.body;
+      if (!email || !password) {
+        throw {name: "invalid_login"}
+      }
       const user = await User.findOne({ where: { email } });
-      console.log(user);
       if (!user) {
         throw { name: "invalid_login" };
       }
@@ -38,6 +40,8 @@ class UserController {
       next(error);
     }
   }
+
+  
 }
 
 module.exports = UserController;

@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-
       username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -35,7 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: { msg: "email alrady exist" },
+        unique: {
+          args: true,
+          msg: "email alrady exist"
+        },
         validate: {
           notEmpty: { msg: `please input email` },
           notNull: { msg: `please input email` },
@@ -64,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
   );
   User.beforeCreate((user) => {
     user.password = hashPass(user.password);
+    user.saldo = 0;
   });
   return User;
 };

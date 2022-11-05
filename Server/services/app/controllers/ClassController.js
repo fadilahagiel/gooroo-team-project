@@ -4,17 +4,23 @@ const {
   Student,
   Teacher,
   Schedule,
+  Subject,
   sequelize,
+  User,
 } = require("../models");
+
+const midtransClient = require("midtrans-client");
 
 class Controller {
   static async postClass(req, res, next) {
     const t = await sequelize.transaction();
     try {
+      if (req.user.role != "teacher") {
+        throw { name: "forbidden" };
+      }
       const { name, price, quota, SubjectId, description, schedules, url } =
         req.body;
-      // const UserId = req.user.id
-      const UserId = 2;
+      const UserId = req.user.id;
       const teacherFound = await Teacher.findOne(
         { where: { UserId } },
         { transaction: t }
@@ -49,24 +55,37 @@ class Controller {
 
   static async getClass(req, res, next) {
     try {
-      const allClass = await Class.findAll({ include: [Schedule] });
+      const allClass = await Class.findAll({
+        include: [Teacher, Subject],
+      });
       res.status(200).json(allClass);
     } catch (error) {
       next(error);
     }
   }
 
+  static async getMyClasses(req, res, next) {
+    try {
+      const { id } = req.user
+      const teacher = await Teacher.findOne({ where: { UserId: id } })
+      if (!teacher) {
+        throw { name: "invalid_credentials" };
+      }
+      const classes = await Class.findAll({ where: { TeacherId: teacher.id } })
+      res.status(200).json(classes)
+    } catch (error) {
+      next(error)
+    }
+  }
+
   static async deleteClass(req, res, next) {
     try {
       const { ClassId } = req.params;
-      const findClass = await Class.findOne(
-        {
-          where: {
-            id: ClassId,
-          },
+      const findClass = await Class.findOne({
+        where: {
+          id: ClassId,
         },
-        { include: [Schedule] }
-      );
+      });
       if (!findClass) {
         throw { name: "class not found" };
       }
@@ -79,6 +98,7 @@ class Controller {
         .status(200)
         .json({ message: `Success delete class ${findClass.name}` });
     } catch (error) {
+      console.log(error, 'ini error');
       next(error);
     }
   }
@@ -90,6 +110,7 @@ class Controller {
         where: {
           id: ClassId,
         },
+        include: [Schedule, Teacher, Subject],
       });
       if (!findClass) {
         throw { name: "class not found" };
@@ -121,6 +142,49 @@ class Controller {
         }
       );
       res.status(200).json({ message: `${findClass.name} has been update` });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async buyClass(req, res, next) {
+    try {
+      const { price } = req.params;
+      const findUser = await User.findOne({
+        where: {
+          id: req.user.id,
+        },
+        include: Student,
+      });
+
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
+        serverKey: "SB-Mid-server-4SbP9885175rZWTHMq1UcYPu",
+      });
+
+      let parameter = {
+        transaction_details: {
+          order_id: new Date(),
+          gross_amount: price,
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          full_name: findUser.Student.fullName,
+          email: findUser.email,
+        },
+      };
+
+      snap.createTransaction(parameter).then((transaction) => {
+        // transaction token
+        let transactionToken = transaction.token;
+        console.log("transactionToken:", transactionToken);
+        res.status(200).json({ transactionToken });
+      });
+      // console.log(findUser);
+      // res.status(200).json(findUser);
     } catch (error) {
       next(error);
     }

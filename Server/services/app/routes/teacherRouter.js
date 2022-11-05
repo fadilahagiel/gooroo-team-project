@@ -1,8 +1,9 @@
-const TeacherController = require('../controllers/TeacherController')
-const router = require('express').Router()
+const TeacherController = require("../controllers/TeacherController");
+const router = require("express").Router();
 
-router.get('/', TeacherController.showBestTeacher)
-router.post('/detail', TeacherController.detail)
+router.get("/detail", TeacherController.showOneTeacher);
+router.get("/", TeacherController.showBestTeacher);
+router.post("/", TeacherController.postTeacher);
+router.put("/", TeacherController.editTeacher);
 
-
-module.exports = router
+module.exports = router;
