@@ -1,3 +1,4 @@
+const { classAverageRating, teacherAverageRating } = require('../helpers/averageRating');
 const { Class, Transaction, Student, Teacher, sequelize, User } = require('../models')
 
 class Controller{
@@ -63,24 +64,28 @@ class Controller{
 
 
     static async studentResponse(req, res, next) {
+        const t = await sequelize.transaction()
         try {
             if (req.user.role !== "student") {
                 throw { name: "forbidden" }
             }
             const { id } = req.params
-            const student = await Student.findOne({ where: { UserId: req.user.id } })
+            const student = await Student.findOne({ where: { UserId: req.user.id } }, { transaction: t })
             const { testimoni, rating } = req.body
             if (!testimoni || !rating) {
                 throw{name: 'reponse_required'}
             }
-            const transactionFound = await Transaction.findOne({ where: { id } })
+            const transactionFound = await Transaction.findOne({ where: { id } }, { transaction: t })
             if (!transactionFound) {
                 throw { name: 'invalid_credentials' }
             }
-            await Transaction.update({ testimoni, rating }, { where: { id } })
+            await Transaction.update({ testimoni, rating }, { where: { id } }, { transaction: t })
+            const updatedRatingClass = await classAverageRating(transactionFound.ClassId)
+            await Class.update({ averageRating: updatedRatingClass }, { where: { id: transactionFound.ClassId } }, { transaction: t })
+            const { updatedRatingTeacher, TeacherId } = await teacherAverageRating(transactionFound.ClassId)
+            await Teacher.update({ averageRating: updatedRatingTeacher }, { where: { id: TeacherId } }, { transaction: t })
             res.status(200).json({message: 'Berhasil memberi testimoni'})
         } catch (error) {
-            console.log(error, 'ini error');
             next(error)
         }
     }
