@@ -1,17 +1,14 @@
 import { Text, View, StyleSheet, Button } from "react-native";
 
-export default function Home({ navigation }) {
+export default function TeacherList({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>INI HOME</Text>
+      <Text>INI LIST TEACHER</Text>
       <Button
-        title="Class List"
-        onPress={() => navigation.navigate("ClassList")}
+        title="Teacher Detail"
+        onPress={() => navigation.navigate("TeacherDetail")}
       />
-      <Button
-        title="See Teacher List"
-        onPress={() => navigation.navigate("TeacherList")}
-      />
+      <Button title="Home" onPress={() => navigation.navigate("Home")} />
     </View>
   );
 }
