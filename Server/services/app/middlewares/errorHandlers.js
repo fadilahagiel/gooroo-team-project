@@ -10,7 +10,10 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "reponse_required") {
     code = 400;
     message = "testimoni & raring are required";
-  } else if (err.name == "invalid_login") {
+  } else if (err.name == "not_enough_balance") {
+    code = 400;
+    message = "not enough balance";
+    } else if (err.name == "invalid_login") {
     code = 401;
     message = "invalid email/password";
   } else if (err.name == "invalid_token" || err.name == "JsonWebTokenError") {
@@ -34,12 +37,12 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "wishlist not found") {
     code = 404;
     message = `Wishlist not found`;
-  } else if (err.name == "already") {
-    code = 400;
-    message = "You already add this class to your wishlist";
   } else if (err.name == "already_have") {
     code = 400;
     message = "You already made a profile";
+  } else if (err.name == "already_buy_class") {
+    code = 400;
+    message = "Cannot buy this class again";
   }
   res.status(code).json({ message });
 };

@@ -1,9 +1,10 @@
 const TeacherController = require("../controllers/TeacherController");
 const router = require("express").Router();
+const upload = require("../helpers/multer");
 
 router.get("/detail", TeacherController.showOneTeacher);
 router.get("/", TeacherController.showAllTeachers);
-router.post("/", TeacherController.postTeacher);
+router.post("/", upload.single('image'), TeacherController.postTeacher);
 router.put("/", TeacherController.editTeacher);
 
 module.exports = router;

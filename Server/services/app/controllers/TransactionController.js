@@ -16,7 +16,15 @@ class Controller{
                 throw { name: 'invalid_credentials'}
             }
             const studentFound = await Student.findOne({ where: { id: StudentFound.id } }, { transaction: t })
-            
+            const transactionFound = await Transaction.findOne({ where: { ClassId: classFound.id, StudentId: studentFound.id } })
+            if (transactionFound) {
+                throw{name: "already_buy_class"}
+            }
+            const user = await User.findOne({ where: { id: UserId } })
+
+            if (user.saldo < classFound.price) {
+                throw { name: "not_enough_balance"}
+            }
             await User.decrement({ saldo: classFound.price }, { where: { id: studentFound.UserId } }, { transaction: t })
             const transactionCreated = await Transaction.create({ ClassId, StudentId: StudentFound.id, }, { transaction: t })
             await t.commit()

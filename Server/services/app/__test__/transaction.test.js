@@ -53,7 +53,7 @@ const classes = [
     {
         "TeacherId": 1,
         "name": "Matematich Class",
-        "price": 20000,
+        "price": 10000,
         "quota": 5,
         "averageRating": 7.5,
         "status": "On Progress",
@@ -63,6 +63,19 @@ const classes = [
         "createdAt": new Date(),
         "updatedAt": new Date()
     },
+    {
+        "TeacherId": 1,
+        "name": "Matematich Class II",
+        "price": 50000,
+        "quota": 5,
+        "averageRating": 7.5,
+        "status": "On Progress",
+        "SubjectId": 1,
+        "description": "kelas bagus",
+        "url": "google.com",
+        "createdAt": new Date(),
+        "updatedAt": new Date()
+    }
 ]
 
 const students = [
@@ -74,16 +87,16 @@ const students = [
         "updatedAt": new Date()
     }
 ]
-const transactions = [
-    {
-        "ClassId": 1,
-        "StudentId": 1,
-        "rating": 8,
-        "testimoni": null,
-        "createdAt": new Date(),
-        "updatedAt": new Date()
-    }
-]
+// const transactions = [
+//     {
+//         "ClassId": 1,
+//         "StudentId": 1,
+//         "rating": 8,
+//         "testimoni": null,
+//         "createdAt": new Date(),
+//         "updatedAt": new Date()
+//     }
+// ]
 
 let payloadA = { id: 1 }
 let validToken = createToken(payloadA)
@@ -96,7 +109,6 @@ beforeAll(async () => {
     await queryInterface.bulkInsert('Subjects', subjects)
     await queryInterface.bulkInsert('Classes', classes)
     await queryInterface.bulkInsert('Students', students)
-    await queryInterface.bulkInsert('Transactions', transactions)
 })
 
 afterAll(async () => {
@@ -123,6 +135,36 @@ describe('POST /transactions', () => {
                 expect(body).toHaveProperty("id", expect.any(Number));
                 expect(body).toHaveProperty("ClassId", 1);
                 expect(body).toHaveProperty("StudentId", expect.any(Number));
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+
+    test(`failed post transaction, already buy class`, (done) => {
+        request(app)
+            .post('/transactions/1')
+            .set("access_token", validToken)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(400);
+                expect(body).toHaveProperty("message", "Cannot buy this class again");
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+
+    test(`failed post transaction, not enough balance`, (done) => {
+        request(app)
+            .post('/transactions/2')
+            .set("access_token", validToken)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(400);
+                expect(body).toHaveProperty("message", "not enough balance");
                 done();
             })
             .catch((err) => {
@@ -174,6 +216,7 @@ describe('POST /transactions', () => {
                 done(err);
             });
     })
+
 })
 
 describe(`PATCH collect class's profit /transactions/:ClassId`, () => {
@@ -184,7 +227,7 @@ describe(`PATCH collect class's profit /transactions/:ClassId`, () => {
             .then((response) => {
                 const { body, status } = response
                 expect(status).toBe(200);
-                expect(body).toHaveProperty("message", "You earned 40000 from Matematich Class");
+                expect(body).toHaveProperty("message", expect.any(String));
                 return done();
             })
             .catch((err) => {

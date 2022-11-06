@@ -29,7 +29,6 @@ class Controller {
       if (role !== 'teacher') {
         throw { name: "forbidden"}
       }
-
       const teacherFound = await Teacher.findOne({ where: { UserId: id } })
 
       if (teacherFound) {
@@ -41,7 +40,7 @@ class Controller {
         fullName,
         UserId: id,
         bio,
-        image,
+        image: req.file.path,
         averageRating: 0,
       });
       res.status(201).json(teacher);
