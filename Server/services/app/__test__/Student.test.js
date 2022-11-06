@@ -57,10 +57,6 @@ const teachers = [
     },
 ]
 
-const newStudent = {
-    "fullName": "zianurr",
-    "image": "foto.img"
-}
 
 const students = [
     {
@@ -174,7 +170,7 @@ describe("show one student Test", () => {
     test("failed show one student, student not found", (done) => {
         request(app)
             .get("/students")
-            .set("access_token", validTokenTeacher2)
+            .set("access_token", validTokenTeacher)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body, status } = res;
@@ -202,7 +198,8 @@ describe("Post student Test", () => {
     test("Success post student", (done) => {
         request(app)
             .post("/students")
-            .send(newStudent)
+            .field("fullName", "zianurr")
+            .attach('image', '/foto/foto.png')
             .set("access_token", validTokenNewStudent)
             .end((err, res) => {
                 if (err) return done(err);
@@ -219,7 +216,8 @@ describe("Post student Test", () => {
     test("failed post student, already created", (done) => {
         request(app)
             .post("/students")
-            .send(newStudent)
+            .field("fullName", "zianurr")
+            .attach('image', '/foto/foto.png')
             .set("access_token", validTokenNewStudent)
             .end((err, res) => {
                 if (err) return done(err);
@@ -233,7 +231,8 @@ describe("Post student Test", () => {
     test("failed post student, role is not student", (done) => {
         request(app)
             .post("/students")
-            .send(newStudent)
+            .field("fullName", "zianurr")
+            .attach('image', '/foto/foto.png')
             .set("access_token", validTokenTeacher)
             .end((err, res) => {
                 if (err) return done(err);

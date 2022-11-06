@@ -11,6 +11,7 @@ class UserController {
       const newUser = await User.create({ username, email, password, role });
       res.status(201).json({ id: newUser.id, email: newUser.email });
     } catch (error) {
+      console.log(error, 'ini error')
       next(error);
     }
   }
@@ -74,9 +75,6 @@ class UserController {
       };
 
       snap.createTransaction(parameter).then((transaction) => {
-        // transaction token
-        // let transactionToken = transaction.token;
-        // console.log("transactionToken:", transactionToken);
         res.status(200).json({ transaction });
       });
     } catch (error) {

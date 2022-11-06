@@ -167,7 +167,9 @@ describe("Post teacher Test", () => {
     test("Success post teacher", (done) => {
         request(app)
             .post("/teachers")
-            .send(newTeacher)
+            .field("fullName", "zianurr")
+            .field("bio", "good teacher")
+            .attach('image', '/foto/foto.png')
             .set("access_token", validTokenNewTeacher)
             .end((err, res) => {
                 if (err) return done(err);
@@ -186,7 +188,9 @@ describe("Post teacher Test", () => {
     test("failed post teacher, already created", (done) => {
         request(app)
             .post("/teachers")
-            .send(newTeacher)
+            .field("fullName", "zianurr")
+            .field("bio", "good teacher")
+            .attach('image', '/foto/foto.png')
             .set("access_token", validTokenNewTeacher)
             .end((err, res) => {
                 if (err) return done(err);
@@ -200,7 +204,9 @@ describe("Post teacher Test", () => {
     test("failed post teacher, role is not teacher", (done) => {
         request(app)
             .post("/teachers")
-            .send(newTeacher)
+            .field("fullName", "zianurr")
+            .field("bio", "good teacher")
+            .attach('image', '/foto/foto.png')
             .set("access_token", validTokenStudent)
             .end((err, res) => {
                 if (err) return done(err);

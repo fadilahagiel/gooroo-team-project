@@ -12,7 +12,7 @@ class StudentController {
       const {ClassId}  = req.params
       const transactions = await Transaction.findAll({ where: { ClassId }, include: Student });
       const students = transactions.map((el) => {
-        return { name: el.Student }
+        return el.Student 
       })
       res.status(200).json(students)
     } catch (error) {
@@ -23,13 +23,13 @@ class StudentController {
   static async postStudent(req, res, next) {
     try {
       const { id, role } = req.user;
-      if (role !== 'student') {
-        throw { name: "forbidden" }
-      }
-
+      console.log(req.body, req.file);
       const studentFound = await Student.findOne({ where: { UserId: id } })
       if (studentFound) {
         throw { name: "already_have" };
+      }
+      if (role !== 'student') {
+        throw { name: "forbidden" }
       }
       const { fullName } = req.body;
       const student = await Student.create({
@@ -61,7 +61,6 @@ class StudentController {
   static async showOneStudent(req, res, next) {
     try {
       const { id } = req.user
-      console.log(id);
       const student = await Student.findOne({ where: { UserId:id } })
       if (!student) {
         throw { name: "invalid_credentials" };
