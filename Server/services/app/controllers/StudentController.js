@@ -31,11 +31,11 @@ class StudentController {
       if (studentFound) {
         throw { name: "already_have" };
       }
-      const { fullName, image } = req.body;
+      const { fullName } = req.body;
       const student = await Student.create({
         fullName,
         UserId: id,
-        image,
+        image: req.file.path
       });
       res.status(201).json(student);
     } catch (error) {
