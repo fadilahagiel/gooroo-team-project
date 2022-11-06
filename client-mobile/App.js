@@ -9,6 +9,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import MainTabScreen from "./src/screens/MainTabScreen";
 import Profile from "./src/screens/Profile";
+import Bookmark from "./src/screens/BookMark";
+import Settings from "./src/screens/Settings";
+
+import { DrawerContent } from "./src/screens/DrawerContent";
 
 const ProfileStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -50,11 +54,14 @@ const App = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
+        drawerContent={(props) => <DrawerContent {...props} />}
         screenOptions={{ headerShown: false }}
         initialRouteName="Home"
       >
         <Drawer.Screen name="Home" component={MainTabScreen} />
         <Drawer.Screen name="My Profile" component={ProfileStackScreen} />
+        <Drawer.Screen name="Bookmark" component={Bookmark} />
+        <Drawer.Screen name="Settings" component={Settings} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
