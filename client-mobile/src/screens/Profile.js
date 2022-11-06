@@ -3,8 +3,16 @@ import { Text, View, StyleSheet, Button, StatusBar } from "react-native";
 export default function Profile({ navigation }) {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#009387" barStyle="light-content" />
+      <StatusBar
+        backgroundColor="#009387"
+        barStyle="light-content"
+      />
       <Text>INI PROFILE</Text>
+
+      <Button
+        title="Top Up"
+        onPress={() => navigation.navigate("TopUp")}
+      />
     </View>
   );
 }

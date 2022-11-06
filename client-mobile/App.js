@@ -15,6 +15,8 @@ import TeacherDetail from "./src/screens/TeacherDetail";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
 import WelcomeScreen from "./src/screens/WelcomeScreen";
+import TopUp from "./src/screens/TopUp";
+import Midtrans from "./src/screens/Midtrans";
 
 const HomeStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
@@ -31,8 +33,7 @@ const HomeStackScreen = ({ navigation }) => {
         headerTintColor: colors.white,
         headerShadowVisible: false, // applied here
         headerBackTitleVisible: false,
-      }}
-    >
+      }}>
       <HomeStack.Screen
         options={{
           title: "My Home",
@@ -49,9 +50,26 @@ const HomeStackScreen = ({ navigation }) => {
         name="Home"
         component={Home}
       />
-      <HomeStack.Screen name="TeacherList" component={TeacherList} />
-      <HomeStack.Screen name="ClassList" component={ClassList} />
-      <HomeStack.Screen name="TeacherDetail" component={TeacherDetail} />
+      <HomeStack.Screen
+        name="TeacherList"
+        component={TeacherList}
+      />
+      <HomeStack.Screen
+        name="ClassList"
+        component={ClassList}
+      />
+      <HomeStack.Screen
+        name="TeacherDetail"
+        component={TeacherDetail}
+      />
+      <HomeStack.Screen
+        name="TopUp"
+        component={TopUp}
+      />
+      <HomeStack.Screen
+        name="Midtrans"
+        component={Midtrans}
+      />
       {/* <HomeStack.Screen name="Welcome" component={WelcomeScreen} />
       <HomeStack.Screen name="Login" component={Login} />
       <HomeStack.Screen name="Register" component={Register} /> */}
@@ -70,8 +88,7 @@ const ProfileStackScreen = ({ navigation }) => {
         headerTintColor: colors.white,
         headerShadowVisible: false, // applied here
         headerBackTitleVisible: false,
-      }}
-    >
+      }}>
       <ProfileStack.Screen
         options={{
           title: "My Profile",
@@ -97,10 +114,15 @@ const App = () => {
     <NavigationContainer>
       <Drawer.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Home"
-      >
-        <Drawer.Screen name="Home" component={HomeStackScreen} />
-        <Drawer.Screen name="My Profile" component={ProfileStackScreen} />
+        initialRouteName="Home">
+        <Drawer.Screen
+          name="Home"
+          component={HomeStackScreen}
+        />
+        <Drawer.Screen
+          name="My Profile"
+          component={ProfileStackScreen}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );
