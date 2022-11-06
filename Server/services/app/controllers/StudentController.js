@@ -61,7 +61,8 @@ class StudentController {
   static async showOneStudent(req, res, next) {
     try {
       const { id } = req.user
-      const student = await Student.findOne({ where: { id } })
+      console.log(id);
+      const student = await Student.findOne({ where: { UserId:id } })
       if (!student) {
         throw { name: "invalid_credentials" };
       }
