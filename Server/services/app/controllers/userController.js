@@ -1,6 +1,8 @@
 const { comparePass } = require("../helpers/bcrypt");
 const { createToken } = require("../helpers/jwt");
-const { User } = require("../models");
+const { User, Student } = require("../models");
+
+const midtransClient = require("midtrans-client");
 
 class UserController {
   static async register(req, res, next) {
@@ -16,7 +18,7 @@ class UserController {
     try {
       const { email, password } = req.body;
       if (!email || !password) {
-        throw {name: "invalid_login"}
+        throw { name: "invalid_login" };
       }
       const user = await User.findOne({ where: { email } });
       if (!user) {
@@ -41,7 +43,46 @@ class UserController {
     }
   }
 
-  
+  static async topup(req, res, next) {
+    try {
+      const { price } = req.body;
+      const findUser = await User.findOne({
+        where: {
+          id: req.user.id,
+        },
+        include: Student,
+      });
+
+      let snap = new midtransClient.Snap({
+        // Set to true if you want Production Environment (accept real transaction).
+        isProduction: false,
+        serverKey: "SB-Mid-server-4SbP9885175rZWTHMq1UcYPu",
+      });
+
+      let parameter = {
+        transaction_details: {
+          order_id: new Date(),
+          gross_amount: price,
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          full_name: findUser.Student.fullName,
+          email: findUser.email,
+        },
+      };
+
+      snap.createTransaction(parameter).then((transaction) => {
+        // transaction token
+        // let transactionToken = transaction.token;
+        // console.log("transactionToken:", transactionToken);
+        res.status(200).json({ transaction });
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = UserController;
