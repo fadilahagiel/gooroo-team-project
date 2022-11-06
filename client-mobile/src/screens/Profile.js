@@ -1,19 +1,10 @@
 import { Text, View, StyleSheet, Button, StatusBar } from "react-native";
-import colors from "../config/colors";
 
-export default function Home({ navigation }) {
+export default function Profile({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#009387" barStyle="light-content" />
-      <Text>INI HOME</Text>
-      <Button
-        title="Class List"
-        onPress={() => navigation.navigate("ClassList")}
-      />
-      <Button
-        title="See Teacher List"
-        onPress={() => navigation.navigate("TeacherList")}
-      />
+      <Text>INI PROFILE</Text>
     </View>
   );
 }
