@@ -11,7 +11,7 @@ class UserController {
       const newUser = await User.create({ username, email, password, role });
       res.status(201).json({ id: newUser.id, email: newUser.email });
     } catch (error) {
-      console.log(error, 'ini error')
+      console.log(error, "ini error");
       next(error);
     }
   }
@@ -77,6 +77,30 @@ class UserController {
       snap.createTransaction(parameter).then((transaction) => {
         res.status(200).json({ transaction });
       });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async updateSaldo(req, res, next) {
+    try {
+      const { saldo } = req.body;
+      const { id } = req.user;
+      const findUser = await User.findOne({
+        where: {
+          id,
+        },
+      });
+      let newSaldo = +findUser.saldo + +saldo;
+      await User.update(
+        { saldo: newSaldo },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      res.status(200).json({ message: `success top up saldo ${saldo}` });
     } catch (error) {
       next(error);
     }

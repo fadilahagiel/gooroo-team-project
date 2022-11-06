@@ -9,6 +9,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 import MainTabScreen from "./src/screens/MainTabScreen";
 import Profile from "./src/screens/Profile";
+import TopUp from "./src/screens/TopUp";
+import Midtrans from "./src/screens/Midtrans";
 
 const ProfileStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -24,8 +26,7 @@ const ProfileStackScreen = ({ navigation }) => {
         headerTintColor: colors.white,
         headerShadowVisible: false, // applied here
         headerBackTitleVisible: false,
-      }}
-    >
+      }}>
       <ProfileStack.Screen
         options={{
           title: "My Profile",
@@ -42,6 +43,15 @@ const ProfileStackScreen = ({ navigation }) => {
         name="Profile"
         component={Profile}
       />
+
+      <ProfileStack.Screen
+        name="TopUp"
+        component={TopUp}
+      />
+      <ProfileStack.Screen
+        name="Midtrans"
+        component={Midtrans}
+      />
     </ProfileStack.Navigator>
   );
 };
@@ -51,10 +61,15 @@ const App = () => {
     <NavigationContainer>
       <Drawer.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Home"
-      >
-        <Drawer.Screen name="Home" component={MainTabScreen} />
-        <Drawer.Screen name="My Profile" component={ProfileStackScreen} />
+        initialRouteName="Home">
+        <Drawer.Screen
+          name="Home"
+          component={MainTabScreen}
+        />
+        <Drawer.Screen
+          name="My Profile"
+          component={ProfileStackScreen}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );

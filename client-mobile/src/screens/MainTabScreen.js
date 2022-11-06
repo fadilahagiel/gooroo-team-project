@@ -26,8 +26,7 @@ const HomeStackScreen = ({ navigation }) => {
         headerTintColor: colors.white,
         headerShadowVisible: false, // applied here
         headerBackTitleVisible: false,
-      }}
-    >
+      }}>
       <HomeStack.Screen
         options={{
           title: "My Home",
@@ -44,7 +43,10 @@ const HomeStackScreen = ({ navigation }) => {
         name="HomeScreen"
         component={HomeScreen}
       />
-      <HomeStack.Screen name="ClassList" component={ClassList} />
+      <HomeStack.Screen
+        name="ClassList"
+        component={ClassList}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -60,8 +62,7 @@ const TeacherStackScreen = ({ navigation }) => {
         headerTintColor: colors.white,
         headerShadowVisible: false, // applied here
         headerBackTitleVisible: false,
-      }}
-    >
+      }}>
       <TeacherStack.Screen
         options={{
           title: "Teacher List",
@@ -78,7 +79,10 @@ const TeacherStackScreen = ({ navigation }) => {
         name="Teacher List"
         component={TeacherList}
       />
-      <TeacherStack.Screen name="TeacherDetail" component={TeacherDetail} />
+      <TeacherStack.Screen
+        name="TeacherDetail"
+        component={TeacherDetail}
+      />
     </TeacherStack.Navigator>
   );
 };
@@ -95,13 +99,16 @@ const MainTabScreen = () => {
         elevation: 0,
         backgroundColor: colors.white,
         height: 90,
-      }}
-    >
+      }}>
       <Tab.Screen
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-home" color={color} size={26} />
+            <Icon
+              name="ios-home"
+              color={color}
+              size={26}
+            />
           ),
         }}
         name="Tab Home"
@@ -111,7 +118,11 @@ const MainTabScreen = () => {
         options={{
           tabBarLabel: "List",
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-list" color={color} size={26} />
+            <Icon
+              name="ios-list"
+              color={color}
+              size={26}
+            />
           ),
         }}
         name="List"
