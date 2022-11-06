@@ -7,64 +7,18 @@ import colors from "./src/config/colors";
 
 import Icon from "react-native-vector-icons/Ionicons";
 
-import Home from "./src/screens/Home";
+import MainTabScreen from "./src/screens/MainTabScreen";
 import Profile from "./src/screens/Profile";
-import TeacherList from "./src/screens/TeacherList";
-import ClassList from "./src/screens/ClassList";
-import TeacherDetail from "./src/screens/TeacherDetail";
-import Login from "./src/screens/Login";
-import Register from "./src/screens/Register";
-import WelcomeScreen from "./src/screens/WelcomeScreen";
 
-const HomeStack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-
-const HomeStackScreen = ({ navigation }) => {
-  return (
-    <HomeStack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: colors.primary,
-          borderBottomWidth: 0,
-        },
-        headerTintColor: colors.white,
-        headerShadowVisible: false, // applied here
-        headerBackTitleVisible: false,
-      }}
-    >
-      <HomeStack.Screen
-        options={{
-          title: "My Home",
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              backgroundColor={colors.primary}
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            />
-          ),
-        }}
-        name="Home"
-        component={Home}
-      />
-      <HomeStack.Screen name="TeacherList" component={TeacherList} />
-      <HomeStack.Screen name="ClassList" component={ClassList} />
-      <HomeStack.Screen name="TeacherDetail" component={TeacherDetail} />
-      {/* <HomeStack.Screen name="Welcome" component={WelcomeScreen} />
-      <HomeStack.Screen name="Login" component={Login} />
-      <HomeStack.Screen name="Register" component={Register} /> */}
-    </HomeStack.Navigator>
-  );
-};
 
 const ProfileStackScreen = ({ navigation }) => {
   return (
     <ProfileStack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: colors.secondary1,
+          backgroundColor: colors.secondaty2,
           borderBottomWidth: 0,
         },
         headerTintColor: colors.white,
@@ -78,7 +32,7 @@ const ProfileStackScreen = ({ navigation }) => {
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
-              backgroundColor={colors.secondary1}
+              backgroundColor={colors.secondaty2}
               onPress={() => {
                 navigation.openDrawer();
               }}
@@ -99,7 +53,7 @@ const App = () => {
         screenOptions={{ headerShown: false }}
         initialRouteName="Home"
       >
-        <Drawer.Screen name="Home" component={HomeStackScreen} />
+        <Drawer.Screen name="Home" component={MainTabScreen} />
         <Drawer.Screen name="My Profile" component={ProfileStackScreen} />
       </Drawer.Navigator>
     </NavigationContainer>

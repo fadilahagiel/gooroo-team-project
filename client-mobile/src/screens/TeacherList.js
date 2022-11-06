@@ -8,7 +8,6 @@ export default function TeacherList({ navigation }) {
         title="Teacher Detail"
         onPress={() => navigation.navigate("TeacherDetail")}
       />
-      <Button title="Home" onPress={() => navigation.navigate("Home")} />
     </View>
   );
 }
