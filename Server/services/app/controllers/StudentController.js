@@ -9,7 +9,7 @@ class StudentController {
       if (!teacherFound) {
         throw { name: "invalid_credentials" };
       }
-      const ClassId  = req.params.classId
+      const {ClassId}  = req.params
       const transactions = await Transaction.findAll({ where: { ClassId }, include: Student });
       const students = transactions.map((el) => {
         return { name: el.Student }
@@ -31,11 +31,11 @@ class StudentController {
       if (studentFound) {
         throw { name: "already_have" };
       }
-      const { fullName, image } = req.body;
+      const { fullName } = req.body;
       const student = await Student.create({
         fullName,
         UserId: id,
-        image,
+        image: req.file.path
       });
       res.status(201).json(student);
     } catch (error) {
@@ -61,7 +61,8 @@ class StudentController {
   static async showOneStudent(req, res, next) {
     try {
       const { id } = req.user
-      const student = await Student.findOne({ where: { id } })
+      console.log(id);
+      const student = await Student.findOne({ where: { UserId:id } })
       if (!student) {
         throw { name: "invalid_credentials" };
       }

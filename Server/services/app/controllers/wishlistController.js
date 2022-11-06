@@ -41,7 +41,9 @@ class Controller {
 
   static async getWishlist(req, res, next) {
     try {
-
+      if (req.user.role != "student") {
+        throw { name: "forbidden" };
+      }
       const { id } = req.user;
       const findStudent = await Student.findOne({ where: { UserId: id } });
       const wishlist = await Wishlist.findAll({
@@ -65,9 +67,7 @@ class Controller {
     try {
       const { WishlistId } = req.params;
       const wishlist = await Wishlist.findOne({ where: { id: WishlistId } });
-      if (!wishlist) {
-        throw { name: "wishlist not found" };
-      }
+
       await Wishlist.destroy({ where: { id: WishlistId } });
       res.status(200).json({ message: `Success delete wishlist` });
     } catch (error) {

@@ -8,7 +8,6 @@ const typeDefs = `#graphql
         message: String
     }
 
-
     type Class {
         id: ID
         TeacherId: Int
@@ -24,6 +23,7 @@ const typeDefs = `#graphql
         Subject: Subject
         Schedules: [schedules]
     }
+
     type Subject{
         id: ID
         name: String
@@ -47,13 +47,14 @@ const typeDefs = `#graphql
     }
     
     input ClassInput {
-        name: String!,
+        name: String!
         price: Int!
         quota: Int!
         SubjectId: Int!
         description: String!
         schedules: [schedule]!
         url: String!
+        Schedules: [schedule]
     }
 
     input InputEditClass{
@@ -83,90 +84,91 @@ const typeDefs = `#graphql
 `;
 
 const resolver = {
-  Query: {
-    getClasses: async (_, args) => {
-      try {
-        const { access_token } = args;
-        const { data } = await axios({
-          method: "get",
-          url: `${urlBase}/classes`,
-          headers: {
-            access_token,
-          },
-        });
-        return data;
-      } catch (error) {
-        return error.response.data;
-      }
+    Query: {
+        getClasses: async (_, args) => {
+        try {
+            const { access_token } = args;
+            const { data } = await axios({
+            method: "get",
+            url: `${urlBase}/classes`,
+            headers: {
+                access_token,
+            },
+            });
+            return data;
+        } catch (error) {
+            return error.response.data;
+        }
+        },
+        getOneClass: async (_, args) => {
+        try {
+            const { access_token, ClassId } = args;
+            const { data } = await axios({
+            method: "get",
+            url: `${urlBase}/classes/${ClassId}`,
+            headers: {
+                access_token,
+            },
+            });
+            return data;
+        } catch (error) {
+            return error.response.data;
+        }
+        },
     },
-    getOneClass: async (_, args) => {
-      try {
-        const { access_token, ClassId } = args;
-        const { data } = await axios({
-          method: "get",
-          url: `${urlBase}/classes/${ClassId}`,
-          headers: {
-            access_token,
-          },
-        });
-        return data;
-      } catch (error) {
-        return error.response.data;
-      }
+    Mutation: {
+        addClass: async (_, args) => {
+        try {
+            const { access_token, ClassInput } = args;
+            const { data } = await axios({
+            url: `${urlBase}/classes`,
+            method: "POST",
+            data: ClassInput,
+            headers: {
+                access_token,
+            },
+            });
+            await redis.del("app:classes");
+            return data;
+        } catch (error) {
+            return error.response.data;
+        }
+        },
+        deleteClass: async (_, args) => {
+        try {
+            const { access_token, ClassId } = args;
+            const { data } = await axios({
+            method: "delete",
+            url: `${urlBase}/classes/${ClassId}`,
+            headers: {
+                access_token,
+            },
+            });
+            return data;
+        } catch (error) {
+            return error.response.data;
+        }
+        },
+        updateClass: async (_, args) => {
+        try {
+            const { ClassId, editClass, access_token } = args;
+            console.log(ClassId, editClass);
+            const { data } = await axios({
+            method: "put",
+            url: `${urlBase}/classes/${ClassId}`,
+            headers: {
+                access_token,
+            },
+            data: editClass,
+            });
+            return data;
+        } catch (error) {
+            console.log(error);
+            return error.response.data;
+        }
+        },
     },
-  },
-  Mutation: {
-    addClass: async (_, args) => {
-      try {
-        const { access_token, ClassInput } = args;
-        const { data } = await axios({
-          url: `${urlBase}/classes`,
-          method: "POST",
-          data: ClassInput,
-          headers: {
-            access_token,
-          },
-        });
-        await redis.del("app:classes");
-        return data;
-      } catch (error) {
-        return error.response.data;
-      }
-    },
-    deleteClass: async (_, args) => {
-      try {
-        const { access_token, ClassId } = args;
-        const { data } = await axios({
-          method: "delete",
-          url: `${urlBase}/classes/${ClassId}`,
-          headers: {
-            access_token,
-          },
-        });
-        return data;
-      } catch (error) {
-        return error.response.data;
-      }
-    },
-    updateClass: async (_, args) => {
-      try {
-        const { ClassId, editClass, access_token } = args;
-        console.log(ClassId, editClass);
-        const { data } = await axios({
-          method: "put",
-          url: `${urlBase}/classes/${ClassId}`,
-          headers: {
-            access_token,
-          },
-          data: editClass,
-        });
-        return data;
-      } catch (error) {
-        console.log(error);
-        return error.response.data;
-      }
-    },
-  },
 };
+
 
 module.exports = { typeDefs, resolver };

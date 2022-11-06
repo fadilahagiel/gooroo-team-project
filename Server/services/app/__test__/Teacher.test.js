@@ -85,6 +85,37 @@ let validTokenStudent = createToken(payloadStudent)
 let payloadNewTeacher = { id: 3 }
 let validTokenNewTeacher = createToken(payloadNewTeacher)
 
+
+describe("show all teacher Test", () => {
+    test("Success show all teacher", (done) => {
+        request(app)
+            .get("/teachers")
+            .set("access_token", validTokenStudent)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+
+                expect(status).toBe(200);
+                expect(Array.isArray(body)).toBeTruthy();
+                return done();
+            });
+    });
+
+    test("failed show all teacher, invalid token", (done) => {
+        request(app)
+            .get("/teachers")
+            .set("access_token", "salah")
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(401);
+                expect(body).toHaveProperty("message", "invalid_token");
+                return done();
+            });
+    });
+
+});
+
 describe("show one teacher Test", () => {
     test("Success show one teacher", (done) => {
         request(app)

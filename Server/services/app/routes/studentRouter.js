@@ -1,11 +1,11 @@
 const StudentController = require("../controllers/StudentController");
 const router = require("express").Router();
+const upload = require("../helpers/multer");
 
 
-
-router.post("/", StudentController.postStudent);
+router.post("/", upload.single('image'),  StudentController.postStudent);
 router.put("/", StudentController.editStudent);
 router.get("/", StudentController.showOneStudent);
-router.get("/:classId", StudentController.getMyStudent);
+router.get("/:ClassId", StudentController.getMyStudent);
 
 module.exports = router;
