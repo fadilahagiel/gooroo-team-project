@@ -10,10 +10,6 @@ export default function Home({ navigation }) {
         title="Class List"
         onPress={() => navigation.navigate("ClassList")}
       />
-      <Button
-        title="See Teacher List"
-        onPress={() => navigation.navigate("TeacherList")}
-      />
     </View>
   );
 }
