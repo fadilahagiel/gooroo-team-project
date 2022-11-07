@@ -9,6 +9,7 @@ import CreateCategory from '../pages/CreateCategory'
 import RegisterPage from '../pages/RegisterPage'
 import WelcomePage from '../pages/WelcomePage'
 import ClassDetail from '../pages/ClassDetail'
+import TeacherProfile from '../pages/TeacherProfile'
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: 'class',
                 element: <ClassDetail/>
+            },
+            {
+                path: 'teacher-profile',
+                element: <TeacherProfile/>
             },
             {
                 path: 'register',
