@@ -17,7 +17,6 @@ import colors from "../config/colors";
 import { AuthContext } from "../components/context";
 
 const { height } = Dimensions.get("window");
-const height_logo = height * 0.28;
 
 export default function Login({ navigation }) {
   const [data, setData] = React.useState({

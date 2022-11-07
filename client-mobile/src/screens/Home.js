@@ -57,7 +57,7 @@ export default function Home({ navigation }) {
       <View style={styles.header}>
         <Text style={styles.text_header}>Hello, Username</Text>
         <Text style={styles.Text_header2}>
-          What do you want to learn today?
+          What Subject you want to learn today?
         </Text>
       </View>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
@@ -67,15 +67,7 @@ export default function Home({ navigation }) {
             justifyContent: "space-between",
           }}
         >
-          <Text
-            style={{
-              fontSize: 20,
-              color: colors.secondary1,
-              fontWeight: "600",
-            }}
-          >
-            Categories
-          </Text>
+          <Text style={styles.text_footer}>Choose Your Subject</Text>
         </View>
         <View style={{ flex: 1 }}>
           <FlatList
@@ -133,7 +125,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#f2f2f2",
     paddingBottom: 5,
   },
-
   button: {
     alignItems: "center",
     marginTop: 50,
