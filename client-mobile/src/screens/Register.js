@@ -18,6 +18,7 @@ import colors from "../config/colors";
 import SPACING from "../config/SPACING";
 const { height } = Dimensions.get("window");
 const height_logo = height * 0.28;
+import axios from "axios";
 
 export default function Login({ navigation }) {
   const [data, setData] = React.useState({
@@ -28,6 +29,20 @@ export default function Login({ navigation }) {
     check_usernameInputChange: false,
     secureTextEntry: true,
   });
+  const register = async () => {
+    try {
+      await axios({
+        method: "post",
+        url: `https://335d-139-228-102-240.ap.ngrok.io/users/register`,
+        data: { ...data, role: "student" },
+      });
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const submitRegister = () => {};
+
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
       setData({
@@ -82,16 +97,21 @@ export default function Login({ navigation }) {
   return (
     <ImageBackground
       source={require("../assets/a71e16012a4afef2f46af95065a5623f.jpg")}
-      style={styles.container}
-    >
+      style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.text_header}>Sign Up Now!</Text>
       </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig">
         <ScrollView>
           <Text style={[styles.text_footer]}>Username</Text>
           <View style={styles.action}>
-            <FontAwesome name="user-o" color={colors.secondaty2} size={20} />
+            <FontAwesome
+              name="user-o"
+              color={colors.secondaty2}
+              size={20}
+            />
             <TextInput
               placeholder="Username"
               placeholderTextColor={colors.secondaty2}
@@ -101,7 +121,11 @@ export default function Login({ navigation }) {
             />
             {data.check_usernameInputChange ? (
               <Animatable.View animation="bounceIn">
-                <Feather name="check-circle" color="green" size={20} />
+                <Feather
+                  name="check-circle"
+                  color="green"
+                  size={20}
+                />
               </Animatable.View>
             ) : null}
           </View>
@@ -112,8 +136,7 @@ export default function Login({ navigation }) {
               {
                 marginTop: 35,
               },
-            ]}
-          >
+            ]}>
             Email
           </Text>
           <View style={styles.action}>
@@ -131,7 +154,11 @@ export default function Login({ navigation }) {
             />
             {data.check_textInputChange ? (
               <Animatable.View animation="bounceIn">
-                <Feather name="check-circle" color="green" size={20} />
+                <Feather
+                  name="check-circle"
+                  color="green"
+                  size={20}
+                />
               </Animatable.View>
             ) : null}
           </View>
@@ -142,12 +169,15 @@ export default function Login({ navigation }) {
               {
                 marginTop: 35,
               },
-            ]}
-          >
+            ]}>
             Password
           </Text>
           <View style={styles.action}>
-            <Feather name="lock" color={colors.secondaty2} size={20} />
+            <Feather
+              name="lock"
+              color={colors.secondaty2}
+              size={20}
+            />
             <TextInput
               placeholder="Your Password"
               secureTextEntry={data.secureTextEntry ? true : false}
@@ -157,26 +187,32 @@ export default function Login({ navigation }) {
             />
             <TouchableOpacity onPress={updateSecureTextEntry}>
               {data.secureTextEntry ? (
-                <Feather name="eye-off" color="grey" size={20} />
+                <Feather
+                  name="eye-off"
+                  color="grey"
+                  size={20}
+                />
               ) : (
-                <Feather name="eye" color="grey" size={20} />
+                <Feather
+                  name="eye"
+                  color="grey"
+                  size={20}
+                />
               )}
             </TouchableOpacity>
           </View>
 
           <View style={styles.button}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("Login")}
-              style={styles.signIn}
-            >
+              onPress={() => register()}
+              style={styles.signIn}>
               <Text
                 style={[
                   styles.textSign,
                   {
                     color: colors.white,
                   },
-                ]}
-              >
+                ]}>
                 Sign Up
               </Text>
             </TouchableOpacity>
@@ -190,16 +226,14 @@ export default function Login({ navigation }) {
                   borderWidth: 1,
                   marginTop: 15,
                 },
-              ]}
-            >
+              ]}>
               <Text
                 style={[
                   styles.textSign,
                   {
                     color: colors.primary,
                   },
-                ]}
-              >
+                ]}>
                 Sign In
               </Text>
             </TouchableOpacity>

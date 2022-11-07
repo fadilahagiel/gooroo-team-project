@@ -174,18 +174,14 @@ class Controller {
         where: {
           StudentId: findStudent.id,
         },
+        include: Class,
       });
       console.log(findTransaction);
-      // const findClass = await Class.findAll({
-      //   where: {
-      //     id: findTransaction.ClassId,
-      //   },
-      // });
-      console.log("masuk get");
-      res.status(200).json(findTransaction);
+      const findClasses = findTransaction.map((el) => {
+        return el.Class;
+      });
+      res.status(200).json(findClasses);
     } catch (error) {
-      console.log(error);
-      console.log("masuk get error");
       next(error);
     }
   }

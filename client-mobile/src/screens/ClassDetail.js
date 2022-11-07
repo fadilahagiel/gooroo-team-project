@@ -8,14 +8,39 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  AsyncStorage,
 } from "react-native";
 import { Modalize } from "react-native-modalize";
 import colors from "../config/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function ClassDetail({ navigation }) {
+export default function ClassDetail({ navigation, route }) {
+  // const { id } = route.params;
+  const [oneClass, setOneClass] = useState({});
+  const [scheduleLength, setScheduleLength] = useState(0);
+  const fetchOneClass = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `https://335d-139-228-102-240.ap.ngrok.io/classes/1`,
+        headers: {
+          access_token,
+        },
+      });
+      setScheduleLength(data.Schedules.length);
+      setOneClass(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchOneClass();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -26,49 +51,50 @@ export default function ClassDetail({ navigation }) {
           }}
           style={styles.image_logo}
         />
-        <Text style={styles.text_header}>Bilangan Prima</Text>
+        <Text style={styles.text_header}>{oneClass.name}</Text>
       </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig">
         <View style={styles.heartWrapper}>
-          <Entypo name="heart" size={32} color="tomato" />
+          <Entypo
+            name="heart"
+            size={32}
+            color="tomato"
+          />
         </View>
         <ScrollView>
           <View style={styles.descriptionWrapper}>
             <Text style={styles.descriptionTitle}>Description</Text>
-            <Text style={styles.descriptionText}>
-              Descriptionzzjfjaklsfnaslfjsdilafsklfjiailbfklfiailfbaklv
-              dasklfewilfjwkfanjaw;fnj;wa
-            </Text>
+            <Text style={styles.descriptionText}>{oneClass.description}</Text>
           </View>
 
           <View style={styles.infoWrapper}>
             <View>
               <Text style={styles.infoTitle}>PRICE</Text>
               <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>75.000</Text>
-                <Text style={styles.infoSubText}>/session</Text>
+                <Text style={styles.infoText}>{oneClass.price}</Text>
               </View>
             </View>
             <View>
               <Text style={styles.infoTitle}>RATING</Text>
               <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>3.5</Text>
-                <Text style={styles.infoSubText}>/5</Text>
+                <Text style={styles.infoText}>{oneClass.averageRating}</Text>
+                <Text style={styles.infoSubText}>/10</Text>
               </View>
             </View>
             <View>
               <Text style={styles.infoTitle}>DURATION</Text>
               <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>3</Text>
-                <Text style={styles.infoSubText}> Days</Text>
+                <Text style={styles.infoText}>{scheduleLength}</Text>
+                <Text style={styles.infoSubText}>Session</Text>
               </View>
             </View>
           </View>
           <View style={styles.wrapper}>
             <TouchableOpacity
               style={styles.buttonWrapper}
-              onPress={() => alert("ENROLL!!!!")}
-            >
+              onPress={() => alert("ENROLL!!!!")}>
               <Text style={styles.buttonText}>Enroll This Class</Text>
             </TouchableOpacity>
           </View>
