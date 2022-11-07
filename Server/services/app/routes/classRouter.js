@@ -8,5 +8,6 @@ router.get("/myClasses", ClassController.getMyClasses);
 router.get("/:ClassId", ClassController.getOneClass);
 router.delete("/:ClassId", AuthTeacher, ClassController.deleteClass);
 router.put("/:ClassId", AuthTeacher, ClassController.updateClass);
+router.patch('/:id', ClassController.statusOnProgress)
 
 module.exports = router;

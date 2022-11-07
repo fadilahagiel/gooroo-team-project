@@ -61,6 +61,19 @@ const classes = [
         "url": "google.com",
         "createdAt": new Date(),
         "updatedAt": new Date()
+    },
+    {
+        "TeacherId": 1,
+        "name": "Matematich Advance",
+        "price": 20000,
+        "quota": 5,
+        "averageRating": 7.5,
+        "status": "On Progress",
+        "SubjectId": 1,
+        "description": "kelas bagus",
+        "url": "google.com",
+        "createdAt": new Date(),
+        "updatedAt": new Date()
     }
 ]
 
@@ -419,5 +432,38 @@ describe("DELETE /classes/:ClassId", () => {
                 done(err);
             });
     });
+});
+
+describe("PATCH /classes/:id status on progress", () => {
+    test("success PATCH class", (done) => {
+        request(app)
+            .patch(`/classes/2`)
+            .set("access_token", validTokenTeacher)
+            .then((response) => {
+                const { body, status } = response;
+                expect(status).toBe(200);
+                expect(body).toHaveProperty("message","Success update class's status");
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+
+    test("Failed PATCH class, class not found", (done) => {
+        request(app)
+            .patch(`/classes/99`)
+            .set("access_token", validTokenTeacher)
+            .then((response) => {
+                const { body, status } = response;
+                expect(status).toBe(404);
+                expect(body).toHaveProperty("message", "Class not found");
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    });
+
 });
 

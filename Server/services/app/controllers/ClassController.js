@@ -62,6 +62,23 @@ class Controller {
     }
   }
 
+  static async statusOnProgress(req, res, next) {
+    try {
+      const { id } = req.params
+      const classFound = await Class.findOne({ where: { id } })
+      if (!classFound) {
+        throw { name: "class not found" };
+      }
+      await Class.update(
+        { status: "on progress" },
+        { where: { id } },
+      )
+      res.status(200).json({message: `Success update class's status`})
+    } catch (error) {
+      next(error)
+    }
+  }
+
   static async getMyClasses(req, res, next) {
     try {
       const { id } = req.user;

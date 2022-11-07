@@ -1,4 +1,4 @@
-const { Class, Transaction, Student, Teacher, User } = require("../models");
+const { Class, Transaction, Student, Teacher, User, Wishlist } = require("../models");
 
 class Controller {
   static async showAllTeachers(req, res, next) {
@@ -13,7 +13,14 @@ class Controller {
   static async showMyDetail(req, res, next) {
     try {
       const { id } = req.user
-      const teacher = await Teacher.findOne({ where: { UserId:id } })
+      console.log(id, 'ini id');
+      const teacher = await Teacher.findOne({
+        where: { UserId: id }, include: {
+          model: Class,
+          include: {
+            model: Transaction,
+          },
+        } })
       if (!teacher) {
         throw { name: "invalid_credentials" };
       }
@@ -26,12 +33,20 @@ class Controller {
   static async showOneTeacher(req, res, next) {
     try {
       const { id } = req.params
-      const teacher = await Teacher.findOne({ where: { UserId: id } })
+      const teacher = await Teacher.findOne({
+        where: { id: id }, include: {
+          model: Class,
+          include: {
+            model: Transaction,
+          },
+        },
+      })
       if (!teacher) {
         throw { name: "invalid_credentials" };
       }
       res.status(200).json(teacher);
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }

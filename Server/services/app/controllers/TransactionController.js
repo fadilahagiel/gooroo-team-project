@@ -17,11 +17,11 @@ class Controller{
                 throw { name: 'invalid_credentials'}
             }
             const studentFound = await Student.findOne({ where: { id: StudentFound.id } }, { transaction: t })
-            const transactionFound = await Transaction.findOne({ where: { ClassId: classFound.id, StudentId: studentFound.id } })
+          const transactionFound = await Transaction.findOne({ where: { ClassId: classFound.id, StudentId: studentFound.id } }, { transaction: t })
             if (transactionFound) {
                 throw{name: "already_buy_class"}
             }
-            const user = await User.findOne({ where: { id: UserId } })
+          const user = await User.findOne({ where: { id: UserId } }, { transaction: t })
             const isFull = await fullQuota(classFound)
             if (isFull) {
                 throw{name: "Class is full"}
@@ -40,11 +40,11 @@ class Controller{
             );
             const newSaldo = user.saldo - classFound.price;
             await SaldoHistory.create({
-              amount: newSaldo,
+              amount: classFound.price,
               UserId,
               description: `Buy class ${classFound.name}`,
-              balance: classFound.price,
-              category: "kredit",
+              balance: newSaldo,
+              category: "credit",
             });
             await t.commit();
             res.status(201).json(transactionCreated);
@@ -69,6 +69,10 @@ class Controller{
       if (classFound.status == "collected") {
         throw { name: "already collected" };
       }
+      console.log(classFound);
+      if (classFound.status != 'done') {
+        throw { name: "status_isnot_done" };
+      }
       await Class.update(
         { status: "collected" },
         { where: { id: transactions[0].ClassId } },
@@ -91,10 +95,10 @@ class Controller{
       const newSaldo = findUser.saldo;
       await SaldoHistory.create(
         {
-          amount: +newSaldo,
+          amount: +profit,
           UserId: +findUser.id,
           description: `Earn profit from ${classFound.name} Rp ${profit}`,
-          balance: +profit,
+          balance: +newSaldo,
           category: "debit",
         },
         { transaction: t }
@@ -104,7 +108,6 @@ class Controller{
         .status(200)
         .json({ message: `You earned ${profit} from ${classFound.name}` });
     } catch (error) {
-      console.log(error);
       await t.rollback();
       next(error);
     }

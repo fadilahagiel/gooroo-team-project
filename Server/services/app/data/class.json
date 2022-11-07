@@ -2,12 +2,23 @@
     {
         "TeacherId": 1,
         "name": "Matematika Class",
-        "price": 10000,
+        "price": 30000,
         "quota": 5,
-        "averageRating": 7,
-        "status": "onProgress",
+        "averageRating": null,
+        "status": "upcoming",
         "SubjectId": 1,
         "description": "belajar matematika",
-        "url": "link.com"
+        "url": "https://meet.google.com/ycq-nvkx-qge"
+    },
+    {
+        "TeacherId": 1,
+        "name": "Fisika Seru",
+        "price": 20000,
+        "quota": 5,
+        "averageRating": null,
+        "status": "upcoming",
+        "SubjectId": 2,
+        "description": "Belajar Fisika dengan menyenangkan",
+        "url": "https://meet.google.com/ycq-nvkx-qge"
     }
 ]

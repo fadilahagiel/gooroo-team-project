@@ -46,6 +46,9 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "Class is full") {
     code = 400;
     message = "Class is full";
+  } else if (err.name == "status_isnot_done") {
+    code = 400;
+    message = "You cannot collect profit before class is done";
   }
   res.status(code).json({ message });
 };

@@ -48,7 +48,7 @@ const users = [
 
 const teachers = [
     {
-        "fullName": "ahmad",
+        "fullName": "budi",
         "UserId": 2,
         "bio": "good teacher",
         "image": "foto.img",
@@ -74,7 +74,7 @@ const classes = [
         "price": 10000,
         "quota": 5,
         "averageRating": 7.5,
-        "status": "On Progress",
+        "status": "done",
         "SubjectId": 1,
         "description": "kelas bagus",
         "url": "google.com",

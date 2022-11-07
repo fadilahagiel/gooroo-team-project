@@ -99,15 +99,14 @@ class UserController {
         }
       );
       await SaldoHistory.create({
-        amount: newSaldo,
+        amount: saldo,
         UserId: id,
         description: `Top up saldo ${saldo}`,
-        balance: saldo,
+        balance: newSaldo,
         category: "debit",
       });
       await res.status(200).json({ message: `success top up saldo ${saldo}` });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
