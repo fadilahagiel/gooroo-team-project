@@ -13,15 +13,14 @@ import {
   Switch,
 } from "react-native-paper";
 
-import colors from "../config/colors";
-
-import Profile from "./Profile";
+import { AuthContext } from "../components/context";
 
 import Icon from "react-native-vector-icons/Ionicons";
 import MatrialIcon from "react-native-vector-icons/Octicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
 export function DrawerContent(props) {
+  const { signOut } = React.useContext(AuthContext);
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -112,6 +111,9 @@ export function DrawerContent(props) {
             <Icon name="ios-exit-outline" color={color} size={size} />
           )}
           label="Sign Out"
+          onPress={() => {
+            signOut();
+          }}
         />
       </Drawer.Section>
     </View>
