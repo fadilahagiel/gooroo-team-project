@@ -1,6 +1,6 @@
 const { comparePass } = require("../helpers/bcrypt");
 const { createToken } = require("../helpers/jwt");
-const { User, Student } = require("../models");
+const { User, Student, SaldoHistory } = require("../models");
 
 const midtransClient = require("midtrans-client");
 
@@ -100,8 +100,16 @@ class UserController {
           },
         }
       );
-      res.status(200).json({ message: `success top up saldo ${saldo}` });
+      await SaldoHistory.create({
+        amount: newSaldo,
+        UserId: id,
+        description: `Top up saldo ${saldo}`,
+        balance: saldo,
+        category: "debit",
+      });
+      await res.status(200).json({ message: `success top up saldo ${saldo}` });
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
