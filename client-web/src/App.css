@@ -1,0 +1,94 @@
+.App {
+  text-align: center;
+}
+
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loginBox{
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  padding: 90px 0 90px 0;
+}
+
+.sub-loginBox{
+  height: 550px;
+  width: 35%;
+  padding-top: 30px;
+  border-radius: 60px;
+  box-shadow: 11px 12px 13px 12px rgb(0,0,0, 0.7);
+  display: flex;
+  justify-content: center;
+  display: flex;
+  padding: 90px 0 90px 0;
+  background-color: rgba(9, 11, 72, 0.2);
+}
+
+.welcomeDiv{
+  background:linear-gradient(gray, rgba(9, 11, 72, 0.6));
+  height: 100vh;
+}
+
+.welcomeImg{
+  display: flex;
+  align-items: center;
+  height: 400px;
+  margin: auto;
+  border-radius: 20%;
+  padding-top: 3vh
+}
+
+.welcomeText{
+  height: 200px;
+  margin: auto;
+  border-radius: 20%;
+  padding-top: 50px;
+  text-align: center;
+  color: rgb(255, 255, 255)
+}
+
+.button{
+  height: 100px;
+  padding: 10px;
+  width: 200px;
+  background-color: black;
+  text-align: center;
+  margin:auto;
+  border-radius: 15%;
+}
+
