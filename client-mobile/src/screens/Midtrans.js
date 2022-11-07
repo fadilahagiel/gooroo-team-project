@@ -13,7 +13,7 @@ export default function Midtrans({ navigation, route }) {
         },
         headers: {
           access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE2Njc4MDU4NjF9.PAOA-qpaxOvDcQl8w6lELJOkG-gI7e7Z3CoYuHWFjlo",
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE2Njc4MzU3MDF9.6QflhZsaykaSPW58RVoiEuxaBEBuEVPQjMokKfZApu0",
         },
       });
       navigation.navigate("Profile");

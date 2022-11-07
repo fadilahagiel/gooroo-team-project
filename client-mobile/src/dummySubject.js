@@ -1,64 +1,64 @@
 const subjects = [
   {
-    name: "Matematika Dasar",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 1,
+    "name": "Matematika Dasar",
+    "image": "https://i.imgur.com/exCifuB.png"
   },
   {
-    name: "Matematika Saintek",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 2,
+    "name": "Matematika Saintek",
+    "image": "https://i.imgur.com/TODqSlb.png"
   },
   {
-    name: "Fisika",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 3,
+    "name": "Fisika",
+    "image": "https://i.imgur.com/mAA4k0V.png"
   },
   {
-    name: "Kimia",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 4,
+    "name": "Kimia",
+    "image": "https://i.imgur.com/JuSQT5f.png"
   },
   {
-    name: "Biologi",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 5,
+    "name": "Biologi",
+    "image": "https://i.imgur.com/jN1Pvl4.png"
   },
   {
-    name: "Akuntansi",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 6,
+    "name": "Ekonomi",
+    "image": "https://i.imgur.com/BA0FvMx.png"
   },
   {
-    name: "Ekonomi",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 7,
+    "name": "Geografi",
+    "image": "https://i.imgur.com/K5nA59J.png"
   },
   {
-    name: "Sosiologi",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 8,
+    "name": "Akuntansi",
+    "image": "https://i.imgur.com/aHdTPsJ.png"
   },
   {
-    name: "Geografi",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 9,
+    "name": "Sosiologi",
+    "image": "https://i.imgur.com/zfxe5Rd.png"
   },
   {
-    name: "Sejarah",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 10,
+    "name": "Sejarah",
+    "image": "https://imgur.com/zYZKGnS.png"
   },
   {
-    name: "Bahasa Indonesia",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
+    "id": 11,
+    "name": "Bahasa Indonesia",
+    "image": "https://i.imgur.com/UpkTX9P.jpg"
   },
   {
-    name: "Bahasa Inggris",
-    image:
-      "https://img.freepik.com/free-vector/boy-student-sitting-stack-books-with-laptop-flat-icon-illustration_1284-64037.jpg?w=740&t=st=1667804569~exp=1667805169~hmac=071fdefca3081e1dedee456cc1b693bf4dac378862fccff4a35b6acf6971c2a6",
-  },
-];
+    "id": 12,
+    "name": "Bahasa Inggris",
+    "image": "https://i.imgur.com/ibJE4sb.png"
+  }
+]
 
 export default subjects;

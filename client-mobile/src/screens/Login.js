@@ -13,6 +13,7 @@ import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import colors from "../config/colors";
+import axios from 'axios'
 
 import { AuthContext } from "../components/context";
 
@@ -27,7 +28,40 @@ export default function Login({ navigation }) {
   });
 
   const { signIn } = React.useContext(AuthContext);
-
+  const login = async () => {
+    fetch(`https://335d-139-228-102-240.ap.ngrok.io/users/login`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        if (data.message) {
+          throw data.message
+        }
+        signIn()
+        return data
+      })
+      .catch((error) => {
+       console.log(error);
+      })
+    // fet
+    // try {
+    //   // const { data } = await axios({
+    //   //   url: 'https://335d-139-228-102-240.ap.ngrok.io/users/login',
+    //   //   method: "POST",
+    //   //   data: data
+    //   // })
+      
+    //   signIn()
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  }
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
       setData({
@@ -128,7 +162,7 @@ export default function Login({ navigation }) {
           <TouchableOpacity
             style={styles.signIn}
             onPress={() => {
-              signIn();
+              login();
             }}
           >
             <Text

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import {axios} from 'axios'
 import {
   Text,
   View,
@@ -14,13 +16,15 @@ import colors from "../config/colors";
 import subjects from "../dummySubject";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
+const url = 'http://localhost:3000'
 
 export default function Home({ navigation }) {
+  
   const SubjectCard = ({ subject }) => {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
-        onPress={() => navigation.navigate("ClassList", { data: subject })}
+        onPress={() => navigation.navigate("ClassList", { subject })}
       >
         <ImageBackground
           source={{

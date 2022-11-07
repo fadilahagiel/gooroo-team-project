@@ -14,13 +14,32 @@ import {
 import { Avatar, Title, Caption, Paragraph, Drawer } from "react-native-paper";
 import colors from "../config/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import IonIcon from "react-native-vector-icons/Ionicons";
+
 import { Modalize } from "react-native-modalize";
+import { useEffect, useState } from "react";
+import axios from 'axios'
+import CardClasses from "../components/cardClasses";
+import IonIcon from "react-native-vector-icons/Ionicons";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function ClassList({ navigation }) {
+export default function ClassList({ route, navigation }) {
+  const [classes, setClasses] = useState([])
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await axios({
+        url: "https://335d-139-228-102-240.ap.ngrok.io/classes",
+        headers: {
+          access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE2Njc4MzU3MDF9.6QflhZsaykaSPW58RVoiEuxaBEBuEVPQjMokKfZApu0"
+        }
+      })
+      const dataClass = data.filter((el) => el.SubjectId == route.params.subject.id)
+      setClasses(dataClass)
+    }
+    fetch()
+      .catch(console.error);
+  }, [])
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -103,8 +122,6 @@ export default function ClassList({ navigation }) {
                 />
               </TouchableOpacity>
             </View>
-          </View>
-          <View style={styles.buttonClass}>
             <View style={{ margin: 5, flexDirection: "row" }}>
               <Image
                 source={require("../assets/face_demo.png")}
@@ -124,130 +141,7 @@ export default function ClassList({ navigation }) {
                   justifyContent: "center",
                 }}
               >
-                <Text style={styles.title}>Perkalian</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  padding: 10,
-                }}
-              >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.buttonClass}>
-            <View style={{ margin: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
-              <View
-                style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={styles.title}>Bilangan Bulat</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  padding: 10,
-                }}
-              >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.buttonClass}>
-            <View style={{ margin: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
-              <View
-                style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={styles.title}>Bilangan Prima</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  padding: 10,
-                }}
-              >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.buttonClass}>
-            <View style={{ margin: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
-              <View
-                style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={styles.title}>Integral</Text>
+                <Text style={styles.title}>Pecahan</Text>
                 <Text style={styles.caption}>By, Mr. Agiel</Text>
                 <Text style={styles.caption}>3 Days</Text>
               </View>
