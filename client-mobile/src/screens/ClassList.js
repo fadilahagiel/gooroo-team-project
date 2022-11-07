@@ -285,15 +285,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingTop: 15,
   },
-  footer: {
-    flex: 3.5,
-    backgroundColor: colors.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    opacity: 0.9,
-  },
   text_header: {
     color: colors.white,
     fontWeight: "bold",
