@@ -20,12 +20,14 @@ export default function ClassDetail({ navigation }) {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.header}>
-        <Image
-          source={{
-            uri: "https://saintif.com/wp-content/uploads/2019/05/Bilangan-prima.png",
-          }}
-          style={styles.image_logo}
-        />
+        <View style={styles.imageWarper}>
+          <Image
+            source={{
+              uri: "https://saintif.com/wp-content/uploads/2019/05/Bilangan-prima.png",
+            }}
+            style={styles.image_logo}
+          />
+        </View>
         <Text style={styles.text_header}>Bilangan Prima</Text>
       </View>
       <Animatable.View style={styles.footer} animation="fadeInUpBig">
@@ -179,12 +181,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: colors.white,
   },
-  image_logo: {
+  imageWarper: {
     backgroundColor: colors.white,
-    padding: 50,
-    width: 170,
-    height: 170,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 180,
+    height: 180,
     borderRadius: 30,
-    marginTop: -30,
+  },
+  image_logo: {
+    // justifyContent: "center",
+    // alignItems: "center",
+    width: 160,
+    height: 160,
+    borderRadius: 30,
   },
 });
