@@ -50,7 +50,8 @@ let onlineUsers = [];
 let onlineStudents = 0;
 let onlineTeachers = 0;
 io.on("connection", (socket) => {
-  const { userId, username, role } = socket.user;
+  const { username, role } = socket.user;
+  const userId = socket.user.id;
   console.log(`⚡: userId: ${userId}, ${username} just connected!`);
 
   // fetch existing users
@@ -75,21 +76,18 @@ io.on("connection", (socket) => {
   });
 
   socket.on("sendChat", async (payload) => {
-    // console.log(`this is payload =>`, payload);
-
     const { roomId, user, msg } = payload;
     await Chat.updateChat(roomId, user, msg);
     const data = { user, msg };
     socket.to(roomId).emit("receiveChat", data);
   });
 
-  // // notify existing users
   // socket.broadcast.emit("user connected", {
   //   userID: socket.id,
   //   username: socket.username,
   // });
 
-  // // forward the private message to the right recipient
+  // private message
   // socket.on("private-msg", ({ content, to }) => {
   //   socket.to(to).emit("private message", {
   //     content,
@@ -97,7 +95,7 @@ io.on("connection", (socket) => {
   //   });
   // });
 
-  // // notify users upon disconnection
+  // notify users upon disconnection
   socket.on("disconnect", () => {
     // socket.broadcast.emit("user disconnected", socket.id);
     if (role === "student") --onlineStudents;
@@ -129,6 +127,21 @@ app.post("/chatlogs", async (req, res, next) => {
   }
 });
 
+app.post("/add", async (req, res, next) => {
+  try {
+    const { user, contact } = req.body;
+    const result = await User.addContact(user, contact);
+    if (!result.newContact) {
+      res.status(200).send({ roomId: result.roomId });
+    } else {
+      const chatRoom = await Chat.createChatRoom(result.roomId);
+      res.status(201).send({ roomId: chatRoom.roomId });
+    }
+  } catch (error) {
+    res.status(500).send({ error });
+  }
+});
+
 app.get("/:userId", async (req, res, next) => {
   try {
     const { userId } = req.params;
@@ -136,22 +149,6 @@ app.get("/:userId", async (req, res, next) => {
     res.status(200).send(contact);
   } catch (error) {
     res.status(500).send(error);
-  }
-});
-
-app.post("/add", async (req, res, next) => {
-  try {
-    const { user, contact } = req.body;
-    // const { contactId, contactName, contactRole } = req.body;
-    // const user = { userId };
-    // const contact = { contactId, contactName, contactRole };
-    const result = await User.addContact(user, contact);
-    if (!result.newContact) throw { msg: "bad request" };
-    const chatRoom = await Chat.createChatRoom(result.roomId);
-    res.status(201).send({ roomId: chatRoom.roomId });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({ error });
   }
 });
 

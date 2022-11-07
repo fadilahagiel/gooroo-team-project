@@ -15,9 +15,10 @@ class User {
       const data = await collection.findOne({ userId });
       if (data) {
         return data.contacts;
+      } else {
+        await collection.insertOne({ userId, contacts: [] });
+        return [];
       }
-      const newData = await collection.insertOne({ userId, contacts: [] });
-      return [];
     } catch (error) {
       return error;
     }
@@ -28,16 +29,27 @@ class User {
     } catch (error) {}
   }
 
-  static async addContact(user, contact) {
+  static async addContact(userData, contactData) {
     try {
       const collection = this.userCollection();
-      const { userId, username, role } = user;
-      const { contactId, contactName, contactRole } = contact;
+      const { username, role } = userData;
+      const { contactName, contactRole } = contactData;
+      const userId = String(userData.userId);
+      const contactId = String(contactData.contactId);
+      const user = {
+        userId,
+        username,
+        role,
+      };
+      const contact = {
+        contactId,
+        contactName,
+        contactRole,
+      };
       const userContacts = await collection.findOne({ userId });
       const check = userContacts.contacts.find(
         (el) => el.contactId === contactId
       );
-      console.log("check", check);
       if (check) {
         return { newContact: false, roomId: check.roomId };
       }
