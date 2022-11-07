@@ -8,6 +8,7 @@ import CategoriesPage from '../pages/CategoriesPage'
 import CreateCategory from '../pages/CreateCategory'
 import RegisterPage from '../pages/RegisterPage'
 import WelcomePage from '../pages/WelcomePage'
+import ClassDetail from '../pages/ClassDetail'
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
                 path: 'product',
                 element: <CreateProduct />
                 
+            },
+            {
+                path: 'class',
+                element: <ClassDetail/>
             },
             {
                 path: 'register',

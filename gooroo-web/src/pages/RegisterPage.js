@@ -37,10 +37,10 @@ function RegisterAdmin() {
 
     return (
         <>
-        <h2 style={{padding:"20px"}}>Teacher's Registration</h2><br></br><br></br>
+        <h2 style={{paddingTop:"40px", paddingLeft: "50px"}}>Teacher's Registration</h2><br></br><br></br>
         <div className="row" style={{padding: "10px"}}>
             <div className='col' style={{flex: 1}}>
-        <Form style={{"width": "60%", "margin": "auto"}} onSubmit={submitRegister}>
+        <Form style={{"width": "40%", "margin": "auto"}} onSubmit={submitRegister}>
         <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Username</Form.Label>
             <Form.Control type="text" placeholder="Enter Username.." onChange={(e) => {
@@ -77,7 +77,7 @@ function RegisterAdmin() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPrice">
-            <Form.Label>Address</Form.Label>
+            <Form.Label>Bio</Form.Label>
             <Form.Control type="text" placeholder="Enter Address.." 
             onChange={(e) => {
                 // console.log(e.target.value);
@@ -90,7 +90,7 @@ function RegisterAdmin() {
 
         <Form.Group className="mb-3" controlId="formBasicStock">
             <Form.Label>Phone Number</Form.Label>
-            <Form.Control type="text" placeholder="Enter Phone Number.." 
+            <Form.Control type="text-area" placeholder="Enter Phone Number.." 
             onChange={(e) => {
                 // console.log(e.target.value);
                 setRegisterForm({
@@ -105,7 +105,7 @@ function RegisterAdmin() {
         </Button>
         </Form>
             </div>
-            <div className='col' style={{flex: 0.8 }}>
+            <div className='col' style={{flex: 0.55 }}>
                 <img className="img-fluid" src="https://www.freeiconspng.com/uploads/png-format-images-of-teacher-icons-21.png"/>
             </div>
         </div>
