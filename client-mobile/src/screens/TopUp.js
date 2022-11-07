@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  AsyncStorage,
 } from "react-native";
 import axios from "axios";
 
@@ -18,7 +19,8 @@ export default function TopUp({ navigation }) {
       if (prc < 50000 || !prc) {
         Alert.alert("Minimum top up Rp 50000");
       } else {
-        console.log(prc, "ini price");
+        const access_token = await AsyncStorage.getItem("access_token");
+
         const { data } = await axios({
           url: `https://335d-139-228-102-240.ap.ngrok.io/users/topup`,
           method: "post",
@@ -26,11 +28,10 @@ export default function TopUp({ navigation }) {
             price: prc,
           },
           headers: {
-            access_token:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE2Njc4MDU4NjF9.PAOA-qpaxOvDcQl8w6lELJOkG-gI7e7Z3CoYuHWFjlo",
+            access_token,
           },
         });
-        console.log(data, "ini data");
+
         navigation.navigate("Midtrans", {
           url: data.transaction.redirect_url,
           price: prc,

@@ -1,9 +1,11 @@
 import { WebView } from "react-native-webview";
 import axios from "axios";
+import { AsyncStorage } from "react-native";
 
 export default function Midtrans({ navigation, route }) {
   const { url, price } = route.params;
   const updateSaldo = async (prc) => {
+    const access_token = await AsyncStorage.getItem("access_token");
     try {
       await axios({
         method: "patch",
@@ -12,8 +14,7 @@ export default function Midtrans({ navigation, route }) {
           saldo: prc,
         },
         headers: {
-          access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE2Njc4MDU4NjF9.PAOA-qpaxOvDcQl8w6lELJOkG-gI7e7Z3CoYuHWFjlo",
+          access_token,
         },
       });
       navigation.navigate("Profile");
