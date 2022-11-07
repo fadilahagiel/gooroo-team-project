@@ -13,7 +13,9 @@ import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import colors from "../config/colors";
-import SPACING from "../config/SPACING";
+
+import { AuthContext } from "../components/context";
+
 const { height } = Dimensions.get("window");
 const height_logo = height * 0.28;
 
@@ -24,6 +26,9 @@ export default function Login({ navigation }) {
     check_textInputChange: false,
     secureTextEntry: true,
   });
+
+  const { signIn } = React.useContext(AuthContext);
+
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
       setData({
@@ -72,7 +77,7 @@ export default function Login({ navigation }) {
             alignItems: "flex-end",
             borderRadius: 50,
           }}
-          onPress={() => navigation.navigate("Welcome")}
+          onPress={() => navigation.navigate("WelcomeScreen")}
         >
           <FontAwesome name="times-circle" color={colors.primary} size={30} />
         </TouchableOpacity>
@@ -121,7 +126,12 @@ export default function Login({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.signIn}>
+          <TouchableOpacity
+            style={styles.signIn}
+            onPress={() => {
+              signIn();
+            }}
+          >
             <Text
               style={[
                 styles.textSign,

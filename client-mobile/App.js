@@ -1,74 +1,120 @@
+import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import colors from "./src/config/colors";
 
-import Icon from "react-native-vector-icons/Ionicons";
-
+import RootStackScreen from "./src/screens/RootStackScreen";
+import ProfileScreen from "./src/screens/ProfileStackScreen";
 import MainTabScreen from "./src/screens/MainTabScreen";
-import Profile from "./src/screens/Profile";
-import TopUp from "./src/screens/TopUp";
-import Midtrans from "./src/screens/Midtrans";
 import Bookmark from "./src/screens/BookMark";
 import Settings from "./src/screens/Settings";
 
+import { AuthContext } from "./src/components/context";
+
 import { DrawerContent } from "./src/screens/DrawerContent";
 
-const ProfileStack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const ProfileStackScreen = ({ navigation }) => {
-  return (
-    <ProfileStack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: colors.secondaty2,
-          borderBottomWidth: 0,
-        },
-        headerTintColor: colors.white,
-        headerShadowVisible: false, // applied here
-        headerBackTitleVisible: false,
-      }}
-    >
-      <ProfileStack.Screen
-        options={{
-          title: "My Profile",
-          headerLeft: () => (
-            <Icon.Button
-              name="ios-menu"
-              backgroundColor={colors.secondaty2}
-              onPress={() => {
-                navigation.openDrawer();
-              }}
-            />
-          ),
-        }}
-        name="Profile"
-        component={Profile}
-      />
-
-      <ProfileStack.Screen name="TopUp" component={TopUp} />
-      <ProfileStack.Screen name="Midtrans" component={Midtrans} />
-    </ProfileStack.Navigator>
-  );
-};
-
 const App = () => {
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [userToken, setUserToken] = React.useState(null);
+
+  const initialLoginState = {
+    isLoading: true,
+    id: null,
+    username: null,
+    access_token: null,
+  };
+
+  const loginReducer = (prevState, action) => {
+    switch (action.type) {
+      case "RETRIVE_TOKEN":
+        return {
+          ...prevState,
+          access_token: action.access_token,
+          isLoading: false,
+        };
+      case "LOGIN":
+        return {
+          ...prevState,
+          id: action.id,
+          username: action.username,
+          access_token: action.access_token,
+          isLoading: false,
+        };
+      case "LOGOUT":
+        return {
+          ...prevState,
+          id: null,
+          username: null,
+          access_token: null,
+          isLoading: false,
+        };
+      case "REGISTER":
+        return {
+          ...prevState,
+          id: action.id,
+          username: action.username,
+          access_token: action.access_token,
+          isLoading: false,
+        };
+      default:
+        break;
+    }
+  };
+
+  const authContext = React.useMemo(
+    () => ({
+      signIn: () => {
+        setIsLoading(false), setUserToken("access_token");
+      },
+      signUp: () => {
+        setIsLoading(false), setUserToken("access_token");
+      },
+      signOut: () => {
+        setIsLoading(false), setUserToken(null);
+      },
+    }),
+    []
+  );
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        drawerContent={(props) => <DrawerContent {...props} />}
-        screenOptions={{ headerShown: false }}
-        initialRouteName="Home"
-      >
-        <Drawer.Screen name="Home" component={MainTabScreen} />
-        <Drawer.Screen name="My Profile" component={ProfileStackScreen} />
-        <Drawer.Screen name="Bookmark" component={Bookmark} />
-        <Drawer.Screen name="Settings" component={Settings} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        {userToken !== null ? (
+          <Drawer.Navigator
+            drawerContent={(props) => <DrawerContent {...props} />}
+            screenOptions={{ headerShown: false }}
+            initialRouteName="Home"
+          >
+            <Drawer.Screen name="Home" component={MainTabScreen} />
+            <Drawer.Screen name="My Profile" component={ProfileScreen} />
+            <Drawer.Screen name="Bookmark" component={Bookmark} />
+            <Drawer.Screen name="Settings" component={Settings} />
+          </Drawer.Navigator>
+        ) : (
+          <RootStackScreen />
+        )}
+
+        {/*  */}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 };
 

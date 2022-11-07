@@ -182,7 +182,7 @@ export default function Login({ navigation }) {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate("Login")}
+              onPress={() => navigation.goBack()}
               style={[
                 styles.signUp,
                 {
