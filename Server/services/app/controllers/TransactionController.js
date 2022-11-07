@@ -69,7 +69,6 @@ class Controller{
       if (classFound.status == "collected") {
         throw { name: "already collected" };
       }
-      console.log(classFound);
       if (classFound.status != 'done') {
         throw { name: "status_isnot_done" };
       }
