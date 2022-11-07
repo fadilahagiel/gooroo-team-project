@@ -3,56 +3,56 @@ const fullQuota = require('../helpers/fullQuota');
 const { Class, Transaction, Student, Teacher, sequelize, User, SaldoHistory } = require('../models')
 
 class Controller{
-    static async enterClass(req, res, next) {
-        const t = await sequelize.transaction()
-        try {
-            if (req.user.role != "student") {
-                throw { name: "forbidden" };
-            }
-            const {ClassId} = req.params
-            const UserId = req.user.id
-            const StudentFound = await Student.findOne({ where: { UserId } }, { transaction: t })
-            const classFound = await Class.findOne({ where: { id: ClassId } }, { transaction: t })
-            if (!classFound) {
-                throw { name: 'invalid_credentials'}
-            }
-            const studentFound = await Student.findOne({ where: { id: StudentFound.id } }, { transaction: t })
-          const transactionFound = await Transaction.findOne({ where: { ClassId: classFound.id, StudentId: studentFound.id } }, { transaction: t })
-            if (transactionFound) {
-                throw{name: "already_buy_class"}
-            }
-          const user = await User.findOne({ where: { id: UserId } }, { transaction: t })
-            const isFull = await fullQuota(classFound)
-            if (isFull) {
-                throw{name: "Class is full"}
-            }
-            if (user.saldo < classFound.price) {
-              throw { name: "not_enough_balance" };
-            }
-            await User.decrement(
-              { saldo: classFound.price },
-              { where: { id: studentFound.UserId } },
-              { transaction: t }
-            );
-            const transactionCreated = await Transaction.create(
-              { ClassId, StudentId: StudentFound.id },
-              { transaction: t }
-            );
-            const newSaldo = user.saldo - classFound.price;
-            await SaldoHistory.create({
-              amount: classFound.price,
-              UserId,
-              description: `Buy class ${classFound.name}`,
-              balance: newSaldo,
-              category: "credit",
-            });
-            await t.commit();
-            res.status(201).json(transactionCreated);
-          } catch (error) {
-            await t.rollback();
-            next(error);
-          }
+  static async enterClass(req, res, next) {
+    const t = await sequelize.transaction()
+    try {
+        if (req.user.role != "student") {
+            throw { name: "forbidden" };
         }
+        const {ClassId} = req.params
+        const UserId = req.user.id
+        const StudentFound = await Student.findOne({ where: { UserId } }, { transaction: t })
+        const classFound = await Class.findOne({ where: { id: ClassId } }, { transaction: t })
+        if (!classFound) {
+            throw { name: 'invalid_credentials'}
+        }
+        const studentFound = await Student.findOne({ where: { id: StudentFound.id } }, { transaction: t })
+        const transactionFound = await Transaction.findOne({ where: { ClassId: classFound.id, StudentId: studentFound.id } }, { transaction: t })
+        if (transactionFound) {
+            throw{name: "already_buy_class"}
+        }
+        const user = await User.findOne({ where: { id: UserId } }, { transaction: t })
+        const isFull = await fullQuota(classFound)
+        if (isFull) {
+            throw{name: "Class is full"}
+        }
+        if (user.saldo < classFound.price) {
+          throw { name: "not_enough_balance" };
+        }
+        await User.decrement(
+          { saldo: classFound.price },
+          { where: { id: studentFound.UserId } },
+          { transaction: t }
+        );
+        const transactionCreated = await Transaction.create(
+          { ClassId, StudentId: StudentFound.id },
+          { transaction: t }
+        );
+        const newSaldo = user.saldo - classFound.price;
+        await SaldoHistory.create({
+          amount: classFound.price,
+          UserId,
+          description: `Buy class ${classFound.name}`,
+          balance: newSaldo,
+          category: "credit",
+        });
+        await t.commit();
+        res.status(201).json(transactionCreated);
+      } catch (error) {
+        await t.rollback();
+        next(error);
+      }
+  }
 
   static async collectTransaction(req, res, next) {
     const t = await sequelize.transaction();
