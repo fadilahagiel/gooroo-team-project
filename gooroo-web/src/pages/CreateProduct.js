@@ -44,7 +44,7 @@ function CreateProduct() {
 
     return (
         <>
-        <h2>Input your new product here</h2><br></br><br></br>
+        <h2 style={{paddingTop:"40px", paddingLeft: "50px"}}>Input your new product here</h2><br></br><br></br>
         <div className="row">
             <div className='col'>
         <Form style={{"width": "80%", "margin": "auto"}} onSubmit={submitProduct}>
@@ -170,7 +170,7 @@ function CreateProduct() {
         </Form>
             </div>
             <div className='col'>
-                <img className="img-fluid" src="https://guitar.com/wp-content/uploads/2018/04/Les-Paul-Bible-3.jpg"/>
+                <img className="img-fluid" src="https://images.pexels.com/photos/2675061/pexels-photo-2675061.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" style={{borderRadius: "20px"}}/>
             </div>
         </div>
         </>
