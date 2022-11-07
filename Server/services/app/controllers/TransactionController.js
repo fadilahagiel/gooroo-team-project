@@ -1,4 +1,5 @@
 const { classAverageRating, teacherAverageRating } = require('../helpers/averageRating');
+const fullQuota = require('../helpers/fullQuota');
 const { Class, Transaction, Student, Teacher, sequelize, User } = require('../models')
 
 class Controller{
@@ -21,6 +22,10 @@ class Controller{
                 throw{name: "already_buy_class"}
             }
             const user = await User.findOne({ where: { id: UserId } })
+            const isFull = await fullQuota(classFound)
+            if (isFull) {
+                throw{name: "Class is full"}
+            }
 
             if (user.saldo < classFound.price) {
                 throw { name: "not_enough_balance"}

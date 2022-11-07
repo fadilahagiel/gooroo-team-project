@@ -96,7 +96,6 @@ class Controller {
         .status(200)
         .json({ message: `Success delete class ${findClass.name}` });
     } catch (error) {
-      console.log(error, "ini error");
       next(error);
     }
   }
@@ -144,49 +143,6 @@ class Controller {
       next(error);
     }
   }
-
-  // static async buyClass(req, res, next) {
-  //   try {
-  //     const { price } = req.params;
-  //     const findUser = await User.findOne({
-  //       where: {
-  //         id: req.user.id,
-  //       },
-  //       include: Student,
-  //     });
-
-  //     let snap = new midtransClient.Snap({
-  //       // Set to true if you want Production Environment (accept real transaction).
-  //       isProduction: false,
-  //       serverKey: "SB-Mid-server-4SbP9885175rZWTHMq1UcYPu",
-  //     });
-
-  //     let parameter = {
-  //       transaction_details: {
-  //         order_id: new Date(),
-  //         gross_amount: price,
-  //       },
-  //       credit_card: {
-  //         secure: true,
-  //       },
-  //       customer_details: {
-  //         full_name: findUser.Student.fullName,
-  //         email: findUser.email,
-  //       },
-  //     };
-
-  //     snap.createTransaction(parameter).then((transaction) => {
-  //       // transaction token
-  //       // let transactionToken = transaction.token;
-  //       // console.log("transactionToken:", transactionToken);
-  //       res.status(200).json({ transaction });
-  //     });
-  //     // console.log(findUser);
-  //     // res.status(200).json(findUser);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
 }
 
 module.exports = Controller;

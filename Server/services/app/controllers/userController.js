@@ -11,7 +11,6 @@ class UserController {
       const newUser = await User.create({ username, email, password, role });
       res.status(201).json({ id: newUser.id, email: newUser.email });
     } catch (error) {
-      console.log(error, 'ini error')
       next(error);
     }
   }
@@ -55,7 +54,6 @@ class UserController {
       });
 
       let snap = new midtransClient.Snap({
-        // Set to true if you want Production Environment (accept real transaction).
         isProduction: false,
         serverKey: "SB-Mid-server-4SbP9885175rZWTHMq1UcYPu",
       });

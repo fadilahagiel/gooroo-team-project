@@ -10,10 +10,23 @@ class Controller {
     }
   }
 
-  static async showOneTeacher(req, res, next) {
+  static async showMyDetail(req, res, next) {
     try {
       const { id } = req.user
       const teacher = await Teacher.findOne({ where: { UserId:id } })
+      if (!teacher) {
+        throw { name: "invalid_credentials" };
+      }
+      res.status(200).json(teacher);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async showOneTeacher(req, res, next) {
+    try {
+      const { id } = req.params
+      const teacher = await Teacher.findOne({ where: { UserId: id } })
       if (!teacher) {
         throw { name: "invalid_credentials" };
       }

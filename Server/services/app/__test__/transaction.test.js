@@ -13,7 +13,7 @@ const users = [
         "email": "ahmad@mail.com",
         "password": "12345",
         "role": "student",
-        "saldo": 20000,
+        "saldo": 100000,
         "createdAt": new Date(),
         "updatedAt": new Date()
     },
@@ -25,6 +25,24 @@ const users = [
         "saldo": 30000,
         "createdAt": new Date(),
         "updatedAt": new Date() 
+    },
+    {
+        "username": "pascal",
+        "email": "pascal@mail.com",
+        "password": "12345",
+        "role": "student",
+        "saldo": 20000,
+        "createdAt": new Date(),
+        "updatedAt": new Date()
+    },
+    {
+        "username": "chossy",
+        "email": "chossy@mail.com",
+        "password": "12345",
+        "role": "student",
+        "saldo": 20000,
+        "createdAt": new Date(),
+        "updatedAt": new Date()
     }
 ];
 
@@ -67,7 +85,20 @@ const classes = [
         "TeacherId": 1,
         "name": "Matematich Class II",
         "price": 50000,
-        "quota": 5,
+        "quota": 1,
+        "averageRating": 7.5,
+        "status": "On Progress",
+        "SubjectId": 1,
+        "description": "kelas bagus",
+        "url": "google.com",
+        "createdAt": new Date(),
+        "updatedAt": new Date()
+    },
+    {
+        "TeacherId": 1,
+        "name": "Matematich Class II",
+        "price": 1000000,
+        "quota": 1,
         "averageRating": 7.5,
         "status": "On Progress",
         "SubjectId": 1,
@@ -85,23 +116,47 @@ const students = [
         "UserId": 1,
         "createdAt": new Date(),
         "updatedAt": new Date()
+    },
+    {
+        "fullName": "Pascal",
+        "image": "foto.img",
+        "UserId": 3,
+        "createdAt": new Date(),
+        "updatedAt": new Date()
+    },
+    {
+        "fullName": "Chosy",
+        "image": "foto.img",
+        "UserId": 4,
+        "createdAt": new Date(),
+        "updatedAt": new Date()
     }
 ]
-// const transactions = [
-//     {
-//         "ClassId": 1,
-//         "StudentId": 1,
-//         "rating": 8,
-//         "testimoni": null,
-//         "createdAt": new Date(),
-//         "updatedAt": new Date()
-//     }
-// ]
+const transactions = [
+    {
+        "ClassId": 2,
+        "StudentId": 2,
+        "rating": null,
+        "testimoni": null,
+        "createdAt": new Date(),
+        "updatedAt": new Date()
+    },
+    // {
+    //     "ClassId": 2,
+    //     "StudentId": 3,
+    //     "rating": null,
+    //     "testimoni": null,
+    //     "createdAt": new Date(),
+    //     "updatedAt": new Date()
+    // }
+]
 
 let payloadA = { id: 1 }
 let validToken = createToken(payloadA)
 let payloadTeacher = { id: 2 }
 let teacherToken = createToken(payloadTeacher)
+let payloadStudent2 = { id: 4 }
+let studetn2Token = createToken(payloadStudent2)
 
 beforeAll(async () => {
     await queryInterface.bulkInsert('Users', users)
@@ -109,6 +164,7 @@ beforeAll(async () => {
     await queryInterface.bulkInsert('Subjects', subjects)
     await queryInterface.bulkInsert('Classes', classes)
     await queryInterface.bulkInsert('Students', students)
+    await queryInterface.bulkInsert('Transactions', transactions)
 })
 
 afterAll(async () => {
@@ -142,6 +198,21 @@ describe('POST /transactions', () => {
             });
     })
 
+    test(`failed post transaction, class is full`, (done) => {
+        request(app)
+            .post('/transactions/2')
+            .set("access_token", studetn2Token)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(400);
+                expect(body).toHaveProperty("message", "Class is full");
+                done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+
     test(`failed post transaction, already buy class`, (done) => {
         request(app)
             .post('/transactions/1')
@@ -159,7 +230,7 @@ describe('POST /transactions', () => {
 
     test(`failed post transaction, not enough balance`, (done) => {
         request(app)
-            .post('/transactions/2')
+            .post('/transactions/3')
             .set("access_token", validToken)
             .then((response) => {
                 const { body, status } = response
@@ -277,7 +348,6 @@ describe(`GET one transaction /transactions/:id`, () => {
                 expect(body).toHaveProperty("id", expect.any(Number));
                 expect(body).toHaveProperty("ClassId", expect.any(Number));
                 expect(body).toHaveProperty("StudentId", expect.any(Number));
-                expect(body).toHaveProperty("rating", expect.any(String));
                 expect(body).toHaveProperty("testimoni");
                 expect(body).toHaveProperty("Student");
                 expect(body).toHaveProperty("Class");

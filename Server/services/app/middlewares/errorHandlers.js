@@ -43,6 +43,9 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "already_buy_class") {
     code = 400;
     message = "Cannot buy this class again";
+  } else if (err.name == "Class is full") {
+    code = 400;
+    message = "Class is full";
   }
   res.status(code).json({ message });
 };

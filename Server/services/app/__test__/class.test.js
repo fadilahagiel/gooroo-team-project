@@ -61,7 +61,7 @@ const classes = [
         "url": "google.com",
         "createdAt": new Date(),
         "updatedAt": new Date()
-    },
+    }
 ]
 
 const students = [
