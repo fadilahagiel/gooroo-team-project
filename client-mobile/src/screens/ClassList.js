@@ -4,7 +4,10 @@ export default function ClassList({ navigation }) {
   return (
     <View style={styles.container}>
       <Text>INI CLASS LIST</Text>
-      <Button title="Go Back Home" onPress={() => navigation.goBack()} />
+      <Button
+        title="Go Back Home"
+        onPress={() => navigation.navigate("HomeScreen")}
+      />
     </View>
   );
 }
