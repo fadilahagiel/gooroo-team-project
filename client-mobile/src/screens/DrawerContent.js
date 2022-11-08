@@ -38,7 +38,6 @@ export function DrawerContent(props) {
       });
       setStudent(res.data);
       setUser(data);
-      console.log(student.image);
     } catch (error) {
       console.log(error);
     }

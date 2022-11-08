@@ -18,7 +18,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import serverUrl from "../config/url";
+import {serverUrl} from "../config/url";
 
 export default function ClassDetail({ navigation, route }) {
   const { id } = route.params;
@@ -26,6 +26,7 @@ export default function ClassDetail({ navigation, route }) {
   const fetchTeacher = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
+      console.log('masuk');
       const { data } = await axios({
         method: "get",
         url: `${serverUrl}/teachers/${id}`,
@@ -54,7 +55,7 @@ export default function ClassDetail({ navigation, route }) {
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: "row" }}>
             <Avatar.Image
-              source={require("../assets/face_demo.png")}
+              source={{ uri: teacher.image }}
               size={70}
             />
             <View style={{ marginLeft: 25, flexDirection: "column", flex: 2 }}>
