@@ -46,7 +46,7 @@ export default function TopUp({ navigation }) {
     <View style={styles.containerPhoto}>
       <View style={styles.userView}>
         <View style={{ marginStart: 0 }}>
-          <Text style={styles.hallo}>Enter Top up amount</Text>
+          <Text style={styles.hallo}>Enter top up amount</Text>
         </View>
       </View>
       <View style={styles.inputcontainer}>
