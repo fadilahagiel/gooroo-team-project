@@ -15,6 +15,7 @@ export default function Midtrans({ navigation, route }) {
         },
         headers: {
           access_token,
+
         },
       });
       navigation.navigate("Profile");

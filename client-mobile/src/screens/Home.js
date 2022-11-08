@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import axios from 'axios'
 import {
   Text,
   View,
@@ -8,19 +10,41 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
+  AsyncStorage
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import colors from "../config/colors";
 import subjects from "../dummySubject";
+import serverUrl from "../config/url";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function Home({ navigation }) {
+  const [user, setUser] = useState({})
+  const fetchUser = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        url: `${serverUrl}/users`,
+        method: 'GET',
+        headers: {
+          access_token
+        }
+      })
+      setUser(data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    fetchUser()
+  }, [])
+
   const SubjectCard = ({ subject }) => {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
-        onPress={() => navigation.navigate("ClassList", { data: subject })}
+        onPress={() => navigation.navigate("ClassList", { subject })}
       >
         <ImageBackground
           source={{
@@ -55,7 +79,7 @@ export default function Home({ navigation }) {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.header}>
-        <Text style={styles.text_header}>Hello, Username</Text>
+        <Text style={styles.text_header}>Hello, {user.username}</Text>
         <Text style={styles.Text_header2}>
           What Subject you want to learn today?
         </Text>
