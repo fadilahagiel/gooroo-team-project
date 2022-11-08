@@ -35,7 +35,7 @@ export default function Login({ navigation }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: data.email, password: data.password, username:data.username })
+      body: JSON.stringify({ email: data.email, password: data.password, username:data.username, role: 'student' })
     })
       .then((response) => {
         return response.json()
