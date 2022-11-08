@@ -54,7 +54,7 @@ describe("User Routes Test", () => {
                     const { body, status } = res;
 
                     expect(status).toBe(400);
-                    expect(body).toHaveProperty("message", "please input email");
+                    expect(body).toHaveProperty("message", "Please input email");
                     return done();
                 });
         });
@@ -68,7 +68,7 @@ describe("User Routes Test", () => {
                     const { body, status } = res;
 
                     expect(status).toBe(400);
-                    expect(body).toHaveProperty("message", "email alrady exist");
+                    expect(body).toHaveProperty("message", "Email already exist");
                     return done();
                 });
         });
@@ -86,7 +86,7 @@ describe("User Routes Test", () => {
                     const { body, status } = res;
 
                     expect(status).toBe(400);
-                    expect(body).toHaveProperty("message", "must be email format");
+                    expect(body).toHaveProperty("message", "Email must be in email format");
                     return done();
                 });
         });
@@ -103,7 +103,7 @@ describe("User Routes Test", () => {
                     const { body, status } = res;
 
                     expect(status).toBe(400);
-                    expect(body).toHaveProperty("message", "please input password");
+                    expect(body).toHaveProperty("message", "Please input password");
                     return done();
                 });
         });
@@ -120,7 +120,7 @@ describe("User Routes Test", () => {
                     const { body, status } = res;
 
                     expect(status).toBe(400);
-                    expect(body).toHaveProperty("message", "please input username");
+                    expect(body).toHaveProperty("message", "Please input username");
                     return done();
                 });
         });

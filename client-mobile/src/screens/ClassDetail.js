@@ -42,6 +42,10 @@ export default function ClassDetail({ navigation, route }) {
   useEffect(() => {
     fetchOneClass();
   }, []);
+
+  const enrollHandler = (id) => {
+    console.log(id);
+  }
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -102,7 +106,7 @@ export default function ClassDetail({ navigation, route }) {
           <View style={styles.wrapper}>
             <TouchableOpacity
               style={styles.buttonWrapper}
-              onPress={() => alert("ENROLL!!!!")}>
+              onPress={() => enrollHandler(oneClass.id)}>
               <Text style={styles.buttonText}>Enroll This Class</Text>
             </TouchableOpacity>
           </View>
