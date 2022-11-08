@@ -6,6 +6,7 @@ const {
   Schedule,
   Subject,
   sequelize,
+  Wishlist,
   User,
 } = require("../models");
 
@@ -174,7 +175,7 @@ class Controller {
         where: {
           StudentId: findStudent.id,
         },
-        include: Class,
+        include: { model: Class, include: [Schedule] },
       });
       console.log(findTransaction);
       const findClasses = findTransaction.map((el) => {

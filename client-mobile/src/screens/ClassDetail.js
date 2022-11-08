@@ -79,7 +79,7 @@ export default function ClassDetail({ navigation, route }) {
 
   const enrollHandler = (id) => {
     console.log(id);
-  }
+  };
   useEffect(() => {
     cekTransaction();
   }, [isBuy]);
@@ -141,7 +141,6 @@ export default function ClassDetail({ navigation, route }) {
             </View>
           </View>
           <View style={styles.wrapper}>
-
             {isBuy ? (
               <TouchableOpacity style={styles.buttonWrapperTrue}>
                 <Text style={styles.buttonTextTrue}>Enroll This Class</Text>
