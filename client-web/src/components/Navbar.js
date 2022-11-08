@@ -32,7 +32,7 @@ export default function MyNavbar () {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to="/">Home</Link>
-            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"product"}>Add Class</Link>
+            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"add-class"}>Add Class</Link>
             <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"categories"}>Subjects</Link>
             <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"teacher-profile"}>My Profile</Link>
             <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"register"}>Teacher Registration</Link>

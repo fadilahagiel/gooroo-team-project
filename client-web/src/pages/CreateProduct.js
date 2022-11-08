@@ -1,45 +1,34 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react'
-import {createProduct} from "../store/actionCreator"
+import {createClass} from "../store/actionCreator"
 import { useNavigate } from 'react-router-dom';
-import {fetchCategory} from '../store/actionCreator'
 import {useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 
-function CreateProduct() {
+function CreateClass() {
     const navigate = useNavigate();
-    const categories = useSelector((state) => state.categories)
 
-    const [productForm, setProductForm] = useState({
+    const [classForm, setClassForm] = useState({
         name: '',
-        description: '',
-        mainImg: '',
-        stock: 0,
         price: 0,
-        categoryId: '',
+        quota: 0,
+        description: '',
+        url: '',
+        SubjectId: '',
+        Schedules: []
 
     })
     
-    useEffect(()=> {
-        dispatch(fetchCategory())
-      },[])
-      console.log(categories);
 
     const dispatch = useDispatch();
 
-    const submitProduct = (e) => {
+    const submitClass = (e) => {
         e.preventDefault();
-        console.log(productForm);
-        dispatch(createProduct(productForm))
+        console.log(classForm);
+        dispatch(createClass(classForm))
         .then(() => navigate('/'))
     }
-
-    const [pictureForm, setPictureForm] = useState({
-        imgUrl1:'',
-        imgUrl2:'',
-        imgUrl3:'',
-    })
 
 
     return (
@@ -47,13 +36,13 @@ function CreateProduct() {
         <h2 style={{paddingTop:"40px", paddingLeft: "50px"}}>Input your new class here</h2><br></br><br></br>
         <div className="row">
             <div className='col'>
-        <Form style={{"width": "80%", "margin": "auto"}} onSubmit={submitProduct}>
+        <Form style={{"width": "80%", "margin": "auto"}} onSubmit={submitClass}>
         <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter Product Name.." onChange={(e) => {
+            <Form.Control type="text" placeholder="Enter Class Name.." onChange={(e) => {
                 // console.log(e.target.value);
-                setProductForm({
-                    ...productForm,
+                setClassForm({
+                    ...classForm,
                     name: e.target.value,
                 })
             }} />
@@ -62,10 +51,10 @@ function CreateProduct() {
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Description</Form.Label>
             <Form.Control as="textarea" rows={3} 
-            placeholder="Enter Product Description.." onChange={(e) => {
+            placeholder="Enter Class Description.." onChange={(e) => {
                 // console.log(e.target.value);
-                setProductForm({
-                    ...productForm,
+                setClassForm({
+                    ...classForm,
                     description: e.target.value,
                 })
             }}  />
@@ -73,11 +62,11 @@ function CreateProduct() {
 
         <Form.Group className="mb-3" controlId="formBasicPrice">
             <Form.Label>Price</Form.Label>
-            <Form.Control type="number" placeholder="Product price.." 
+            <Form.Control type="number" placeholder="Class price.." 
             onChange={(e) => {
                 // console.log(e.target.value);
-                setProductForm({
-                    ...productForm,
+                setClassForm({
+                    ...classForm,
                     price: e.target.value,
                 })
             }}  />
@@ -85,34 +74,50 @@ function CreateProduct() {
 
         <Form.Group className="mb-3" controlId="formBasicStock">
             <Form.Label>Quota</Form.Label>
-            <Form.Control type="number" placeholder="Product stock.." 
+            <Form.Control type="text" placeholder="Class quota.." 
             onChange={(e) => {
                 // console.log(e.target.value);
-                setProductForm({
-                    ...productForm,
-                    stock: e.target.value,
+                setClassForm({
+                    ...classForm,
+                    url: e.target.value,
+                })
+            }}  />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicStock">
+            <Form.Label>Class URL</Form.Label>
+            <Form.Control type="number" placeholder="Class quota.." 
+            onChange={(e) => {
+                // console.log(e.target.value);
+                setClassForm({
+                    ...classForm,
+                    quota: e.target.value,
                 })
             }}  />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicStock">
-            <Form.Label>Category: </Form.Label><br></br>
+            <Form.Label>Subject: </Form.Label><br></br>
             <Form.Select aria-label="Default select example"
             onChange={(e) => {
                 // console.log(e.target.value);
-                setProductForm({
-                    ...productForm,
-                    categoryId: e.target.value,
+                setClassForm({
+                    ...classForm,
+                    SubjectId: e.target.value,
                 })
             }}  >
-                <option>Select Subject</option>
-                {categories.map((category) => {
-                  return (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                      );
-                })}
+                <option selected={false}>Select Subject</option>
+                <option value={1}>Matematika Dasar</option>
+                <option value={2}>Matematika Saintek</option>
+                <option value={3}>Fisika</option>
+                <option value={4}>Kimia</option>
+                <option value={5}>Biologi</option>
+                <option value={6}>Ekonomi</option>
+                <option value={7}>Geografi</option>
+                <option value={8}>Akuntansi</option>
+                <option value={9}>Sosiologi</option>
+                <option value={10}>Sejarah</option>
+                <option value={11}>Bahasa Indonesia</option>
+                <option value={12}>Bahasa Inggris</option>
             </Form.Select>
         </Form.Group><br></br><br></br>
 
@@ -129,4 +134,4 @@ function CreateProduct() {
     );
 }
 
-export default CreateProduct;
+export default CreateClass;

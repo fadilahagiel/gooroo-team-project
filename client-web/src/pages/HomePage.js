@@ -1,42 +1,47 @@
 import Table from 'react-bootstrap/Table';
 import { useSelector, useDispatch} from 'react-redux'
 import {useEffect} from 'react'
-import ProductRow from '../components/ClassRow';
+import ClassRow from '../components/ClassRow';
 import Header from '../components/Header'
-import {fetchProducts} from '../store/actionCreator'
+import {fetchClasses} from '../store/actionCreator'
+import { Container } from 'react-bootstrap';
 
 export default function MyTable() {
-  const products = useSelector((state) => state.products)
+  const classes = useSelector((state) => state.classes)
   const dispatch = useDispatch()
   
-  console.log(products, "<<<< ini products");
+  console.log(classes, "<<<< ini classes");
 
   useEffect(()=> {
-    dispatch(fetchProducts())
+    dispatch(fetchClasses())
   },[])
-  console.log(products);
+
+  console.log(classes, "<<CLASSES");
   return (
     <>
+    <Container>
     <Header/>
+    <br></br>
+    <br></br>
     <Table striped bordered hover className={"table-dark"}>
-      <thead>
+      <thead style={{textAlign: "center"}}>
         <tr>
           <th>#</th>
           <th>Name</th>
-          <th>Description</th>
-          <th>Category</th>
+          <th>Subject Id</th>
           <th>Price</th>
-          <th>Stock</th>
-          <th>Created By</th>
+          <th>Quota</th>
+          <th>Average Rating</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        {products.map((product, i) => {
-          return <ProductRow key={product.id}product={product} index={i + 1}/>
+      {classes.map((oneClass, i) => {
+          return <ClassRow key={oneClass.id}oneClass={oneClass} index={i + 1}/>
           })}
       </tbody>
     </Table>
+    </Container>
     </>
   );
 }

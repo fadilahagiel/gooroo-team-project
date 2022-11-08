@@ -1,14 +1,28 @@
 //khusus Heroku function delete dan add product belum bisa, tetapi di localhost sudah bisa semua
 
-export const productFetchSuccess = (data) => {
+export const classesFetchSuccess = (data) => {
     return {
-        type: "products/fetchSuccess",
+        type: "classes/fetchSuccess",
         payload: data
     }
 };
+
+export const oneClassFetchSuccess = (data) => {
+    return {
+        type: "oneClass/fetchSuccess",
+        payload: data
+    }
+};
+
 export const categoryFetchSuccess = (data) => {
     return {
         type: "categories/fetchSuccess",
+        payload: data
+    }
+};
+export const teacherFetchSuccess = (data) => {
+    return {
+        type: "teachers/fetchSuccess",
         payload: data
     }
 };
@@ -38,12 +52,37 @@ export const fetchCategory = () => {
         })
     }
 }
-
-
-export const fetchProducts = () => {
+export const fetchTeacherProfile = () => {
     return (dispatch, getState) => {
         const access_token = localStorage.getItem("access_token")
-        fetch("http://localhost:3001/products",{
+        fetch("http://localhost:3000/teachers/detail",{
+            method: "GET",
+            headers: {
+                access_token
+            }
+        })
+        .then(res => {
+            console.log(res, "<< Teacher Profile!");
+          if(!res.ok){
+            throw new Error("hardcoded error")
+          }
+          return res.json()
+        })
+        .then((data) => {
+          console.log(data);
+          dispatch(teacherFetchSuccess(data))
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+    }
+}
+
+
+export const fetchClasses = () => {
+    return (dispatch, getState) => {
+        const access_token = localStorage.getItem("access_token")
+        fetch("http://localhost:3000/classes/myClasses",{
             method: "GET",
             headers: {
                 access_token
@@ -56,8 +95,33 @@ export const fetchProducts = () => {
           return res.json()
         })
         .then((data) => {
-          console.log(data);
-          dispatch(productFetchSuccess(data))
+          console.log(data, "<<<DATA");
+          dispatch(classesFetchSuccess(data))
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+    }
+}
+
+export const fetchOneClass = (id) => {
+    return (dispatch, getState) => {
+        const access_token = localStorage.getItem("access_token")
+        fetch(`http://localhost:3000/classes/${id}`,{
+            method: "GET",
+            headers: {
+                access_token
+            }
+        })
+        .then(res => {
+          if(!res.ok){
+            throw new Error("hardcoded error")
+          }
+          return res.json()
+        })
+        .then((data) => {
+          console.log(data, "<<<ONE DATA");
+          dispatch(oneClassFetchSuccess(data))
         })
         .catch((err)=>{
           console.log(err);
@@ -91,12 +155,38 @@ export const createProduct = (productForm) => {
         
     }; 
 }
+export const createClass = (classForm) => {
+    return (dispatch) => {
+        console.log("<< MASUK ACTION");
+        const access_token = localStorage.getItem("access_token")
+        return fetch('http://localhost:3001/products', {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json",
+                access_token
+            },
+            body: JSON.stringify(productForm)
+        })
+        .then((res)=>{
+            console.log("<< MASUK ACTION 2");
+            if(!res.ok) {
+                throw new Error('hadrcoded Error')
+            }
+            return res.json();
+        })
+        .then((body) => console.log(body))
+        .catch((err)=>{
+            console.log(err);
+          })
+        
+    }; 
+}
 
 export const registerAdmin = (registerForm) => {
     return (dispatch) => {
         console.log("<< MASUK ACTION REGISTER");
         const access_token = localStorage.getItem("access_token")
-        return fetch('http://localhost:3001/users/register', {
+        return fetch('http://localhost:3000/users/register', {
             method: "POST",
             headers: {
                 'Content-Type': "application/json",
@@ -150,7 +240,7 @@ export const createCategory = (categoryForm) => {
 export const login = (loginForm) => {
     return (dispatch) => {
         console.log(loginForm, "<<<LOGIN FORM");
-       return fetch("http://localhost:3001/users/login", {
+       return fetch("http://localhost:3000/users/login", {
             method: "POST",
             headers: {
                 'Content-Type': "application/json",
@@ -167,6 +257,7 @@ export const login = (loginForm) => {
         .then(data => {
             console.log(data)
             localStorage.access_token = data.access_token
+            localStorage.id = data.id
         })
         .catch((err)=>{
             console.log(err);
@@ -174,7 +265,7 @@ export const login = (loginForm) => {
     }
 }
 
-export const deleteProduct = (id) => {
+export const deleteClass = (id) => {
     return (dispatch) => {
         const access_token = localStorage.getItem("access_token")
         return fetch("http://localhost:3001/products/" + id, {
@@ -224,7 +315,7 @@ export const deleteCategory = (id) => {
     }
 }
 
-export const updateProduct = ({
+export const updateClass = ({
     id,
     name,
     description,

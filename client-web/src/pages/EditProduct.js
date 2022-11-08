@@ -1,8 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react'
-import {createProduct} from "../store/actionCreator"
-import {updateProduct} from "../store/actionCreator"
+import {createProduct, updateClass} from "../store/actionCreator"
 import {updatePicture} from "../store/actionCreator"
 import {useSelector,  useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom';
@@ -130,7 +129,7 @@ function UpdateProduct() {
             console.log(editProduct);
 
             dispatch(
-              updateProduct({
+              updateClass({
                 id: params.id,
                 name: editProduct.name,
                 description: editProduct.description,

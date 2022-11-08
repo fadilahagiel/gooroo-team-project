@@ -29,12 +29,12 @@ const router = createBrowserRouter([
                 element: <HomePage />
             },
             {
-                path: 'product',
+                path: 'add-class',
                 element: <CreateProduct />
                 
             },
             {
-                path: 'class',
+                path: 'class/:id',
                 element: <ClassDetail/>
             },
             {

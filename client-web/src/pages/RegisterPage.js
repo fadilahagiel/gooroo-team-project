@@ -12,9 +12,8 @@ function RegisterAdmin() {
         username: '',
         email: '',
         password: '',
-        address: '',
-        phoneNumber: '',
-        role: 'admin'
+        saldo: 10000,
+        role: 'teacher'
 
     })
 
@@ -72,30 +71,6 @@ function RegisterAdmin() {
                 setRegisterForm({
                     ...registerForm,
                     password: e.target.value,
-                })
-            }}  />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPrice">
-            <Form.Label>Bio</Form.Label>
-            <Form.Control type="text" placeholder="Enter Address.." 
-            onChange={(e) => {
-                // console.log(e.target.value);
-                setRegisterForm({
-                    ...registerForm,
-                    address: e.target.value,
-                })
-            }}  />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicStock">
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control type="text-area" placeholder="Enter Phone Number.." 
-            onChange={(e) => {
-                // console.log(e.target.value);
-                setRegisterForm({
-                    ...registerForm,
-                    phoneNumber: e.target.value,    
                 })
             }}  />
         </Form.Group>
