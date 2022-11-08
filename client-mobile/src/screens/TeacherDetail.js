@@ -18,8 +18,38 @@ import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import serverUrl from "../config/url";
 
 export default function ClassDetail({ navigation, route }) {
+  const { id } = route.params;
+  const [teacher, setTeacher] = useState({});
+  const fetchTeacher = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/teachers/${id}`,
+        headers: {
+          access_token,
+        },
+      });
+      const idUser = data.UserId;
+      const user = await axios({
+        method: "get",
+        url: `${serverUrl}/users/${idUser}`,
+      });
+
+      console.log(data, "dari teacher detail");
+      console.log(data.fullName, "dari teacher detail");
+      setTeacher(data);
+      setTeacher({ ...data, username: user.data.username });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchTeacher();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -31,10 +61,12 @@ export default function ClassDetail({ navigation, route }) {
               size={70}
             />
             <View style={{ marginLeft: 25, flexDirection: "column", flex: 2 }}>
-              <Title style={styles.title}>Fadilah Agiel</Title>
-              <Caption style={styles.caption}>Agiel008</Caption>
+              <Title style={styles.title}>{teacher.fullName}</Title>
+              <Caption style={styles.caption}>{teacher.username}</Caption>
               <View style={styles.section}>
-                <Paragraph style={styles.paragraph}>3</Paragraph>
+                <Paragraph style={styles.paragraph}>
+                  {teacher?.Classes?.length}
+                </Paragraph>
                 <Caption style={styles.caption}>Classes</Caption>
               </View>
             </View>
@@ -43,11 +75,10 @@ export default function ClassDetail({ navigation, route }) {
                 justifyContent: "center",
                 alignItems: "flex-end",
                 flex: 1,
-              }}
-            >
+              }}>
               <Text style={styles.infoTitle}>RATING</Text>
               <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>8</Text>
+                <Text style={styles.infoText}>{}</Text>
                 <Text style={styles.infoSubText}> /10</Text>
               </View>
             </View>
@@ -58,8 +89,7 @@ export default function ClassDetail({ navigation, route }) {
                 justifyContent: "flex-start",
                 alignItems: "flex-end",
                 // marginTop: 10,
-              }}
-            >
+              }}>
               {/* <Text style={{ color: colors.secondaty2 }}>CONTACT ME!</Text> */}
               <TouchableOpacity>
                 <Icon
@@ -83,35 +113,33 @@ export default function ClassDetail({ navigation, route }) {
           <View style={styles.row}></View>
         </View>
       </Animatable.View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig">
         <Text style={styles.text_footer}>Class List</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{ height: 400 }}
-        >
+          style={{ height: 400 }}>
           <View style={styles.classWarpper}>
             <View style={{ flex: 1 }}>
               <View
                 style={{
                   flex: 2,
                   justifyContent: "space-between",
-                }}
-              >
+                }}>
                 <View>
                   <Text
                     style={{
                       color: colors.primary,
                       fontSize: 20,
-                    }}
-                  >
+                    }}>
                     Bilangan Prima
                   </Text>
                 </View>
               </View>
               <View
-                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
-              >
+                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
                 <Text style={styles.infoTitle}>DURATION</Text>
                 <View style={styles.infoTextWrapper}>
                   <Text>3</Text>
@@ -124,8 +152,7 @@ export default function ClassDetail({ navigation, route }) {
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
-                onPress={() => alert("to class detail")}
-              >
+                onPress={() => alert("to class detail")}>
                 <View>
                   <Text style={{ color: colors.green1 }}>See More</Text>
                 </View>
@@ -138,22 +165,19 @@ export default function ClassDetail({ navigation, route }) {
                 style={{
                   flex: 2,
                   justifyContent: "space-between",
-                }}
-              >
+                }}>
                 <View>
                   <Text
                     style={{
                       color: colors.primary,
                       fontSize: 20,
-                    }}
-                  >
+                    }}>
                     Bilangan Prima
                   </Text>
                 </View>
               </View>
               <View
-                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
-              >
+                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
                 <Text style={styles.infoTitle}>DURATION</Text>
                 <View style={styles.infoTextWrapper}>
                   <Text>3</Text>
@@ -166,8 +190,7 @@ export default function ClassDetail({ navigation, route }) {
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
-                onPress={() => {}}
-              >
+                onPress={() => {}}>
                 <View>
                   <Text style={{ color: colors.green1 }}>See More</Text>
                 </View>
@@ -180,22 +203,19 @@ export default function ClassDetail({ navigation, route }) {
                 style={{
                   flex: 2,
                   justifyContent: "space-between",
-                }}
-              >
+                }}>
                 <View>
                   <Text
                     style={{
                       color: colors.primary,
                       fontSize: 20,
-                    }}
-                  >
+                    }}>
                     Bilangan Prima
                   </Text>
                 </View>
               </View>
               <View
-                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
-              >
+                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
                 <Text style={styles.infoTitle}>DURATION</Text>
                 <View style={styles.infoTextWrapper}>
                   <Text>3</Text>
@@ -208,8 +228,7 @@ export default function ClassDetail({ navigation, route }) {
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
-                onPress={() => {}}
-              >
+                onPress={() => {}}>
                 <View>
                   <Text style={{ color: colors.green1 }}>See More</Text>
                 </View>
@@ -222,22 +241,19 @@ export default function ClassDetail({ navigation, route }) {
                 style={{
                   flex: 2,
                   justifyContent: "space-between",
-                }}
-              >
+                }}>
                 <View>
                   <Text
                     style={{
                       color: colors.primary,
                       fontSize: 20,
-                    }}
-                  >
+                    }}>
                     Bilangan Prima
                   </Text>
                 </View>
               </View>
               <View
-                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}
-              >
+                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
                 <Text style={styles.infoTitle}>DURATION</Text>
                 <View style={styles.infoTextWrapper}>
                   <Text>3</Text>
@@ -250,8 +266,7 @@ export default function ClassDetail({ navigation, route }) {
                   justifyContent: "flex-end",
                   alignItems: "flex-end",
                 }}
-                onPress={() => {}}
-              >
+                onPress={() => {}}>
                 <View>
                   <Text style={{ color: colors.green1 }}>See More</Text>
                 </View>
@@ -272,8 +287,7 @@ export default function ClassDetail({ navigation, route }) {
           backgroundColor: colors.white,
         }}
         alwaysOpen={250}
-        scrollViewProps={{ showsVerticalScrollIndicator: false }}
-      >
+        scrollViewProps={{ showsVerticalScrollIndicator: false }}>
         <View style={{ margin: 30, marginTop: 50, marginBottom: 80 }}>
           <Text>Comments:</Text>
           <View style={styles.cardContainer}>
@@ -287,8 +301,7 @@ export default function ClassDetail({ navigation, route }) {
                   fontSize: 18,
                   fontWeight: "bold",
                   color: colors.primary,
-                }}
-              >
+                }}>
                 Giovanni
               </Text>
               <Text style={{ fontSize: 16, color: colors.secondary1 }}>
@@ -307,8 +320,7 @@ export default function ClassDetail({ navigation, route }) {
                   fontSize: 18,
                   fontWeight: "bold",
                   color: colors.primary,
-                }}
-              >
+                }}>
                 Giovanni
               </Text>
               <Text style={{ fontSize: 16, color: colors.secondary1 }}>
@@ -327,8 +339,7 @@ export default function ClassDetail({ navigation, route }) {
                   fontSize: 18,
                   fontWeight: "bold",
                   color: colors.primary,
-                }}
-              >
+                }}>
                 Giovanni
               </Text>
               <Text style={{ fontSize: 16, color: colors.secondary1 }}>

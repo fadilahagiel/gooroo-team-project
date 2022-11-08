@@ -112,9 +112,19 @@ class UserController {
     }
   }
 
-  static async findOneUser(req, res, next) {
+  static async findOneDetailUser(req, res, next) {
     try {
       const { id } = req.user;
+      const user = await User.findOne({ where: { id } });
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async findOneUser(req, res, next) {
+    try {
+      const { id } = req.params;
       const user = await User.findOne({ where: { id } });
       res.status(200).json(user);
     } catch (error) {

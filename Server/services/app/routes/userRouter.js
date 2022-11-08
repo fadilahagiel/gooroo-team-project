@@ -8,6 +8,7 @@ router.post("/register", UserController.register);
 router.post("/login", UserController.login);
 router.post("/topup", authentication, UserController.topup);
 router.patch("/saldo", authentication, UserController.updateSaldo);
-router.get("/", authentication, UserController.findOneUser);
+router.get("/", authentication, UserController.findOneDetailUser);
+router.get("/:id", UserController.findOneUser);
 
 module.exports = router;
