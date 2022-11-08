@@ -19,7 +19,7 @@ import SPACING from "../config/SPACING";
 const { height } = Dimensions.get("window");
 const height_logo = height * 0.28;
 import axios from "axios";
-
+import serverUrl from "../config/url";
 export default function Login({ navigation }) {
   const [data, setData] = React.useState({
     username: "",
@@ -33,7 +33,7 @@ export default function Login({ navigation }) {
     try {
       await axios({
         method: "post",
-        url: `https://335d-139-228-102-240.ap.ngrok.io/users/register`,
+        url: `${serverUrl}/users/register`,
         data: { ...data, role: "student" },
       });
       navigation.navigate("Login");

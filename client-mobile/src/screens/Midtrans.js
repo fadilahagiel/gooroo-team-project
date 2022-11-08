@@ -1,7 +1,7 @@
 import { WebView } from "react-native-webview";
 import axios from "axios";
 import { AsyncStorage } from "react-native";
-
+import serverUrl from "../config/url";
 export default function Midtrans({ navigation, route }) {
   const { url, price } = route.params;
   const updateSaldo = async (prc) => {
@@ -9,13 +9,12 @@ export default function Midtrans({ navigation, route }) {
     try {
       await axios({
         method: "patch",
-        url: `https://335d-139-228-102-240.ap.ngrok.io/users/saldo`,
+        url: `${serverUrl}/users/saldo`,
         data: {
           saldo: prc,
         },
         headers: {
           access_token,
-
         },
       });
       navigation.navigate("Profile");
