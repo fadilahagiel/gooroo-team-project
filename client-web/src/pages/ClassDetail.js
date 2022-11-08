@@ -9,14 +9,17 @@ import { useParams } from "react-router-dom";
 
 
 export default function ClassDetail () {
-    const params = useParams();
-    const dispatch = useDispatch()
-    const id = params.id
     const navigate = useNavigate();
+    const oneClass = useSelector((state) => state.oneClass)
+    const dispatch = useDispatch()
+    const params = useParams();
+    const id = params.id
+    console.log(oneClass,id, "<<<ONE CLASS");
+
     useEffect(()=> {
         dispatch(fetchOneClass(id))
       },[])
-    const oneClass = useSelector((state) => state.oneClass)
+      
 
     return (
         <>

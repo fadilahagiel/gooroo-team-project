@@ -105,6 +105,7 @@ export const fetchClasses = () => {
 }
 
 export const fetchOneClass = (id) => {
+    console.log("<<<MASUK ID");
     return (dispatch, getState) => {
         const access_token = localStorage.getItem("access_token")
         fetch(`http://localhost:3000/classes/${id}`,{
@@ -129,32 +130,32 @@ export const fetchOneClass = (id) => {
     }
 }
 
-export const createProduct = (productForm) => {
-    return (dispatch) => {
-        console.log("<< MASUK ACTION");
-        const access_token = localStorage.getItem("access_token")
-        return fetch('http://localhost:3001/products', {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json",
-                access_token
-            },
-            body: JSON.stringify(productForm)
-        })
-        .then((res)=>{
-            console.log("<< MASUK ACTION 2");
-            if(!res.ok) {
-                throw new Error('hadrcoded Error')
-            }
-            return res.json();
-        })
-        .then((body) => console.log(body))
-        .catch((err)=>{
-            console.log(err);
-          })
+// export const createProduct = (productForm) => {
+//     return (dispatch) => {
+//         console.log("<< MASUK ACTION");
+//         const access_token = localStorage.getItem("access_token")
+//         return fetch('http://localhost:3001/products', {
+//             method: "POST",
+//             headers: {
+//                 'Content-Type': "application/json",
+//                 access_token
+//             },
+//             body: JSON.stringify(productForm)
+//         })
+//         .then((res)=>{
+//             console.log("<< MASUK ACTION 2");
+//             if(!res.ok) {
+//                 throw new Error('hadrcoded Error')
+//             }
+//             return res.json();
+//         })
+//         .then((body) => console.log(body))
+//         .catch((err)=>{
+//             console.log(err);
+//           })
         
-    }; 
-}
+//     }; 
+// }
 export const createClass = (classForm) => {
     return (dispatch) => {
         console.log("<< MASUK ACTION");
@@ -165,7 +166,7 @@ export const createClass = (classForm) => {
                 'Content-Type': "application/json",
                 access_token
             },
-            body: JSON.stringify(productForm)
+            body: JSON.stringify(classForm)
         })
         .then((res)=>{
             console.log("<< MASUK ACTION 2");

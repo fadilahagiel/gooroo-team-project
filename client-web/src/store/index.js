@@ -4,7 +4,8 @@ import thunk from 'redux-thunk'
 let initialState = {
     classes: [],
     subjects: [],
-    teachers: []
+    teachers: [],
+    oneClass: []
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -18,17 +19,17 @@ const rootReducer = (state = initialState, action) => {
             return{
                 ...state,
                 subjects: action.payload
-            }
+            };
         case "teachers/fetchSuccess":
             return{
                 ...state,
                 teachers: action.payload
-            }
+            };
         case "oneClass/fetchSuccess":
             return{
                 ...state,
                 oneClass: action.payload
-            }
+            };
     }
     return state;
 }
