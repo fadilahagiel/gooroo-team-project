@@ -21,18 +21,16 @@ import axios from "axios";
 export default function ClassDetail({ navigation, route }) {
   // const { id } = route.params;
   const [oneClass, setOneClass] = useState({});
-  const [scheduleLength, setScheduleLength] = useState(0);
   const fetchOneClass = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
       const { data } = await axios({
         method: "get",
-        url: `https://335d-139-228-102-240.ap.ngrok.io/classes/1`,
+        url: `https://335d-139-228-102-240.ap.ngrok.io/classes/13`,
         headers: {
           access_token,
         },
       });
-      setScheduleLength(data.Schedules.length);
       setOneClass(data);
     } catch (error) {
       console.log(error);
@@ -53,9 +51,15 @@ export default function ClassDetail({ navigation, route }) {
         />
         <Text style={styles.text_header}>{oneClass.name}</Text>
       </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig">
         <View style={styles.heartWrapper}>
-          <Entypo name="heart" size={32} color="tomato" />
+          <Entypo
+            name="heart"
+            size={32}
+            color="tomato"
+          />
         </View>
         <ScrollView>
           <View style={styles.descriptionWrapper}>
@@ -67,7 +71,12 @@ export default function ClassDetail({ navigation, route }) {
             <View>
               <Text style={styles.infoTitle}>PRICE</Text>
               <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>{oneClass.price}</Text>
+                <Text style={styles.infoText}>
+                  Rp.{" "}
+                  {oneClass.price
+                    ?.toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </Text>
               </View>
             </View>
             <View>
@@ -80,7 +89,9 @@ export default function ClassDetail({ navigation, route }) {
             <View>
               <Text style={styles.infoTitle}>DURATION</Text>
               <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>{scheduleLength}</Text>
+                <Text style={styles.infoText}>
+                  {oneClass?.Schedules?.length}
+                </Text>
                 <Text style={styles.infoSubText}>Session</Text>
               </View>
             </View>
@@ -88,8 +99,7 @@ export default function ClassDetail({ navigation, route }) {
           <View style={styles.wrapper}>
             <TouchableOpacity
               style={styles.buttonWrapper}
-              onPress={() => alert("ENROLL!!!!")}
-            >
+              onPress={() => alert("ENROLL!!!!")}>
               <Text style={styles.buttonText}>Enroll This Class</Text>
             </TouchableOpacity>
           </View>

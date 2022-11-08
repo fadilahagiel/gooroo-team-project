@@ -111,6 +111,17 @@ class UserController {
       next(error);
     }
   }
+
+  static async findOneUser(req, res, next) {
+    try {
+      const { id } = req.user;
+      console.log(id);
+      const user = await User.findOne({ where: { id } });
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = UserController;
