@@ -17,7 +17,7 @@ import { Modalize } from "react-native-modalize";
 
 import IonIcon from "react-native-vector-icons/Ionicons";
 
-export default function BookMark({ route, navigation }) {
+export default function History({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -27,11 +27,15 @@ export default function BookMark({ route, navigation }) {
             <IonIcon name="ios-menu" color={colors.white} size={20} />
           </TouchableOpacity>
         </View>
-        <View style={{ marginTop: 25 }}>
-          <Text style={styles.text_header}>My Bookmark List</Text>
-          <Text style={styles.Text_header2}>
-            Stay focus and always ready to learn
-          </Text>
+        <View
+          style={{
+            marginTop: 25,
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+          }}
+        >
+          <Text style={styles.text_header}>TOTAL BALANCE</Text>
+          <Text style={styles.Text_header2}>Rp. 3050000</Text>
         </View>
       </View>
 
@@ -62,62 +66,89 @@ export default function BookMark({ route, navigation }) {
                 <View style={{ flexDirection: "column" }}>
                   <Text
                     style={{
-                      color: colors.primary,
+                      color: "yellow",
                       fontSize: 20,
                     }}
                   >
-                    Nama Kelas
+                    + 50000
                   </Text>
                   <Text
                     style={{
-                      color: colors.secondaty2,
+                      color: colors.white,
                       fontSize: 16,
+                      marginTop: 5,
                     }}
                   >
-                    By, whoo
+                    TopUp balance
                   </Text>
                 </View>
-                <TouchableOpacity
+                <View
                   style={{
                     flex: 1,
                     alignItems: "flex-end",
                   }}
                 >
                   <View>
-                    <Text style={{ color: colors.green1 }}>See More</Text>
+                    <Text style={{ color: colors.white }}>30 Nov 2022</Text>
                   </View>
-                </TouchableOpacity>
+                </View>
               </View>
               <View
                 style={{
-                  flex: 1,
                   marginTop: 10,
-                  justifyContent: "space-between",
                   alignItems: "flex-end",
-                  flexDirection: "row",
                 }}
               >
-                <View>
-                  <Text style={styles.infoTitle}>PRICE</Text>
-                  <View style={styles.infoTextWrapper}>
-                    <Text>30000</Text>
-                    <Text style={styles.infoSubText}> /Session</Text>
+                <Text style={styles.infoTitle}>DEBIT</Text>
+              </View>
+            </View>
+          </View>
+          <View style={styles.classWarpper2}>
+            <View style={{ flex: 1 }}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  // justifyContent: "space-between",
+                }}
+              >
+                <View style={{ flexDirection: "column" }}>
+                  <Text
+                    style={{
+                      color: "yellow",
+                      fontSize: 20,
+                    }}
+                  >
+                    - 50000
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.white,
+                      fontSize: 16,
+                      marginTop: 5,
+                    }}
+                  >
+                    Ikut kelas Ms. Sri
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <View>
+                    <Text style={{ color: colors.white }}>30 Nov 2022</Text>
                   </View>
                 </View>
-                <View>
-                  <Text style={styles.infoTitle}>QUOTA</Text>
-                  <View style={styles.infoTextWrapper}>
-                    <Text>3</Text>
-                    <Text style={styles.infoSubText}> /10</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text style={styles.infoTitle}>DURATION</Text>
-                  <View style={styles.infoTextWrapper}>
-                    <Text>3</Text>
-                    <Text style={styles.infoSubText}> Days</Text>
-                  </View>
-                </View>
+              </View>
+              <View
+                style={{
+                  marginTop: 10,
+                  alignItems: "flex-end",
+                }}
+              >
+                <Text style={styles.infoTitle}>kredit</Text>
               </View>
             </View>
           </View>
@@ -130,7 +161,7 @@ export default function BookMark({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.secondary1,
+    backgroundColor: colors.green2,
   },
   header: {
     flex: 0.5,
@@ -139,23 +170,25 @@ const styles = StyleSheet.create({
   },
   text_header: {
     color: colors.white,
-    fontWeight: "bold",
+    // fontWeight: "bold",
     fontSize: 20,
   },
   Text_header2: {
-    color: colors.green2,
+    color: "yellow",
     fontWeight: "bold",
     marginTop: 5,
+    fontSize: 25,
   },
   mainWarpper: {
     margin: 20,
+    marginTop: 40,
   },
   classWarpper: {
-    backgroundColor: colors.white,
-    height: 120,
+    backgroundColor: colors.blue,
+    height: 90,
     width: "100%",
-    marginTop: 20,
     marginRight: 10,
+    marginBottom: 20,
     borderRadius: 10,
     padding: 15,
     shadowColor: "#000",
@@ -166,21 +199,25 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.2,
   },
+  classWarpper2: {
+    backgroundColor: colors.red,
+    height: 90,
+    width: "100%",
+    marginRight: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+    padding: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      height: 10,
+      width: 0,
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.2,
+  },
   infoTitle: {
-    fontSize: 12,
-    color: colors.secondaty2,
-  },
-  infoTextWrapper: {
-    flexDirection: "row",
-    alignItems: "flex-end",
-    marginTop: 5,
-  },
-  infoText: {
-    fontSize: 20,
-    color: colors.white,
-  },
-  infoSubText: {
     fontSize: 14,
-    color: colors.secondaty2,
+    color: colors.white,
+    textTransform: "uppercase",
   },
 });

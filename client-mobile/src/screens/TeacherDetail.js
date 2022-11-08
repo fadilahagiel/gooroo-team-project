@@ -18,7 +18,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import serverUrl from "../config/url";
+import { serverUrl } from "../config/url";
 
 export default function ClassDetail({ navigation, route }) {
   const { id } = route.params;
@@ -72,7 +72,8 @@ export default function ClassDetail({ navigation, route }) {
                 justifyContent: "center",
                 alignItems: "flex-end",
                 flex: 1,
-              }}>
+              }}
+            >
               <Text style={styles.infoTitle}>RATING</Text>
               <View style={styles.infoTextWrapper}>
                 <Text style={styles.infoText}>{teacher.averageRating}</Text>
@@ -86,7 +87,8 @@ export default function ClassDetail({ navigation, route }) {
                 justifyContent: "flex-start",
                 alignItems: "flex-end",
                 // marginTop: 10,
-              }}>
+              }}
+            >
               <TouchableOpacity>
                 <Icon
                   name="ios-chatbox-ellipses-outline"
@@ -105,31 +107,30 @@ export default function ClassDetail({ navigation, route }) {
           <View style={styles.row}></View>
         </View>
       </Animatable.View>
-      <Animatable.View
-        style={styles.footer}
-        animation="fadeInUpBig">
+      <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <Text style={styles.text_footer}>Class List</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{ height: 400 }}>
+          style={{ height: 400 }}
+        >
           {teacher?.Classes?.map((el) => {
             return (
-              <View
-                key={el.id}
-                style={styles.classWarpper}>
+              <View key={el.id} style={styles.classWarpper}>
                 <View style={{ flex: 1 }}>
                   <View
                     style={{
                       flex: 2,
                       justifyContent: "space-between",
-                    }}>
+                    }}
+                  >
                     <View>
                       <Text
                         style={{
                           color: colors.primary,
                           fontSize: 20,
-                        }}>
+                        }}
+                      >
                         {el.name}
                       </Text>
                     </View>
@@ -138,7 +139,8 @@ export default function ClassDetail({ navigation, route }) {
                     style={{
                       justifyContent: "flex-end",
                       alignItems: "flex-end",
-                    }}>
+                    }}
+                  >
                     <Text style={styles.infoTitle}>DURATION</Text>
                     <View style={styles.infoTextWrapper}>
                       <Text>{el?.Schedules?.length}</Text>
@@ -155,7 +157,8 @@ export default function ClassDetail({ navigation, route }) {
                       navigation.navigate("ClassDetail", {
                         id: el.id,
                       })
-                    }>
+                    }
+                  >
                     <View>
                       <Text style={{ color: colors.green1 }}>See More</Text>
                     </View>
@@ -178,7 +181,8 @@ export default function ClassDetail({ navigation, route }) {
           backgroundColor: colors.white,
         }}
         alwaysOpen={250}
-        scrollViewProps={{ showsVerticalScrollIndicator: false }}>
+        scrollViewProps={{ showsVerticalScrollIndicator: false }}
+      >
         <View style={{ margin: 30, marginTop: 50, marginBottom: 80 }}>
           <Text>Comments:</Text>
           <View style={styles.cardContainer}>
@@ -192,7 +196,8 @@ export default function ClassDetail({ navigation, route }) {
                   fontSize: 18,
                   fontWeight: "bold",
                   color: colors.primary,
-                }}>
+                }}
+              >
                 Giovanni
               </Text>
               <Text style={{ fontSize: 16, color: colors.secondary1 }}>
@@ -211,7 +216,8 @@ export default function ClassDetail({ navigation, route }) {
                   fontSize: 18,
                   fontWeight: "bold",
                   color: colors.primary,
-                }}>
+                }}
+              >
                 Giovanni
               </Text>
               <Text style={{ fontSize: 16, color: colors.secondary1 }}>
@@ -230,7 +236,8 @@ export default function ClassDetail({ navigation, route }) {
                   fontSize: 18,
                   fontWeight: "bold",
                   color: colors.primary,
-                }}>
+                }}
+              >
                 Giovanni
               </Text>
               <Text style={{ fontSize: 16, color: colors.secondary1 }}>
