@@ -1,57 +1,83 @@
-const { classAverageRating, teacherAverageRating } = require('../helpers/averageRating');
-const fullQuota = require('../helpers/fullQuota');
-const { Class, Transaction, Student, Teacher, sequelize, User, SaldoHistory } = require('../models')
+const {
+  classAverageRating,
+  teacherAverageRating,
+} = require("../helpers/averageRating");
+const fullQuota = require("../helpers/fullQuota");
+const {
+  Class,
+  Transaction,
+  Student,
+  Teacher,
+  sequelize,
+  User,
+  SaldoHistory,
+} = require("../models");
 
-class Controller{
+class Controller {
   static async enterClass(req, res, next) {
-    const t = await sequelize.transaction()
+    const t = await sequelize.transaction();
     try {
-        if (req.user.role != "student") {
-            throw { name: "forbidden" };
-        }
-        const {ClassId} = req.params
-        const UserId = req.user.id
-        const StudentFound = await Student.findOne({ where: { UserId } }, { transaction: t })
-        const classFound = await Class.findOne({ where: { id: ClassId } }, { transaction: t })
-        if (!classFound) {
-            throw { name: 'invalid_credentials'}
-        }
-        const studentFound = await Student.findOne({ where: { id: StudentFound.id } }, { transaction: t })
-        const transactionFound = await Transaction.findOne({ where: { ClassId: classFound.id, StudentId: studentFound.id } }, { transaction: t })
-        if (transactionFound) {
-            throw{name: "already_buy_class"}
-        }
-        const user = await User.findOne({ where: { id: UserId } }, { transaction: t })
-        const isFull = await fullQuota(classFound)
-        if (isFull) {
-            throw{name: "Class is full"}
-        }
-        if (user.saldo < classFound.price) {
-          throw { name: "not_enough_balance" };
-        }
-        await User.decrement(
-          { saldo: classFound.price },
-          { where: { id: studentFound.UserId } },
-          { transaction: t }
-        );
-        const transactionCreated = await Transaction.create(
-          { ClassId, StudentId: StudentFound.id },
-          { transaction: t }
-        );
-        const newSaldo = user.saldo - classFound.price;
-        await SaldoHistory.create({
-          amount: classFound.price,
-          UserId,
-          description: `Buy class ${classFound.name}`,
-          balance: newSaldo,
-          category: "credit",
-        });
-        await t.commit();
-        res.status(201).json(transactionCreated);
-      } catch (error) {
-        await t.rollback();
-        next(error);
+      if (req.user.role != "student") {
+        throw { name: "forbidden" };
       }
+      const { ClassId } = req.params;
+      // console.log(ClassId, "class id");
+      const UserId = req.user.id;
+      // console.log(UserId, "INI USERID");
+      const StudentFound = await Student.findOne(
+        { where: { UserId } },
+        { transaction: t }
+      );
+      console.log(StudentFound, "ini student found");
+      const classFound = await Class.findOne(
+        { where: { id: ClassId } },
+        { transaction: t }
+      );
+      if (!classFound) {
+        throw { name: "invalid_credentials" };
+      }
+
+      const transactionFound = await Transaction.findOne(
+        { where: { ClassId: classFound.id, StudentId: StudentFound.id } },
+        { transaction: t }
+      );
+      if (transactionFound) {
+        throw { name: "already_buy_class" };
+      }
+      const user = await User.findOne(
+        { where: { id: UserId } },
+        { transaction: t }
+      );
+      const isFull = await fullQuota(classFound);
+      if (isFull) {
+        throw { name: "Class is full" };
+      }
+      if (user.saldo < classFound.price) {
+        throw { name: "not_enough_balance" };
+      }
+      await User.decrement(
+        { saldo: classFound.price },
+        { where: { id: StudentFound.UserId } },
+        { transaction: t }
+      );
+      const transactionCreated = await Transaction.create(
+        { ClassId, StudentId: StudentFound.id },
+        { transaction: t }
+      );
+      const newSaldo = user.saldo - classFound.price;
+      await SaldoHistory.create({
+        amount: classFound.price,
+        UserId,
+        description: `Buy class ${classFound.name}`,
+        balance: newSaldo,
+        category: "credit",
+      });
+      await t.commit();
+      res.status(201).json(transactionCreated);
+    } catch (error) {
+      await t.rollback();
+      next(error);
+    }
   }
 
   static async collectTransaction(req, res, next) {
@@ -69,7 +95,7 @@ class Controller{
       if (classFound.status == "collected") {
         throw { name: "already collected" };
       }
-      if (classFound.status != 'done') {
+      if (classFound.status != "done") {
         throw { name: "status_isnot_done" };
       }
       await Class.update(
@@ -172,6 +198,27 @@ class Controller{
         { transaction: t }
       );
       res.status(200).json({ message: "Berhasil memberi testimoni" });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async findTransaction(req, res, next) {
+    try {
+      const { ClassId } = req.params;
+      const UserId = req.user.id;
+      const studentFound = await Student.findOne({ where: { UserId } });
+      const findTrans = await Transaction.findOne({
+        where: {
+          ClassId,
+          StudentId: studentFound.id,
+        },
+      });
+      if (findTrans) {
+        res.status(200).json(true);
+      } else {
+        res.status(200).json(false);
+      }
     } catch (error) {
       next(error);
     }
