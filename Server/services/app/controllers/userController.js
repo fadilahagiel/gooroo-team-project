@@ -67,7 +67,7 @@ class UserController {
           secure: true,
         },
         customer_details: {
-          full_name: findUser.Student.fullName,
+          full_name: findUser.username,
           email: findUser.email,
         },
       };

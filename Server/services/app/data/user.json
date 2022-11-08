@@ -26,5 +26,19 @@
         "password": "12345",
         "role": "teacher",
         "saldo": 10000
+    },
+    {
+        "username": "septriadi",
+        "email": "septriadi@mail.com",
+        "password": "12345",
+        "role": "student",
+        "saldo": 10000
+    },
+    {
+        "username": "fachmi",
+        "email": "fahcmi@mail.com",
+        "password": "12345",
+        "role": "student",
+        "saldo": 10000
     }
 ]

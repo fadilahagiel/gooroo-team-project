@@ -64,28 +64,25 @@ class Controller {
 
   static async statusOnProgress(req, res, next) {
     try {
-      const { id } = req.params
-      const classFound = await Class.findOne({ where: { id } })
+      const { id } = req.params;
+      const classFound = await Class.findOne({ where: { id } });
       if (!classFound) {
         throw { name: "class not found" };
       }
-      await Class.update(
-        { status: "on progress" },
-        { where: { id } },
-      )
-      res.status(200).json({message: `Success update class's status`})
+      await Class.update({ status: "on progress" }, { where: { id } });
+      res.status(200).json({ message: `Success update class's status` });
     } catch (error) {
-      next(error)
+      next(error);
     }
   }
 
-  static async getMyClasses(req, res, next) {
+  static async getMyClassesTeacher(req, res, next) {
     try {
       const { id } = req.user;
-      const teacher = await Teacher.findOne({ where: { UserId: id } });
-      if (!teacher) {
-        throw { name: "invalid_credentials" };
+      if (req.user.role != "teacher") {
+        throw { name: "forbidden" };
       }
+      const teacher = await Teacher.findOne({ where: { UserId: id } });
       const classes = await Class.findAll({ where: { TeacherId: teacher.id } });
       res.status(200).json(classes);
     } catch (error) {
@@ -156,6 +153,34 @@ class Controller {
         }
       );
       res.status(200).json({ message: `${findClass.name} has been update` });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getMyClassesStudent(req, res, next) {
+    try {
+      const { id } = req.user;
+      if (req.user.role != "student") {
+        throw { name: "forbidden" };
+      }
+      console.log(id, "ini id");
+      const findStudent = await Student.findOne({
+        where: {
+          UserId: id,
+        },
+      });
+      const findTransaction = await Transaction.findAll({
+        where: {
+          StudentId: findStudent.id,
+        },
+        include: Class,
+      });
+      console.log(findTransaction);
+      const findClasses = findTransaction.map((el) => {
+        return el.Class;
+      });
+      res.status(200).json(findClasses);
     } catch (error) {
       next(error);
     }

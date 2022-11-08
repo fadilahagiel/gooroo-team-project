@@ -1,4 +1,5 @@
 const errorHandlers = async (err, req, res, next) => {
+  console.log(err, "ini error");
   let code = 500;
   let message = "Internal Server Error";
   if (
@@ -13,7 +14,7 @@ const errorHandlers = async (err, req, res, next) => {
   } else if (err.name == "not_enough_balance") {
     code = 400;
     message = "not enough balance";
-    } else if (err.name == "invalid_login") {
+  } else if (err.name == "invalid_login") {
     code = 401;
     message = "invalid email/password";
   } else if (err.name == "invalid_token" || err.name == "JsonWebTokenError") {
