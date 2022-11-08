@@ -44,7 +44,7 @@ function CreateProduct() {
 
     return (
         <>
-        <h2 style={{paddingTop:"40px", paddingLeft: "50px"}}>Input your new product here</h2><br></br><br></br>
+        <h2 style={{paddingTop:"40px", paddingLeft: "50px"}}>Input your new class here</h2><br></br><br></br>
         <div className="row">
             <div className='col'>
         <Form style={{"width": "80%", "margin": "auto"}} onSubmit={submitProduct}>
@@ -71,18 +71,6 @@ function CreateProduct() {
             }}  />
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicMainImg">
-            <Form.Label>Image Url</Form.Label>
-            <Form.Control type="text" placeholder="Product main image.." 
-            onChange={(e) => {
-                // console.log(e.target.value);
-                setProductForm({
-                    ...productForm,
-                    mainImg: e.target.value,
-                })
-            }}  />
-        </Form.Group>
-
         <Form.Group className="mb-3" controlId="formBasicPrice">
             <Form.Label>Price</Form.Label>
             <Form.Control type="number" placeholder="Product price.." 
@@ -96,7 +84,7 @@ function CreateProduct() {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicStock">
-            <Form.Label>Stock</Form.Label>
+            <Form.Label>Quota</Form.Label>
             <Form.Control type="number" placeholder="Product stock.." 
             onChange={(e) => {
                 // console.log(e.target.value);
@@ -117,7 +105,7 @@ function CreateProduct() {
                     categoryId: e.target.value,
                 })
             }}  >
-                <option>Select Category</option>
+                <option>Select Subject</option>
                 {categories.map((category) => {
                   return (
                     <option key={category.id} value={category.id}>
@@ -127,42 +115,6 @@ function CreateProduct() {
                 })}
             </Form.Select>
         </Form.Group><br></br><br></br>
-
-        <div style={{"width": "60%", "margin": "0"}}>
-        <Form.Group className="mb-3" controlId="formBasicMainImg">
-            <Form.Label>Additional Images 1</Form.Label>
-            <Form.Control type="text" placeholder="additional image.." 
-            onChange={(e) => {
-                // console.log(e.target.value);
-                setPictureForm({
-                    ...pictureForm,
-                    imgUrl1: e.target.value,
-                })
-            }}  />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicMainImg">
-            <Form.Label>Additional Images 2</Form.Label>
-            <Form.Control type="text" placeholder="additional image.." 
-            onChange={(e) => {
-                // console.log(e.target.value);
-                setPictureForm({
-                    ...pictureForm,
-                    imgUrl2: e.target.value,
-                })
-            }}  />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicMainImg">
-            <Form.Label>Additional Images 3</Form.Label>
-            <Form.Control type="text" placeholder="additional image.." 
-            onChange={(e) => {
-                // console.log(e.target.value);
-                setPictureForm({
-                    ...pictureForm,
-                    imgUrl3: e.target.value,
-                })
-            }}  />
-        </Form.Group>
-        </div>
 
         <Button variant="primary" type="submit">
             Submit

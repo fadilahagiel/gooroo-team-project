@@ -61,7 +61,7 @@
 
 .welcomeDiv{
   background:linear-gradient(gray, rgba(9, 11, 72, 0.6));
-  height: auto;
+  height: 100vh;
 }
 
 .welcomeImg{

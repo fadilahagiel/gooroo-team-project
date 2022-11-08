@@ -81,9 +81,9 @@ export default function ClassList({ route, navigation }) {
         alwaysOpen={560}
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
       >
-        <View style={{ margin: 20, marginTop: 50 }}>
+        <View style={{ margin: 20, marginTop: 50, marginBottom: 10 }}>
           <View style={styles.buttonClass}>
-            <View style={{ margin: 5, flexDirection: "row" }}>
+            <View style={{ marginRight: 5, flexDirection: "row" }}>
               <Image
                 source={require("../assets/face_demo.png")}
                 style={{
@@ -103,8 +103,8 @@ export default function ClassList({ route, navigation }) {
                 }}
               >
                 <Text style={styles.title}>Pecahan</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
+                <Text style={styles.caption1}>By, Mr. Agiel</Text>
+                <Text style={styles.caption2}>3 Days</Text>
               </View>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ClassDetail")}
@@ -113,16 +113,20 @@ export default function ClassList({ route, navigation }) {
                   justifyContent: "center",
                   alignItems: "flex-end",
                   padding: 10,
+
+                  marginRight: 10,
                 }}
               >
                 <IonIcon
                   name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
+                  color={colors.green1}
+                  size={30}
                 />
               </TouchableOpacity>
             </View>
-            <View style={{ margin: 5, flexDirection: "row" }}>
+          </View>
+          <View style={styles.buttonClass}>
+            <View style={{ marginRight: 5, flexDirection: "row" }}>
               <Image
                 source={require("../assets/face_demo.png")}
                 style={{
@@ -141,9 +145,10 @@ export default function ClassList({ route, navigation }) {
                   justifyContent: "center",
                 }}
               >
-                <Text style={styles.title}>Pecahan</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
+
+                <Text style={styles.title}>Bilangan Prima</Text>
+                <Text style={styles.caption1}>By, Mr. Agiel</Text>
+                <Text style={styles.caption2}>3 Days</Text>
               </View>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ClassDetail")}
@@ -152,12 +157,13 @@ export default function ClassList({ route, navigation }) {
                   justifyContent: "center",
                   alignItems: "flex-end",
                   padding: 10,
+                  marginRight: 10,
                 }}
               >
                 <IonIcon
                   name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
+                  color={colors.green1}
+                  size={30}
                 />
               </TouchableOpacity>
             </View>
@@ -194,18 +200,31 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     // alignItems: "center",
     borderRadius: 10,
-    backgroundColor: colors.secondaty2,
-    marginBottom: 10,
+    marginBottom: 20,
+    backgroundColor: colors.white,
+    shadowColor: "000",
+    shadowOffset: {
+      height: 10,
+      width: 0,
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.1,
   },
   title: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
-    color: colors.white,
+    color: colors.primary,
   },
-  caption: {
+  caption1: {
     marginTop: 5,
     fontSize: 14,
     lineHeight: 14,
     color: colors.secondary1,
+  },
+  caption2: {
+    marginTop: 5,
+    fontSize: 14,
+    lineHeight: 14,
+    color: colors.green2,
   },
 });

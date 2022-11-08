@@ -73,7 +73,7 @@ export default function Home({ navigation }) {
         >
           <Text style={styles.text_footer}>Choose Your Subject</Text>
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginBottom: 30, marginTop: 10 }}>
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}
@@ -118,9 +118,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   text_footer: {
-    color: colors.primary,
-    fontSize: 18,
-    fontWeight: "500",
+    color: colors.secondary1,
+    fontSize: 14,
+    fontWeight: "600",
   },
   action: {
     flexDirection: "row",
