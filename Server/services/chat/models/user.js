@@ -32,19 +32,21 @@ class User {
   static async addContact(userData, contactData) {
     try {
       const collection = this.userCollection();
-      const { username, role } = userData;
-      const { contactName, contactRole } = contactData;
+      const { username, role, userImage } = userData;
+      const { contactName, contactRole, contactImage } = contactData;
       const userId = String(userData.userId);
       const contactId = String(contactData.contactId);
       const user = {
         userId,
         username,
         role,
+        userImage,
       };
       const contact = {
         contactId,
         contactName,
         contactRole,
+        contactImage,
       };
       const userContacts = await collection.findOne({ userId });
       const check = userContacts.contacts.find(
@@ -59,6 +61,7 @@ class User {
         contactId: userId,
         contactName: username,
         contactRole: role,
+        contactImage: userImage,
       };
       await collection.updateOne(
         { userId },
