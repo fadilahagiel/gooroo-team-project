@@ -44,30 +44,14 @@ export default function Login({ navigation }) {
         return response.json()
       })
       .then((data) => {
-        console.log(data);
-        // if (data.error) {
-        //   throw data.message
-        // }
-        // return data
+        if (data.message) {
+          throw data.message
+        }
+        return data
       })
       .catch((error) => {
-        throw error
+        return alert(error)
       })
-    // try {
-    //   const resdata = await axios({
-    //     method: "post",
-    //     url: `${serverUrl}/users/login`,
-    //     data: {
-    //       email: data.email,
-    //       password: data.password,
-    //     },
-    //   });
-    //   await AsyncStorage.setItem("access_token", resdata.data.access_token);
-    //   const token = await AsyncStorage.getItem("access_token");
-    //   signIn();
-    // } catch (error) {
-    //   console.log(error, "error");
-    // }
   };
 
   const textInputChange = (val) => {
