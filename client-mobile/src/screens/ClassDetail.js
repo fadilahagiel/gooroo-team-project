@@ -18,29 +18,67 @@ import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import { serverUrl } from "../config/url";
+
 export default function ClassDetail({ navigation, route }) {
   // const { id } = route.params;
+  // console.log(navigation, "INI NAVIGATI");
   const [oneClass, setOneClass] = useState({});
-  const [scheduleLength, setScheduleLength] = useState(0);
+  const [isBuy, setIsBuy] = useState(false);
   const fetchOneClass = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
       const { data } = await axios({
         method: "get",
-        url: `https://335d-139-228-102-240.ap.ngrok.io/classes/1`,
+
+        url: `${serverUrl}/classes/${route.params.id}`,
+
         headers: {
           access_token,
         },
       });
-      setScheduleLength(data.Schedules.length);
       setOneClass(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const cekTransaction = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/transactions/cek/${route.params.id}`,
+        headers: {
+          access_token,
+        },
+      });
+      setIsBuy(data);
+    } catch (error) {
+      console.log();
+    }
+  };
+  const buyClass = async (id) => {
+    try {
+      const access_token = await AsyncStorage.getItem("access_token");
+      await axios({
+        method: "post",
+        url: `${serverUrl}/transactions/${id}`,
+        headers: {
+          access_token,
+        },
+      });
+      setIsBuy(true);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     fetchOneClass();
+    cekTransaction();
   }, []);
+  useEffect(() => {
+    cekTransaction();
+  }, [isBuy]);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -53,9 +91,15 @@ export default function ClassDetail({ navigation, route }) {
         />
         <Text style={styles.text_header}>{oneClass.name}</Text>
       </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig">
         <View style={styles.heartWrapper}>
-          <Entypo name="heart" size={32} color="tomato" />
+          <Entypo
+            name="heart"
+            size={32}
+            color="tomato"
+          />
         </View>
         <ScrollView>
           <View style={styles.descriptionWrapper}>
@@ -67,7 +111,12 @@ export default function ClassDetail({ navigation, route }) {
             <View>
               <Text style={styles.infoTitle}>PRICE</Text>
               <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>{oneClass.price}</Text>
+                <Text style={styles.infoText}>
+                  Rp.{" "}
+                  {oneClass.price
+                    ?.toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </Text>
               </View>
             </View>
             <View>
@@ -80,18 +129,25 @@ export default function ClassDetail({ navigation, route }) {
             <View>
               <Text style={styles.infoTitle}>DURATION</Text>
               <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>{scheduleLength}</Text>
+                <Text style={styles.infoText}>
+                  {oneClass?.Schedules?.length}
+                </Text>
                 <Text style={styles.infoSubText}>Session</Text>
               </View>
             </View>
           </View>
           <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.buttonWrapper}
-              onPress={() => alert("ENROLL!!!!")}
-            >
-              <Text style={styles.buttonText}>Enroll This Class</Text>
-            </TouchableOpacity>
+            {isBuy ? (
+              <TouchableOpacity style={styles.buttonWrapperTrue}>
+                <Text style={styles.buttonTextTrue}>Enroll This Class</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.buttonWrapperFalse}
+                onPress={() => buyClass(oneClass.id)}>
+                <Text style={styles.buttonTextFalse}>Enroll This Class</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </ScrollView>
       </Animatable.View>
@@ -187,7 +243,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-  buttonWrapper: {
+  buttonWrapperTrue: {
     marginHorizontal: 20,
     marginTop: 40,
     backgroundColor: colors.green2,
@@ -195,7 +251,20 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
   },
-  buttonText: {
+  buttonWrapperFalse: {
+    marginHorizontal: 20,
+    marginTop: 40,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    paddingVertical: 15,
+    borderRadius: 10,
+  },
+  buttonTextTrue: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.white,
+  },
+  buttonTextFalse: {
     fontSize: 18,
     fontWeight: "bold",
     color: colors.white,

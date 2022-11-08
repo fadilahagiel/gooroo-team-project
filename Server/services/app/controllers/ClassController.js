@@ -54,7 +54,7 @@ class Controller {
   static async getClass(req, res, next) {
     try {
       const allClass = await Class.findAll({
-        include: [Teacher, Subject],
+        include: [Teacher, Subject, Schedule],
       });
       res.status(200).json(allClass);
     } catch (error) {

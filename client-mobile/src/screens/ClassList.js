@@ -14,13 +14,36 @@ import {
 import { Avatar, Title, Caption, Paragraph, Drawer } from "react-native-paper";
 import colors from "../config/colors";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import IonIcon from "react-native-vector-icons/Ionicons";
+
 import { Modalize } from "react-native-modalize";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import CardClasses from "../components/cardClasses";
+import IonIcon from "react-native-vector-icons/Ionicons";
+import { serverUrl } from "../config/url";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function ClassList({ navigation }) {
+export default function ClassList({ route, navigation }) {
+  const [classes, setClasses] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const { data } = await axios({
+        url: `${serverUrl}/classes`,
+        headers: {
+          access_token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE2Njc4MzU3MDF9.6QflhZsaykaSPW58RVoiEuxaBEBuEVPQjMokKfZApu0",
+        },
+      });
+      const dataClass = data.filter(
+        (el) => el.SubjectId == route.params.subject.id
+      );
+      setClasses(dataClass);
+    };
+    fetch().catch(console.error);
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -62,89 +85,78 @@ export default function ClassList({ navigation }) {
         alwaysOpen={560}
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
       >
-        <View style={{ margin: 20, marginTop: 50, marginBottom: 10 }}>
-          <View style={styles.buttonClass}>
-            <View style={{ marginRight: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
+        <View style={styles.mainWarpper}>
+          <View style={styles.classWarpper}>
+            <View style={{ flex: 1 }}>
               <View
                 style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
+                  flex: 1,
+                  flexDirection: "row",
+                  // justifyContent: "space-between",
                 }}
               >
-                <Text style={styles.title}>Pecahan</Text>
-                <Text style={styles.caption1}>By, Mr. Agiel</Text>
-                <Text style={styles.caption2}>3 Days</Text>
+                <View style={{ flexDirection: "column" }}>
+                  <Text
+
+                    style={{
+                      color: colors.primary,
+                      fontSize: 20,
+                    }}
+                  >
+                    Nama Kelas
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.secondaty2,
+                      fontSize: 16,
+                    }}
+                  >
+                    By, whoo
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <View>
+                    <Text style={{ color: colors.green1 }}>See More</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  padding: 10,
-                  marginRight: 10,
-                }}
-              >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.green1}
-                  size={30}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.buttonClass}>
-            <View style={{ marginRight: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
               <View
                 style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={styles.title}>Bilangan Prima</Text>
-                <Text style={styles.caption1}>By, Mr. Agiel</Text>
-                <Text style={styles.caption2}>3 Days</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
                   flex: 1,
-                  justifyContent: "center",
+                  marginTop: 10,
+                  justifyContent: "space-between",
                   alignItems: "flex-end",
-                  padding: 10,
-                  marginRight: 10,
+                  flexDirection: "row",
                 }}
               >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.green1}
-                  size={30}
-                />
-              </TouchableOpacity>
+                <View>
+                  <Text style={styles.infoTitle}>PRICE</Text>
+                  <View style={styles.infoTextWrapper}>
+                    <Text>30000</Text>
+                    <Text style={styles.infoSubText}> /Session</Text>
+                  </View>
+                </View>
+                <View>
+                  <Text style={styles.infoTitle}>QUOTA</Text>
+                  <View style={styles.infoTextWrapper}>
+                    <Text>3</Text>
+                    <Text style={styles.infoSubText}> /10</Text>
+                  </View>
+                </View>
+                <View>
+                  <Text style={styles.infoTitle}>DURATION</Text>
+                  <View style={styles.infoTextWrapper}>
+                    <Text>3</Text>
+                    <Text style={styles.infoSubText}> Days</Text>
+                  </View>
+
+                </View>
+              </View>
             </View>
           </View>
         </View>
@@ -174,20 +186,42 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 5,
   },
-  buttonClass: {
-    width: "100%",
-    // justifyContent: "center",
-    // alignItems: "center",
-    borderRadius: 10,
-    marginBottom: 20,
+  mainWarpper: {
+    marginTop: 35,
+    margin: 20,
+  },
+  classWarpper: {
     backgroundColor: colors.white,
-    shadowColor: "000",
+    height: 120,
+    width: "100%",
+    marginTop: 20,
+    marginRight: 10,
+    borderRadius: 10,
+    padding: 15,
+    shadowColor: "#000",
     shadowOffset: {
       height: 10,
       width: 0,
     },
     shadowRadius: 10,
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
+  },
+  infoTitle: {
+    fontSize: 12,
+    color: colors.secondaty2,
+  },
+  infoTextWrapper: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    marginTop: 5,
+  },
+  infoText: {
+    fontSize: 20,
+    color: colors.white,
+  },
+  infoSubText: {
+    fontSize: 14,
+    color: colors.secondaty2,
   },
   title: {
     fontSize: 15,

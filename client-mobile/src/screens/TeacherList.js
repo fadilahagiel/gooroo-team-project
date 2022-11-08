@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -10,15 +11,38 @@ import {
   Dimensions,
   Image,
   ScrollView,
+  AsyncStorage,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { Modalize } from "react-native-modalize";
 import colors from "../config/colors";
 import subjects from "../dummySubject";
+import { serverUrl } from "../config/url";
+
+import axios from "axios";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function TeacherList({ navigation }) {
+  const [teachers, setTeachers] = useState([]);
+  const fetchTeachers = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/teachers`,
+        headers: {
+          access_token,
+        },
+      });
+      setTeachers(data);
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchTeachers();
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -41,301 +65,75 @@ export default function TeacherList({ navigation }) {
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
       >
         <View style={{ margin: 20, marginTop: 50, marginBottom: 80 }}>
-          <View>
-            <View style={styles.cardContainer}>
-              <View>
-                <Image
-                  source={require("../assets/face_demo.png")}
-                  style={styles.cardImageContainer}
-                />
-              </View>
-              <View style={styles.cardDetailContainer}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flex: 2 }}>
-                    <Text
+          {teachers.map((el) => {
+            return (
+              <View key={el.id}>
+                <View style={styles.cardContainer}>
+                  <View>
+                    <Image
+                      source={{ uri: el.image }}
+                      style={styles.cardImageContainer}
+                    />
+                  </View>
+                  <View style={styles.cardDetailContainer}>
+                    <View
                       style={{
-                        // fontWeight: "bold",
-                        color: colors.primary,
-                        fontSize: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
                       }}
                     >
-                      Mr. Fadilah Agiel
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1, alignItems: "flex-end" }}>
-                    <Text style={styles.infoTitle}>RATING</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3.5</Text>
-                      <Text style={styles.infoSubText}>/5</Text>
+                      <View style={{ flex: 2 }}>
+                        <Text
+                          style={{
+                            // fontWeight: "bold",
+                            color: colors.primary,
+                            fontSize: 20,
+                          }}
+                        >
+                          {el.fullName}
+                        </Text>
+                      </View>
+                      <View style={{ flex: 1, alignItems: "flex-end" }}>
+                        <Text style={styles.infoTitle}>RATING</Text>
+                        <View style={styles.infoTextWrapper}>
+                          <Text style={styles.infoText}>
+                            {el.averageRating}
+                          </Text>
+                          <Text style={styles.infoSubText}>/10</Text>
+                        </View>
+                      </View>
                     </View>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ marginTop: 10 }}>
-                    <Text style={styles.infoTitle}>TOTAL CLASS</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3</Text>
-                      <Text style={styles.infoSubText}> Classes</Text>
-                    </View>
-                  </View>
-                  <TouchableOpacity
-                    style={{ justifyContent: "flex-end" }}
-                    onPress={() => navigation.navigate("TeacherDetail")}
-                  >
-                    <View>
-                      <Text style={{ color: colors.green1 }}>See More</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View>
-            <View style={styles.cardContainer}>
-              <View>
-                <Image
-                  source={require("../assets/face_demo.png")}
-                  style={styles.cardImageContainer}
-                />
-              </View>
-              <View style={styles.cardDetailContainer}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flex: 2 }}>
-                    <Text
+                    <View
                       style={{
-                        // fontWeight: "bold",
-                        color: colors.primary,
-                        fontSize: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
                       }}
                     >
-                      Mr. Fadilah Agiel
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1, alignItems: "flex-end" }}>
-                    <Text style={styles.infoTitle}>RATING</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3.5</Text>
-                      <Text style={styles.infoSubText}>/5</Text>
+                      <View style={{ marginTop: 10 }}>
+                        <Text style={styles.infoTitle}>TOTAL CLASS</Text>
+                        <View style={styles.infoTextWrapper}>
+                          <Text style={styles.infoText}>
+                            {el?.Classes?.length}
+                          </Text>
+                          <Text style={styles.infoSubText}> Classes</Text>
+                        </View>
+                      </View>
+                      <TouchableOpacity
+                        style={{ justifyContent: "flex-end" }}
+                        onPress={() =>
+                          navigation.navigate("TeacherDetail", { id: el.id })
+                        }
+                      >
+                        <View>
+                          <Text style={{ color: colors.green1 }}>See More</Text>
+                        </View>
+                      </TouchableOpacity>
                     </View>
                   </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ marginTop: 10 }}>
-                    <Text style={styles.infoTitle}>TOTAL CLASS</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3</Text>
-                      <Text style={styles.infoSubText}> Classes</Text>
-                    </View>
-                  </View>
-                  <TouchableOpacity
-                    style={{ justifyContent: "flex-end" }}
-                    onPress={() => navigation.navigate("TeacherDetail")}
-                  >
-                    <View>
-                      <Text style={{ color: colors.green1 }}>See More</Text>
-                    </View>
-                  </TouchableOpacity>
                 </View>
               </View>
-            </View>
-          </View>
-          <View>
-            <View style={styles.cardContainer}>
-              <View>
-                <Image
-                  source={require("../assets/face_demo.png")}
-                  style={styles.cardImageContainer}
-                />
-              </View>
-              <View style={styles.cardDetailContainer}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flex: 2 }}>
-                    <Text
-                      style={{
-                        // fontWeight: "bold",
-                        color: colors.primary,
-                        fontSize: 20,
-                      }}
-                    >
-                      Mr. Fadilah Agiel
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1, alignItems: "flex-end" }}>
-                    <Text style={styles.infoTitle}>RATING</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3.5</Text>
-                      <Text style={styles.infoSubText}>/5</Text>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ marginTop: 10 }}>
-                    <Text style={styles.infoTitle}>TOTAL CLASS</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3</Text>
-                      <Text style={styles.infoSubText}> Classes</Text>
-                    </View>
-                  </View>
-                  <TouchableOpacity
-                    style={{ justifyContent: "flex-end" }}
-                    onPress={() => navigation.navigate("TeacherDetail")}
-                  >
-                    <View>
-                      <Text style={{ color: colors.green1 }}>See More</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View>
-            <View style={styles.cardContainer}>
-              <View>
-                <Image
-                  source={require("../assets/face_demo.png")}
-                  style={styles.cardImageContainer}
-                />
-              </View>
-              <View style={styles.cardDetailContainer}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flex: 2 }}>
-                    <Text
-                      style={{
-                        // fontWeight: "bold",
-                        color: colors.primary,
-                        fontSize: 20,
-                      }}
-                    >
-                      Mr. Fadilah Agiel
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1, alignItems: "flex-end" }}>
-                    <Text style={styles.infoTitle}>RATING</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3.5</Text>
-                      <Text style={styles.infoSubText}>/5</Text>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ marginTop: 10 }}>
-                    <Text style={styles.infoTitle}>TOTAL CLASS</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3</Text>
-                      <Text style={styles.infoSubText}> Classes</Text>
-                    </View>
-                  </View>
-                  <TouchableOpacity
-                    style={{ justifyContent: "flex-end" }}
-                    onPress={() => navigation.navigate("TeacherDetail")}
-                  >
-                    <View>
-                      <Text style={{ color: colors.green1 }}>See More</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View>
-            <View style={styles.cardContainer}>
-              <View>
-                <Image
-                  source={require("../assets/face_demo.png")}
-                  style={styles.cardImageContainer}
-                />
-              </View>
-              <View style={styles.cardDetailContainer}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flex: 2 }}>
-                    <Text
-                      style={{
-                        // fontWeight: "bold",
-                        color: colors.primary,
-                        fontSize: 20,
-                      }}
-                    >
-                      Mr. Fadilah Agiel
-                    </Text>
-                  </View>
-                  <View style={{ flex: 1, alignItems: "flex-end" }}>
-                    <Text style={styles.infoTitle}>RATING</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3.5</Text>
-                      <Text style={styles.infoSubText}>/5</Text>
-                    </View>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ marginTop: 10 }}>
-                    <Text style={styles.infoTitle}>TOTAL CLASS</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text style={styles.infoText}>3</Text>
-                      <Text style={styles.infoSubText}> Classes</Text>
-                    </View>
-                  </View>
-                  <TouchableOpacity
-                    style={{ justifyContent: "flex-end" }}
-                    onPress={() => navigation.navigate("TeacherDetail")}
-                  >
-                    <View>
-                      <Text style={{ color: colors.green1 }}>See More</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View>
+            );
+          })}
         </View>
       </Modalize>
     </SafeAreaView>
