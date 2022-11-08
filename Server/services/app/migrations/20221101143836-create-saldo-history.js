@@ -24,15 +24,6 @@ module.exports = {
       balance: {
         type: Sequelize.INTEGER,
       },
-      TransactionId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Transactions",
-          key: "id",
-        },
-        onUpdate: "cascade",
-        onDelete: "cascade",
-      },
       category: {
         type: Sequelize.STRING,
       },

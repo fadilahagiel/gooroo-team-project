@@ -62,13 +62,27 @@ class Controller {
     }
   }
 
-  static async getMyClasses(req, res, next) {
+  static async statusOnProgress(req, res, next) {
+    try {
+      const { id } = req.params;
+      const classFound = await Class.findOne({ where: { id } });
+      if (!classFound) {
+        throw { name: "class not found" };
+      }
+      await Class.update({ status: "on progress" }, { where: { id } });
+      res.status(200).json({ message: `Success update class's status` });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getMyClassesTeacher(req, res, next) {
     try {
       const { id } = req.user;
-      const teacher = await Teacher.findOne({ where: { UserId: id } });
-      if (!teacher) {
-        throw { name: "invalid_credentials" };
+      if (req.user.role != "teacher") {
+        throw { name: "forbidden" };
       }
+      const teacher = await Teacher.findOne({ where: { UserId: id } });
       const classes = await Class.findAll({ where: { TeacherId: teacher.id } });
       res.status(200).json(classes);
     } catch (error) {
@@ -96,7 +110,6 @@ class Controller {
         .status(200)
         .json({ message: `Success delete class ${findClass.name}` });
     } catch (error) {
-      console.log(error, "ini error");
       next(error);
     }
   }
@@ -145,48 +158,33 @@ class Controller {
     }
   }
 
-  // static async buyClass(req, res, next) {
-  //   try {
-  //     const { price } = req.params;
-  //     const findUser = await User.findOne({
-  //       where: {
-  //         id: req.user.id,
-  //       },
-  //       include: Student,
-  //     });
-
-  //     let snap = new midtransClient.Snap({
-  //       // Set to true if you want Production Environment (accept real transaction).
-  //       isProduction: false,
-  //       serverKey: "SB-Mid-server-4SbP9885175rZWTHMq1UcYPu",
-  //     });
-
-  //     let parameter = {
-  //       transaction_details: {
-  //         order_id: new Date(),
-  //         gross_amount: price,
-  //       },
-  //       credit_card: {
-  //         secure: true,
-  //       },
-  //       customer_details: {
-  //         full_name: findUser.Student.fullName,
-  //         email: findUser.email,
-  //       },
-  //     };
-
-  //     snap.createTransaction(parameter).then((transaction) => {
-  //       // transaction token
-  //       // let transactionToken = transaction.token;
-  //       // console.log("transactionToken:", transactionToken);
-  //       res.status(200).json({ transaction });
-  //     });
-  //     // console.log(findUser);
-  //     // res.status(200).json(findUser);
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // }
+  static async getMyClassesStudent(req, res, next) {
+    try {
+      const { id } = req.user;
+      if (req.user.role != "student") {
+        throw { name: "forbidden" };
+      }
+      console.log(id, "ini id");
+      const findStudent = await Student.findOne({
+        where: {
+          UserId: id,
+        },
+      });
+      const findTransaction = await Transaction.findAll({
+        where: {
+          StudentId: findStudent.id,
+        },
+        include: Class,
+      });
+      console.log(findTransaction);
+      const findClasses = findTransaction.map((el) => {
+        return el.Class;
+      });
+      res.status(200).json(findClasses);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;

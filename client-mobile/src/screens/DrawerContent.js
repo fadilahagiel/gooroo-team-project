@@ -1,17 +1,7 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, AsyncStorage } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
-import {
-  useTheme,
-  Avatar,
-  Title,
-  Caption,
-  Paragraph,
-  Drawer,
-  Text,
-  TouchableRipple,
-  Switch,
-} from "react-native-paper";
+import { Avatar, Title, Caption, Paragraph, Drawer } from "react-native-paper";
 
 import { AuthContext } from "../components/context";
 
@@ -21,6 +11,10 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 
 export function DrawerContent(props) {
   const { signOut } = React.useContext(AuthContext);
+  const submitLogout = async () => {
+    await AsyncStorage.clear();
+    signOut();
+  };
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -55,7 +49,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <MatrialIcon name="home" color={color} size={size} />
+                <MatrialIcon
+                  name="home"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Home"
               onPress={() => {
@@ -65,7 +63,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon name="user" color={color} size={size} />
+                <FeatherIcon
+                  name="user"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Profile"
               onPress={() => {
@@ -75,7 +77,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon name="bookmark" color={color} size={size} />
+                <FeatherIcon
+                  name="bookmark"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Bookmark"
               onPress={() => {
@@ -85,7 +91,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <MatrialIcon name="history" color={color} size={size} />
+                <MatrialIcon
+                  name="history"
+                  color={color}
+                  size={size}
+                />
               )}
               label="History"
               onPress={() => {
@@ -95,7 +105,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon name="settings" color={color} size={size} />
+                <FeatherIcon
+                  name="settings"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Settings"
               onPress={() => {
@@ -108,12 +122,14 @@ export function DrawerContent(props) {
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem
           icon={({ color, size }) => (
-            <Icon name="ios-exit-outline" color={color} size={size} />
+            <Icon
+              name="ios-exit-outline"
+              color={color}
+              size={size}
+            />
           )}
           label="Sign Out"
-          onPress={() => {
-            signOut();
-          }}
+          onPress={submitLogout}
         />
       </Drawer.Section>
     </View>

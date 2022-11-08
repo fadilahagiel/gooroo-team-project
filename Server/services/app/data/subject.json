@@ -1,6 +1,50 @@
 [
     {
-        "name": "Matematika",
+        "name": "Matematika Dasar",
+        "image": "https://i.imgur.com/exCifuB.png"
+    },
+    {
+        "name": "Matematika Saintek",
         "image": "gambar.com"
+    },
+    {
+        "name": "Fisika",
+        "image": "https://i.imgur.com/mAA4k0V.png"
+    },
+    {
+        "name": "Kimia",
+        "image": "https://i.imgur.com/JuSQT5f.png"
+    },
+    {
+        "name": "Biologi",
+        "image": "https://i.imgur.com/jN1Pvl4.png"
+    },
+    {
+        "name": "Ekonomi",
+        "image": "https://i.imgur.com/BA0FvMx.png"
+    },
+    {
+        "name": "Geografi",
+        "image": "https://i.imgur.com/K5nA59J.png"
+    },
+    {
+        "name": "Akuntansi",
+        "image": "https://i.imgur.com/aHdTPsJ.png"
+    },
+    {
+        "name": "Sosiologi",
+        "image": "https://i.imgur.com/zfxe5Rd.png"
+    },
+    {
+        "name": "Sejarah",
+        "image": "https://imgur.com/zYZKGnS.png"
+    },
+    {
+        "name": "Bahasa Indonesia",
+        "image": "https://i.imgur.com/UpkTX9P.jpg"
+    },
+    {
+        "name": "Bahasa Inggris",
+        "image": "https://i.imgur.com/ibJE4sb.png"
     }
 ]

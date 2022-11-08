@@ -4,9 +4,11 @@ const router = require("express").Router();
 
 router.post("/", ClassController.postClass);
 router.get("/", ClassController.getClass);
-router.get("/myClasses", ClassController.getMyClasses);
+router.get("/myClassesStudent", ClassController.getMyClassesStudent);
+router.get("/myClasses", ClassController.getMyClassesTeacher);
 router.get("/:ClassId", ClassController.getOneClass);
 router.delete("/:ClassId", AuthTeacher, ClassController.deleteClass);
 router.put("/:ClassId", AuthTeacher, ClassController.updateClass);
+router.patch("/:id", ClassController.statusOnProgress);
 
 module.exports = router;

@@ -23,7 +23,6 @@ class StudentController {
   static async postStudent(req, res, next) {
     try {
       const { id, role } = req.user;
-      console.log(req.body, req.file);
       const studentFound = await Student.findOne({ where: { UserId: id } })
       if (studentFound) {
         throw { name: "already_have" };

@@ -1,6 +1,6 @@
 const { comparePass } = require("../helpers/bcrypt");
 const { createToken } = require("../helpers/jwt");
-const { User, Student } = require("../models");
+const { User, Student, SaldoHistory } = require("../models");
 
 const midtransClient = require("midtrans-client");
 
@@ -11,7 +11,6 @@ class UserController {
       const newUser = await User.create({ username, email, password, role });
       res.status(201).json({ id: newUser.id, email: newUser.email });
     } catch (error) {
-      console.log(error, "ini error");
       next(error);
     }
   }
@@ -56,7 +55,6 @@ class UserController {
       });
 
       let snap = new midtransClient.Snap({
-        // Set to true if you want Production Environment (accept real transaction).
         isProduction: false,
         serverKey: "SB-Mid-server-4SbP9885175rZWTHMq1UcYPu",
       });
@@ -70,7 +68,7 @@ class UserController {
           secure: true,
         },
         customer_details: {
-          full_name: findUser.Student.fullName,
+          full_name: findUser.username,
           email: findUser.email,
         },
       };
@@ -101,7 +99,14 @@ class UserController {
           },
         }
       );
-      res.status(200).json({ message: `success top up saldo ${saldo}` });
+      await SaldoHistory.create({
+        amount: saldo,
+        UserId: id,
+        description: `Top up saldo ${saldo}`,
+        balance: newSaldo,
+        category: "debit",
+      });
+      await res.status(200).json({ message: `success top up saldo ${saldo}` });
     } catch (error) {
       next(error);
     }
