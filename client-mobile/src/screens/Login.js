@@ -51,10 +51,10 @@ export default function Login({ navigation }) {
       await AsyncStorage.setItem("access_token", dataTes.access_token);
 
       // console.log({ userId: dataTes.id });
-      const contacts = await fetchContacts(dataTes.id);
-      // console.log({ dataTes });
-      socket.auth = dataTes;
-      socket.connect();
+      // const contacts = await fetchContacts(dataTes.id);
+      // // console.log({ dataTes });
+      // socket.auth = dataTes;
+      // socket.connect();
       signIn();
     } catch (error) {
       // console.log(error, "error");
