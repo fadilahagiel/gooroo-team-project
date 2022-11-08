@@ -26,6 +26,7 @@ const windowHeight = Dimensions.get("window").height;
 
 export default function ClassList({ route, navigation }) {
   const [classes, setClasses] = useState([])
+
   useEffect(() => {
     const fetch = async () => {
       const { data } = await axios({
@@ -82,92 +83,53 @@ export default function ClassList({ route, navigation }) {
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
       >
         <View style={{ margin: 20, marginTop: 50, marginBottom: 10 }}>
-          <View style={styles.buttonClass}>
-            <View style={{ marginRight: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
-              <View
-                style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={styles.title}>Pecahan</Text>
-                <Text style={styles.caption1}>By, Mr. Agiel</Text>
-                <Text style={styles.caption2}>3 Days</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  padding: 10,
+          {classes.map((el) => {
+            return (
+              <View key={el.id} style={styles.buttonClass}>
+                <View style={{ marginRight: 5, flexDirection: "row" }}>
+                  <Image
+                    source={require("../assets/face_demo.png")}
+                    style={{
+                      flex: 1,
+                      width: 70,
+                      height: 70,
+                      marginRight: 10,
+                      borderRadius: 5,
+                    }}
+                  />
+                  <View
+                    style={{
+                      flex: 2,
+                      marginLeft: 5,
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Text style={styles.title}>{el.name}</Text>
+                    <Text style={styles.caption1}>By. {el?.Teacher?.fullName }</Text>
+                    <Text style={styles.caption2}>{el?.Schedules?.length} Days</Text>
+                  </View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("ClassDetail", { id: el.id})}
+                    style={{
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "flex-end",
+                      padding: 10,
 
-                  marginRight: 10,
-                }}
-              >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.green1}
-                  size={30}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.buttonClass}>
-            <View style={{ marginRight: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
-              <View
-                style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-
-                <Text style={styles.title}>Bilangan Prima</Text>
-                <Text style={styles.caption1}>By, Mr. Agiel</Text>
-                <Text style={styles.caption2}>3 Days</Text>
+                      marginRight: 10,
+                    }}
+                  >
+                    <IonIcon
+                      name="ios-enter-outline"
+                      color={colors.green1}
+                      size={30}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  padding: 10,
-                  marginRight: 10,
-                }}
-              >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.green1}
-                  size={30}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
+            )
+          })}
         </View>
       </Modalize>
     </SafeAreaView>

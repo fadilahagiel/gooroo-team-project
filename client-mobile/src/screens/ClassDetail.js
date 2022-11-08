@@ -17,17 +17,21 @@ import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import serverUrl from "../config/url";
+
+
 
 export default function ClassDetail({ navigation, route }) {
   // const { id } = route.params;
   const [oneClass, setOneClass] = useState({});
   const [scheduleLength, setScheduleLength] = useState(0);
+  console.log(route.params.id);
   const fetchOneClass = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
       const { data } = await axios({
         method: "get",
-        url: `https://335d-139-228-102-240.ap.ngrok.io/classes/1`,
+        url: `${serverUrl}/classes/${route.params.id}`,
         headers: {
           access_token,
         },

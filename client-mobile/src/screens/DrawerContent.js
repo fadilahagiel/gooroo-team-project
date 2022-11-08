@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, AsyncStorage } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Avatar, Title, Caption, Paragraph, Drawer } from "react-native-paper";
@@ -8,9 +8,43 @@ import { AuthContext } from "../components/context";
 import Icon from "react-native-vector-icons/Ionicons";
 import MatrialIcon from "react-native-vector-icons/Octicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import axios from "axios";
+import serverUrl from "../config/url";
 
 export function DrawerContent(props) {
   const { signOut } = React.useContext(AuthContext);
+  const [user, setUser] = useState({})
+  const [student, setStudent] = useState({})
+  const fetchUser = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        url: `${serverUrl}/users`,
+        method: 'GET',
+        headers: {
+          access_token
+        }
+      })
+      const res = await axios({
+        url: `${serverUrl}/students`,
+        method: 'get',
+        headers: {
+          access_token
+        }
+      })
+      setStudent(res.data)
+      setUser(data)
+      console.log(student.image);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchUser()
+  }, [])
+ 
+
   const submitLogout = async () => {
     await AsyncStorage.clear();
     signOut();
@@ -22,12 +56,12 @@ export function DrawerContent(props) {
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
               <Avatar.Image
-                source={require("../assets/face_demo.png")}
+                source={require("../assets/1646813133699.jpg")}
                 size={50}
               />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                <Title style={styles.title}>Username</Title>
-                <Caption style={styles.caption}>Full Name</Caption>
+                <Title style={styles.title}>{user.username}</Title>
+                <Caption style={styles.caption}>{ student.fullName}</Caption>
               </View>
             </View>
             <View style={styles.row}>

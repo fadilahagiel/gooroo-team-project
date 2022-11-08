@@ -17,6 +17,7 @@ import colors from "../config/colors";
 import axios from "axios";
 import { AsyncStorage } from "react-native";
 import { AuthContext } from "../components/context";
+import serverUrl from "../config/url";
 
 const { height } = Dimensions.get("window");
 
@@ -32,19 +33,18 @@ export default function Login({ navigation }) {
 
   const submitLogin = async () => {
     // console.log(data);
+
     try {
       const resdata = await axios({
         method: "post",
-        url: `https://335d-139-228-102-240.ap.ngrok.io/users/login`,
+        url: `${serverUrl}/users/login`,
         data: {
           email: data.email,
           password: data.password,
         },
       });
       await AsyncStorage.setItem("access_token", resdata.data.access_token);
-      // console.log(resdata.data);
       const token = await AsyncStorage.getItem("access_token");
-      console.log(token, "token");
       signIn();
     } catch (error) {
       console.log(error, "error");
