@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import colors from "../config/colors";
-import subjects from "../dummySubject";
+import subjects from "../../assets/dummySubject";
 import serverUrl from "../config/url";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
