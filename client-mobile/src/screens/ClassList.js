@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CardClasses from "../components/cardClasses";
 import IonIcon from "react-native-vector-icons/Ionicons";
-import serverUrl from "../config/url";
+import {serverUrl} from "../config/url";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 

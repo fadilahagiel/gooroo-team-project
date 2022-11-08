@@ -17,7 +17,7 @@ import colors from "../config/colors";
 import axios from "axios";
 import { AsyncStorage } from "react-native";
 import { AuthContext } from "../components/context";
-import serverUrl from "../config/url";
+import {serverUrl} from "../config/url";
 
 const { height } = Dimensions.get("window");
 
@@ -47,7 +47,8 @@ export default function Login({ navigation }) {
         if (data.message) {
           throw data.message
         }
-        return data
+        signIn()
+        return AsyncStorage.setItem("access_token", data.access_token)
       })
       .catch((error) => {
         return alert(error)

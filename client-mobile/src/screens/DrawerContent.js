@@ -9,7 +9,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MatrialIcon from "react-native-vector-icons/Octicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import axios from "axios";
-import serverUrl from "../config/url";
+import {serverUrl} from "../config/url";
 
 export function DrawerContent(props) {
   const { signOut } = React.useContext(AuthContext);
@@ -56,7 +56,7 @@ export function DrawerContent(props) {
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
               <Avatar.Image
-                source={require("../assets/1646813133699.jpg")}
+                source={{uri:student.image}}
                 size={50}
               />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>

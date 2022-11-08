@@ -17,7 +17,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import serverUrl from "../config/url";
+import {serverUrl} from "../config/url";
 
 export default function ClassDetail({ navigation, route }) {
   // const { id } = route.params;
