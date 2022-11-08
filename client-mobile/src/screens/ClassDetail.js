@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
   AsyncStorage,
+  Alert
 } from "react-native";
 import { Modalize } from "react-native-modalize";
 import colors from "../config/colors";
@@ -21,18 +22,35 @@ import axios from "axios";
 import { serverUrl } from "../config/url";
 
 export default function ClassDetail({ navigation, route }) {
-  // const { id } = route.params;
-  // console.log(navigation, "INI NAVIGATI");
+  const confirmation = () => {
+    Alert.alert(
+      `${oneClass.name}`,
+      `Are you sure want to enroll this class ?`,
+      [
+        {
+          text: 'No',
+          onPress: () => {
+            
+          }
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            buyClass(oneClass.id)
+          }
+        }
+      ]
+    )
+  }
   const [oneClass, setOneClass] = useState({});
   const [isBuy, setIsBuy] = useState(false);
+  const [isLoved, setIsLoved] = useState(false)
   const fetchOneClass = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
       const { data } = await axios({
         method: "get",
-
         url: `${serverUrl}/classes/${route.params.id}`,
-
         headers: {
           access_token,
         },
@@ -42,6 +60,48 @@ export default function ClassDetail({ navigation, route }) {
       console.log(error);
     }
   };
+
+  const addWishlist = async() => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: `${serverUrl}/wishlists/${oneClass.id}`,
+        headers: {
+          access_token,
+        },
+      });
+      alert("Success add to wishlist")
+      setIsLoved(true)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const removeWishlist = () => {
+    setIsLoved(false)
+  }
+
+  // useEffect(() => {
+  //   addWishlist();
+  // }, [isLoved]);
+
+  const cekWishlist = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/wishlists/cek/${route.params.id}`,
+        headers: {
+          access_token,
+        },
+      });
+      setIsLoved(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const cekTransaction = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -54,7 +114,7 @@ export default function ClassDetail({ navigation, route }) {
       });
       setIsBuy(data);
     } catch (error) {
-      console.log();
+      console.log(error);
     }
   };
   const buyClass = async (id) => {
@@ -73,13 +133,15 @@ export default function ClassDetail({ navigation, route }) {
     }
   };
   useEffect(() => {
+    cekWishlist()
     fetchOneClass();
     cekTransaction();
   }, []);
 
-  const enrollHandler = (id) => {
-    console.log(id);
-  }
+  useEffect(() => {
+    cekWishlist();
+  }, [isLoved]);
+
   useEffect(() => {
     cekTransaction();
   }, [isBuy]);
@@ -89,7 +151,7 @@ export default function ClassDetail({ navigation, route }) {
       <View style={styles.header}>
         <Image
           source={{
-            uri: "https://saintif.com/wp-content/uploads/2019/05/Bilangan-prima.png",
+            uri: oneClass?.Subject?.image,
           }}
           style={styles.image_logo}
         />
@@ -99,11 +161,22 @@ export default function ClassDetail({ navigation, route }) {
         style={styles.footer}
         animation="fadeInUpBig">
         <View style={styles.heartWrapper}>
-          <Entypo
-            name="heart"
-            size={32}
-            color="tomato"
-          />
+          {isLoved ? (
+            <Entypo
+              name="heart"
+              size={32}
+              color="tomato"
+              onPress={removeWishlist}
+            />
+          ) : (
+              <Entypo
+                onPress={addWishlist}
+                name="heart"
+                size={32}
+                color="grey"
+              />
+          )}
+          
         </View>
         <ScrollView>
           <View style={styles.descriptionWrapper}>
@@ -144,12 +217,13 @@ export default function ClassDetail({ navigation, route }) {
 
             {isBuy ? (
               <TouchableOpacity style={styles.buttonWrapperTrue}>
-                <Text style={styles.buttonTextTrue}>Enroll This Class</Text>
+                <Text style={styles.buttonTextTrue}>Already Enroll</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
                 style={styles.buttonWrapperFalse}
-                onPress={() => buyClass(oneClass.id)}>
+                  onPress={confirmation}>
+                {/* onPress={() => buyClass(oneClass.id)}> */}
                 <Text style={styles.buttonTextFalse}>Enroll This Class</Text>
               </TouchableOpacity>
             )}

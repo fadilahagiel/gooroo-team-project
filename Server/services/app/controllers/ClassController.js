@@ -164,7 +164,6 @@ class Controller {
       if (req.user.role != "student") {
         throw { name: "forbidden" };
       }
-      console.log(id, "ini id");
       const findStudent = await Student.findOne({
         where: {
           UserId: id,
@@ -176,7 +175,6 @@ class Controller {
         },
         include: Class,
       });
-      console.log(findTransaction);
       const findClasses = findTransaction.map((el) => {
         return el.Class;
       });

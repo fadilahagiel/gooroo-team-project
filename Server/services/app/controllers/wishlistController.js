@@ -5,6 +5,7 @@ const { Wishlist, Class, Subject, Student } = require("../models");
 class Controller {
   static async addWishlist(req, res, next) {
     try {
+      console.log('masuk');
       if (req.user.role != "student") {
         throw { name: "forbidden" };
       }
@@ -70,6 +71,27 @@ class Controller {
 
       await Wishlist.destroy({ where: { id: WishlistId } });
       res.status(200).json({ message: `Success delete wishlist` });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async findWishlist(req, res, next) {
+    try {
+      const { ClassId } = req.params;
+      const UserId = req.user.id;
+      const studentFound = await Student.findOne({ where: { UserId } });
+      const findWishlist = await Wishlist.findOne({
+        where: {
+          ClassId,
+          StudentId: studentFound.id,
+        },
+      });
+      if (findWishlist) {
+        res.status(200).json(true);
+      } else {
+        res.status(200).json(false);
+      }
     } catch (error) {
       next(error);
     }
