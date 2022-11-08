@@ -38,8 +38,38 @@ const ProfileStackScreen = ({ navigation }) => {
         component={Profile}
       />
 
-      <ProfileStack.Screen name="TopUp" component={TopUp} />
-      <ProfileStack.Screen name="Midtrans" component={Midtrans} />
+      <ProfileStack.Screen
+        options={{
+          title: "My Profile",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-arrow-back"
+              backgroundColor={colors.secondaty2}
+              onPress={() => {
+                navigation.navigate("Profile");
+              }}
+            />
+          ),
+        }}
+        name="TopUp"
+        component={TopUp}
+      />
+      <ProfileStack.Screen
+        options={{
+          title: "My Profile",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-arrow-back"
+              backgroundColor={colors.secondaty2}
+              onPress={() => {
+                navigation.navigate("TopUp");
+              }}
+            />
+          ),
+        }}
+        name="Midtrans"
+        component={Midtrans}
+      />
     </ProfileStack.Navigator>
   );
 };

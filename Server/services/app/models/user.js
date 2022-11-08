@@ -24,11 +24,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: {
           args: true,
-          msg: "username already used",
+          msg: "Username already used",
         },
         validate: {
-          notEmpty: { msg: "please input username" },
-          notNull: { msg: "please input username" },
+          notEmpty: { msg: "Please input username" },
+          notNull: { msg: "Please input username" },
         },
       },
       email: {
@@ -36,27 +36,34 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: {
           args: true,
-          msg: "email alrady exist"
+          msg: "Email alrady exist"
         },
         validate: {
-          notEmpty: { msg: `please input email` },
-          notNull: { msg: `please input email` },
-          isEmail: { msg: `must be email format` },
+          notEmpty: { msg: `Please input email` },
+          notNull: { msg: `Please input email` },
+          isEmail: { msg: `Email must be in email format` },
         },
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          notEmpty: { msg: `please input password` },
-          notNull: { msg: `please input password` },
+          notEmpty: { msg: `Please input password` },
+          notNull: { msg: `Please input password` },
           len: {
             args: [5, 255],
-            msg: `password must be more than 5 character`,
+            msg: `Password must be more than 5 character`,
           },
         },
       },
-      role: { type: DataTypes.STRING },
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: { msg: `Please input role` },
+          notNull: { msg: `Please input role` },
+        },
+      },
       saldo: { type: DataTypes.INTEGER },
     },
     {

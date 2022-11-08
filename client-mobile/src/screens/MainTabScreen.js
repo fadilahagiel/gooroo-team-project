@@ -31,7 +31,7 @@ const HomeStackScreen = ({ navigation }) => {
     >
       <HomeStack.Screen
         options={{
-          title: "My Home",
+          title: "Goo Roo",
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -45,8 +45,38 @@ const HomeStackScreen = ({ navigation }) => {
         name="HomeScreen"
         component={HomeScreen}
       />
-      <HomeStack.Screen name="ClassList" component={ClassList} />
-      <HomeStack.Screen name="ClassDetail" component={ClassDetail} />
+      <HomeStack.Screen
+        options={{
+          title: "Goo Roo",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-arrow-back"
+              backgroundColor={colors.primary}
+              onPress={() => {
+                navigation.navigate("HomeScreen");
+              }}
+            />
+          ),
+        }}
+        name="ClassList"
+        component={ClassList}
+      />
+      <HomeStack.Screen
+        options={{
+          title: "Goo Roo",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-arrow-back"
+              backgroundColor={colors.primary}
+              onPress={() => {
+                navigation.navigate("ClassList");
+              }}
+            />
+          ),
+        }}
+        name="ClassDetail"
+        component={ClassDetail}
+      />
     </HomeStack.Navigator>
   );
 };
@@ -66,7 +96,7 @@ const TeacherStackScreen = ({ navigation }) => {
     >
       <TeacherStack.Screen
         options={{
-          title: "Teacher List",
+          title: "Goo Roo",
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -80,7 +110,38 @@ const TeacherStackScreen = ({ navigation }) => {
         name="Teacher List"
         component={TeacherList}
       />
-      <TeacherStack.Screen name="TeacherDetail" component={TeacherDetail} />
+      <TeacherStack.Screen
+        options={{
+          title: "Goo Roo",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-arrow-back"
+              backgroundColor={colors.primary}
+              onPress={() => {
+                navigation.navigate("Teacher List");
+              }}
+            />
+          ),
+        }}
+        name="TeacherDetail"
+        component={TeacherDetail}
+      />
+      <TeacherStack.Screen
+        options={{
+          title: "Goo Roo",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-arrow-back"
+              backgroundColor={colors.primary}
+              onPress={() => {
+                navigation.navigate("TeacherDetail");
+              }}
+            />
+          ),
+        }}
+        name="ClassDetail"
+        component={ClassDetail}
+      />
     </TeacherStack.Navigator>
   );
 };

@@ -1,9 +1,19 @@
-const { Class, Transaction, Student, Teacher, User, Wishlist } = require("../models");
+const {
+  Class,
+  Transaction,
+  Student,
+  Teacher,
+  User,
+  Wishlist,
+  Schedule,
+} = require("../models");
 
 class Controller {
   static async showAllTeachers(req, res, next) {
     try {
-      const teachers = await Teacher.findAll();
+      const teachers = await Teacher.findAll({
+        include: Class,
+      });
       res.status(200).json(teachers);
     } catch (error) {
       next(error);
@@ -12,15 +22,17 @@ class Controller {
 
   static async showMyDetail(req, res, next) {
     try {
-      const { id } = req.user
-      console.log(id, 'ini id');
+      const { id } = req.user;
+      console.log(id, "ini id");
       const teacher = await Teacher.findOne({
-        where: { UserId: id }, include: {
+        where: { UserId: id },
+        include: {
           model: Class,
           include: {
             model: Transaction,
           },
-        } })
+        },
+      });
       if (!teacher) {
         throw { name: "invalid_credentials" };
       }
@@ -32,15 +44,14 @@ class Controller {
 
   static async showOneTeacher(req, res, next) {
     try {
-      const { id } = req.params
+      const { id } = req.params;
       const teacher = await Teacher.findOne({
-        where: { id: id }, include: {
+        where: { id: id },
+        include: {
           model: Class,
-          include: {
-            model: Transaction,
-          },
+          include: [Transaction, Schedule],
         },
-      })
+      });
       if (!teacher) {
         throw { name: "invalid_credentials" };
       }
@@ -54,10 +65,10 @@ class Controller {
   static async postTeacher(req, res, next) {
     try {
       const { id, role } = req.user;
-      if (role !== 'teacher') {
-        throw { name: "forbidden"}
+      if (role !== "teacher") {
+        throw { name: "forbidden" };
       }
-      const teacherFound = await Teacher.findOne({ where: { UserId: id } })
+      const teacherFound = await Teacher.findOne({ where: { UserId: id } });
 
       if (teacherFound) {
         throw { name: "already_have" };
@@ -80,15 +91,12 @@ class Controller {
     try {
       const { id, role } = req.user;
       const { fullName, bio, image } = req.body;
-      const teacher = await Teacher.findOne({where: {UserId:id}});
+      const teacher = await Teacher.findOne({ where: { UserId: id } });
       if (!teacher) {
         throw { name: "invalid_credentials" };
       }
-      
-      await Teacher.update(
-        { fullName, bio, image },
-        { where: { UserId:id } }
-      );
+
+      await Teacher.update({ fullName, bio, image }, { where: { UserId: id } });
       res.status(200).json({ message: `Teacher profile has been updated` });
     } catch (error) {
       next(error);

@@ -7,6 +7,9 @@ const classRouter = require("./classRouter");
 const StudentRouter = require("./studentRouter");
 const authentication = require("../middlewares/authentication");
 const scheduleRouter = require("./scheduleRouter");
+const contactRouter = require("./contactRouter");
+
+router.get("/", (req, res) => res.status(200).json("Welcome to Gooroo"));
 
 router.use("/users", userRouter);
 
@@ -18,5 +21,6 @@ router.use("/teachers", TeacherRouter);
 router.use("/students", StudentRouter);
 router.use("/classes", classRouter);
 router.use("/schedules", scheduleRouter);
+router.use("/contacts", contactRouter);
 
 module.exports = router;
