@@ -22,13 +22,12 @@ import { serverUrl } from "../config/url";
 import { fetchContacts } from "../actions";
 import socket from "../config/socket";
 
-
 const { height } = Dimensions.get("window");
 
 export default function Login({ navigation }) {
   const [data, setData] = React.useState({
-    email: "budi@mail.com",
-    password: "12345",
+    email: "",
+    password: "",
     check_textInputChange: false,
     secureTextEntry: true,
   });
@@ -44,20 +43,22 @@ export default function Login({ navigation }) {
         body: JSON.stringify({ email: data.email, password: data.password }),
       });
       const dataTes = await response.json();
+
       if (dataTes.message) {
         throw dataTes.message;
       }
+
       await AsyncStorage.setItem("access_token", dataTes.access_token);
 
       // console.log({ userId: dataTes.id });
       const contacts = await fetchContacts(dataTes.id);
-      console.log({ dataTes });
+      // console.log({ dataTes });
       socket.auth = dataTes;
       socket.connect();
       signIn();
     } catch (error) {
-      console.log(error);
-      return alert(error);
+      // console.log(error, "error");
+      return alert(error, "ini dari error");
     }
   };
 
