@@ -62,9 +62,9 @@ export default function ClassList({ navigation }) {
         alwaysOpen={560}
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
       >
-        <View style={{ margin: 20, marginTop: 50 }}>
+        <View style={{ margin: 20, marginTop: 50, marginBottom: 10 }}>
           <View style={styles.buttonClass}>
-            <View style={{ margin: 5, flexDirection: "row" }}>
+            <View style={{ marginRight: 5, flexDirection: "row" }}>
               <Image
                 source={require("../assets/face_demo.png")}
                 style={{
@@ -84,8 +84,8 @@ export default function ClassList({ navigation }) {
                 }}
               >
                 <Text style={styles.title}>Pecahan</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
+                <Text style={styles.caption1}>By, Mr. Agiel</Text>
+                <Text style={styles.caption2}>3 Days</Text>
               </View>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ClassDetail")}
@@ -94,100 +94,19 @@ export default function ClassList({ navigation }) {
                   justifyContent: "center",
                   alignItems: "flex-end",
                   padding: 10,
-                }}
-              >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.buttonClass}>
-            <View style={{ margin: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
                   marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
-              <View
-                style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={styles.title}>Perkalian</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  padding: 10,
                 }}
               >
                 <IonIcon
                   name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
+                  color={colors.green1}
+                  size={30}
                 />
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.buttonClass}>
-            <View style={{ margin: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
-                  marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
-              <View
-                style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={styles.title}>Bilangan Bulat</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  padding: 10,
-                }}
-              >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.buttonClass}>
-            <View style={{ margin: 5, flexDirection: "row" }}>
+            <View style={{ marginRight: 5, flexDirection: "row" }}>
               <Image
                 source={require("../assets/face_demo.png")}
                 style={{
@@ -207,8 +126,8 @@ export default function ClassList({ navigation }) {
                 }}
               >
                 <Text style={styles.title}>Bilangan Prima</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
+                <Text style={styles.caption1}>By, Mr. Agiel</Text>
+                <Text style={styles.caption2}>3 Days</Text>
               </View>
               <TouchableOpacity
                 onPress={() => navigation.navigate("ClassDetail")}
@@ -217,53 +136,13 @@ export default function ClassList({ navigation }) {
                   justifyContent: "center",
                   alignItems: "flex-end",
                   padding: 10,
-                }}
-              >
-                <IonIcon
-                  name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.buttonClass}>
-            <View style={{ margin: 5, flexDirection: "row" }}>
-              <Image
-                source={require("../assets/face_demo.png")}
-                style={{
-                  flex: 1,
-                  width: 70,
-                  height: 70,
                   marginRight: 10,
-                  borderRadius: 5,
-                }}
-              />
-              <View
-                style={{
-                  flex: 2,
-                  marginLeft: 5,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                }}
-              >
-                <Text style={styles.title}>Integral</Text>
-                <Text style={styles.caption}>By, Mr. Agiel</Text>
-                <Text style={styles.caption}>3 Days</Text>
-              </View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("ClassDetail")}
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-end",
-                  padding: 10,
                 }}
               >
                 <IonIcon
                   name="ios-enter-outline"
-                  color={colors.white}
-                  size={40}
+                  color={colors.green1}
+                  size={30}
                 />
               </TouchableOpacity>
             </View>
@@ -285,15 +164,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingTop: 15,
   },
-  footer: {
-    flex: 3.5,
-    backgroundColor: colors.white,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    opacity: 0.9,
-  },
   text_header: {
     color: colors.white,
     fontWeight: "bold",
@@ -309,18 +179,31 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     // alignItems: "center",
     borderRadius: 10,
-    backgroundColor: colors.secondaty2,
-    marginBottom: 10,
+    marginBottom: 20,
+    backgroundColor: colors.white,
+    shadowColor: "000",
+    shadowOffset: {
+      height: 10,
+      width: 0,
+    },
+    shadowRadius: 10,
+    shadowOpacity: 0.1,
   },
   title: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
-    color: colors.white,
+    color: colors.primary,
   },
-  caption: {
+  caption1: {
     marginTop: 5,
     fontSize: 14,
     lineHeight: 14,
     color: colors.secondary1,
+  },
+  caption2: {
+    marginTop: 5,
+    fontSize: 14,
+    lineHeight: 14,
+    color: colors.green2,
   },
 });
