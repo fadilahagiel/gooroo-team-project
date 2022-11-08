@@ -30,28 +30,29 @@ export default function Login({ navigation }) {
   });
   const { signIn } = React.useContext(AuthContext);
 
-
   const submitLogin = async () => {
-    // console.log(data);
-    fetch(`${serverUrl}/users/login`, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({email: data.email, password: data.password})
-    })
-      .then((response) => {
-        return response.json()
-      })
-      .then((data) => {
-        if (data.message) {
-          throw data.message
-        }
-        return data
-      })
-      .catch((error) => {
-        return alert(error)
-      })
+    console.log(data);
+    try {
+      console.log("cek");
+      console.log(data, "cek email");
+      // console.log(data.password);
+      const response = await fetch(`${serverUrl}/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: data.email, password: data.password }),
+      });
+      const dataTes = await response.json();
+      if (dataTes.message) {
+        throw dataTes.message;
+      }
+      await AsyncStorage.setItem("access_token", dataTes.access_token);
+      console.log("tes bawah");
+      signIn();
+    } catch (error) {
+      return alert(error);
+    }
   };
 
   const textInputChange = (val) => {
