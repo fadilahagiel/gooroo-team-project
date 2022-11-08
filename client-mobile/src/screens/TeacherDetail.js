@@ -38,9 +38,6 @@ export default function ClassDetail({ navigation, route }) {
         method: "get",
         url: `${serverUrl}/users/${idUser}`,
       });
-
-      console.log(data, "dari teacher detail");
-      console.log(data.fullName, "dari teacher detail");
       setTeacher(data);
       setTeacher({ ...data, username: user.data.username });
     } catch (error) {
@@ -78,7 +75,7 @@ export default function ClassDetail({ navigation, route }) {
               }}>
               <Text style={styles.infoTitle}>RATING</Text>
               <View style={styles.infoTextWrapper}>
-                <Text style={styles.infoText}>{}</Text>
+                <Text style={styles.infoText}>{teacher.averageRating}</Text>
                 <Text style={styles.infoSubText}> /10</Text>
               </View>
             </View>
@@ -90,7 +87,6 @@ export default function ClassDetail({ navigation, route }) {
                 alignItems: "flex-end",
                 // marginTop: 10,
               }}>
-              {/* <Text style={{ color: colors.secondaty2 }}>CONTACT ME!</Text> */}
               <TouchableOpacity>
                 <Icon
                   name="ios-chatbox-ellipses-outline"
@@ -103,13 +99,9 @@ export default function ClassDetail({ navigation, route }) {
           <View style={{ flex: 1 }}>
             <View style={styles.descriptionWrapper}>
               <Text style={styles.descriptionTitle}>Bio</Text>
-              <Text style={styles.descriptionText}>
-                adnk;fnuwafnjfnwjdn;dmla'dmwaelfbniw
-                fewhfbywDN'DM,SAnIDLEBFHWLbfiwfenejw;fnW;
-              </Text>
+              <Text style={styles.descriptionText}>{teacher.bio}</Text>
             </View>
           </View>
-          {/* <View style={{ flex: 3 }}></View> */}
           <View style={styles.row}></View>
         </View>
       </Animatable.View>
@@ -121,158 +113,57 @@ export default function ClassDetail({ navigation, route }) {
           horizontal
           showsHorizontalScrollIndicator={false}
           style={{ height: 400 }}>
-          <View style={styles.classWarpper}>
-            <View style={{ flex: 1 }}>
+          {teacher?.Classes?.map((el) => {
+            return (
               <View
-                style={{
-                  flex: 2,
-                  justifyContent: "space-between",
-                }}>
-                <View>
-                  <Text
+                key={el.id}
+                style={styles.classWarpper}>
+                <View style={{ flex: 1 }}>
+                  <View
                     style={{
-                      color: colors.primary,
-                      fontSize: 20,
+                      flex: 2,
+                      justifyContent: "space-between",
                     }}>
-                    Bilangan Prima
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
-                <Text style={styles.infoTitle}>DURATION</Text>
-                <View style={styles.infoTextWrapper}>
-                  <Text>3</Text>
-                  <Text style={styles.infoSubText}> Sessions</Text>
-                </View>
-              </View>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                }}
-                onPress={() => alert("to class detail")}>
-                <View>
-                  <Text style={{ color: colors.green1 }}>See More</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.classWarpper}>
-            <View style={{ flex: 1 }}>
-              <View
-                style={{
-                  flex: 2,
-                  justifyContent: "space-between",
-                }}>
-                <View>
-                  <Text
+                    <View>
+                      <Text
+                        style={{
+                          color: colors.primary,
+                          fontSize: 20,
+                        }}>
+                        {el.name}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
                     style={{
-                      color: colors.primary,
-                      fontSize: 20,
+                      justifyContent: "flex-end",
+                      alignItems: "flex-end",
                     }}>
-                    Bilangan Prima
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
-                <Text style={styles.infoTitle}>DURATION</Text>
-                <View style={styles.infoTextWrapper}>
-                  <Text>3</Text>
-                  <Text style={styles.infoSubText}> Sessions</Text>
-                </View>
-              </View>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                }}
-                onPress={() => {}}>
-                <View>
-                  <Text style={{ color: colors.green1 }}>See More</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.classWarpper}>
-            <View style={{ flex: 1 }}>
-              <View
-                style={{
-                  flex: 2,
-                  justifyContent: "space-between",
-                }}>
-                <View>
-                  <Text
+                    <Text style={styles.infoTitle}>DURATION</Text>
+                    <View style={styles.infoTextWrapper}>
+                      <Text>{el?.Schedules?.length}</Text>
+                      <Text style={styles.infoSubText}> Sessions</Text>
+                    </View>
+                  </View>
+                  <TouchableOpacity
                     style={{
-                      color: colors.primary,
-                      fontSize: 20,
-                    }}>
-                    Bilangan Prima
-                  </Text>
+                      flex: 1,
+                      justifyContent: "flex-end",
+                      alignItems: "flex-end",
+                    }}
+                    onPress={() =>
+                      navigation.navigate("ClassDetail", {
+                        id: el.id,
+                      })
+                    }>
+                    <View>
+                      <Text style={{ color: colors.green1 }}>See More</Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </View>
-              <View
-                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
-                <Text style={styles.infoTitle}>DURATION</Text>
-                <View style={styles.infoTextWrapper}>
-                  <Text>3</Text>
-                  <Text style={styles.infoSubText}> Sessions</Text>
-                </View>
-              </View>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                }}
-                onPress={() => {}}>
-                <View>
-                  <Text style={{ color: colors.green1 }}>See More</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.classWarpper}>
-            <View style={{ flex: 1 }}>
-              <View
-                style={{
-                  flex: 2,
-                  justifyContent: "space-between",
-                }}>
-                <View>
-                  <Text
-                    style={{
-                      color: colors.primary,
-                      fontSize: 20,
-                    }}>
-                    Bilangan Prima
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{ justifyContent: "flex-end", alignItems: "flex-end" }}>
-                <Text style={styles.infoTitle}>DURATION</Text>
-                <View style={styles.infoTextWrapper}>
-                  <Text>3</Text>
-                  <Text style={styles.infoSubText}> Sessions</Text>
-                </View>
-              </View>
-              <TouchableOpacity
-                style={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
-                }}
-                onPress={() => {}}>
-                <View>
-                  <Text style={{ color: colors.green1 }}>See More</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          </View>
+            );
+          })}
         </ScrollView>
       </Animatable.View>
       <Modalize
