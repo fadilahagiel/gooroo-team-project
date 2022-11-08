@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from 'axios'
+import axios from "axios";
 import {
   Text,
   View,
@@ -10,35 +10,35 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
-  AsyncStorage
+  AsyncStorage,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import colors from "../config/colors";
 import subjects from "../../assets/dummySubject";
-import {serverUrl} from "../config/url";
+import { serverUrl } from "../config/url";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function Home({ navigation }) {
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
   const fetchUser = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
       const { data } = await axios({
         url: `${serverUrl}/users`,
-        method: 'GET',
+        method: "GET",
         headers: {
-          access_token
-        }
-      })
-      setUser(data)
+          access_token,
+        },
+      });
+      setUser(data);
     } catch (error) {
       // console.log(error);
     }
-  }
+  };
   useEffect(() => {
-    fetchUser()
-  }, [])
+    fetchUser();
+  }, []);
 
   const SubjectCard = ({ subject }) => {
     return (
@@ -67,6 +67,14 @@ export default function Home({ navigation }) {
               fontSize: 20,
               fontWeight: "bold",
               paddingBottom: 5,
+              color: colors.green2,
+              shadowColor: "#000",
+              shadowOffset: {
+                height: 2,
+                width: 2,
+              },
+              shadowOpacity: 1,
+              shadowRadius: 1,
             }}
           >
             {subject.name}

@@ -17,21 +17,33 @@ import colors from "../config/colors";
 import axios from "axios";
 import { AsyncStorage } from "react-native";
 import { AuthContext } from "../components/context";
-import {serverUrl} from "../config/url";
+import { serverUrl } from "../config/url";
+
+import { fetchContacts } from "../actions";
+import socket from "../config/socket";
+
 
 const { height } = Dimensions.get("window");
 
 export default function Login({ navigation }) {
   const [data, setData] = React.useState({
-    email: "",
-    password: "",
+    email: "budi@mail.com",
+    password: "12345",
     check_textInputChange: false,
     secureTextEntry: true,
   });
   const { signIn } = React.useContext(AuthContext);
 
   const submitLogin = async () => {
+<<<<<<< HEAD
     try {
+=======
+    // console.log(data);
+    try {
+      // console.log("cek");
+      // console.log(data, "cek email");
+      // console.log(data.password);
+>>>>>>> ac224a5ff2a0af4ad67d71f787ea4fd8b45576c5
       const response = await fetch(`${serverUrl}/users/login`, {
         method: "POST",
         headers: {
@@ -44,8 +56,17 @@ export default function Login({ navigation }) {
         throw dataTes.message;
       }
       await AsyncStorage.setItem("access_token", dataTes.access_token);
+<<<<<<< HEAD
+=======
+      // console.log({ userId: dataTes.id });
+      const contacts = await fetchContacts(dataTes.id);
+      console.log({ dataTes });
+      socket.auth = dataTes;
+      socket.connect();
+>>>>>>> ac224a5ff2a0af4ad67d71f787ea4fd8b45576c5
       signIn();
     } catch (error) {
+      console.log(error);
       return alert(error);
     }
   };
@@ -87,46 +108,35 @@ export default function Login({ navigation }) {
   return (
     <ImageBackground
       source={require("../assets/a71e16012a4afef2f46af95065a5623f.jpg")}
-      style={styles.container}>
+      style={styles.container}
+    >
       <View style={styles.header}>
         <Text style={styles.text_header}>Welcome Back!</Text>
       </View>
-      <Animatable.View
-        style={styles.footer}
-        animation="fadeInUpBig">
+      <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <TouchableOpacity
           style={{
             alignItems: "flex-end",
             borderRadius: 50,
           }}
-          onPress={() => navigation.navigate("WelcomeScreen")}>
-          <FontAwesome
-            name="times-circle"
-            color={colors.primary}
-            size={30}
-          />
+          onPress={() => navigation.navigate("WelcomeScreen")}
+        >
+          <FontAwesome name="times-circle" color={colors.primary} size={30} />
         </TouchableOpacity>
         <Text style={[styles.text_footer]}>Email</Text>
         <View style={styles.action}>
-          <FontAwesome
-            name="envelope-o"
-            color={colors.secondaty2}
-            size={20}
-          />
+          <FontAwesome name="envelope-o" color={colors.secondaty2} size={20} />
           <TextInput
             placeholder="Email"
             placeholderTextColor={colors.secondaty2}
             style={[styles.textInput]}
             autoCapitalize="none"
             onChangeText={(val) => textInputChange(val)}
+            value={data.email}
           />
           {data.check_textInputChange ? (
             <Animatable.View animation="bounceIn">
-              <Feather
-                name="check-circle"
-                color="green"
-                size={20}
-              />
+              <Feather name="check-circle" color="green" size={20} />
             </Animatable.View>
           ) : null}
         </View>
@@ -137,49 +147,38 @@ export default function Login({ navigation }) {
             {
               marginTop: 35,
             },
-          ]}>
+          ]}
+        >
           Password
         </Text>
         <View style={styles.action}>
-          <Feather
-            name="lock"
-            color={colors.secondaty2}
-            size={20}
-          />
+          <Feather name="lock" color={colors.secondaty2} size={20} />
           <TextInput
             placeholder="Your Password"
             secureTextEntry={data.secureTextEntry ? true : false}
             placeholderTextColor={colors.secondaty2}
             style={[styles.textInput]}
             onChangeText={(val) => handlePasswordChange(val)}
+            value={data.password}
           />
           <TouchableOpacity onPress={updateSecureTextEntry}>
             {data.secureTextEntry ? (
-              <Feather
-                name="eye-off"
-                color="grey"
-                size={20}
-              />
+              <Feather name="eye-off" color="grey" size={20} />
             ) : (
-              <Feather
-                name="eye"
-                color="grey"
-                size={20}
-              />
+              <Feather name="eye" color="grey" size={20} />
             )}
           </TouchableOpacity>
         </View>
         <View style={styles.button}>
-          <TouchableOpacity
-            style={styles.signIn}
-            onPress={() => submitLogin()}>
+          <TouchableOpacity style={styles.signIn} onPress={() => submitLogin()}>
             <Text
               style={[
                 styles.textSign,
                 {
                   color: "#fff",
                 },
-              ]}>
+              ]}
+            >
               Sign In
             </Text>
           </TouchableOpacity>
@@ -193,14 +192,16 @@ export default function Login({ navigation }) {
                 borderWidth: 1,
                 marginTop: 15,
               },
-            ]}>
+            ]}
+          >
             <Text
               style={[
                 styles.textSign,
                 {
                   color: colors.primary,
                 },
-              ]}>
+              ]}
+            >
               Sign Up
             </Text>
           </TouchableOpacity>
