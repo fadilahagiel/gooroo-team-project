@@ -70,11 +70,13 @@ io.on("connection", (socket) => {
     socket.join(roomId);
   });
 
+  // user leave a chatroom
   socket.on("leaveRoom", (roomId) => {
     console.log(`⚡: userId: ${userId}, ${username}, leave room`, roomId);
     socket.leave(roomId);
   });
 
+  // on send text message
   socket.on("sendChat", async (payload) => {
     const { roomId, user, msg } = payload;
     await Chat.updateChat(roomId, user, msg);
@@ -82,28 +84,15 @@ io.on("connection", (socket) => {
     socket.to(roomId).emit("receiveChat", data);
   });
 
-  // socket.broadcast.emit("user connected", {
-  //   userID: socket.id,
-  //   username: socket.username,
-  // });
-
-  // private message
-  // socket.on("private-msg", ({ content, to }) => {
-  //   socket.to(to).emit("private message", {
-  //     content,
-  //     from: socket.id,
-  //   });
-  // });
-
   // notify users upon disconnection
   socket.on("disconnect", () => {
-    // socket.broadcast.emit("user disconnected", socket.id);
     if (role === "student") --onlineStudents;
     if (role === "teacher") --onlineTeachers;
     onlineUsers = onlineUsers.filter((el) => el.userId !== userId);
     console.log(`⚡: userId  ${username} just disconnected!`);
   });
 
+  // on error
   socket.on("connect_error", (err) => {
     console.log(`connect_error due to ${err.message}`);
   });
@@ -151,10 +140,6 @@ app.get("/:userId", async (req, res, next) => {
     res.status(500).send(error);
   }
 });
-
-// server.listen(PORT, () => {
-//   console.log(`Listening to port: ${PORT}`);
-// });
 
 mongoConnect().then(() => {
   server.listen(PORT, () => {

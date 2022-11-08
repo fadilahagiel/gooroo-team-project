@@ -17,7 +17,9 @@ import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {serverUrl} from "../config/url";
+
+import { serverUrl } from "../config/url";
+
 
 export default function ClassDetail({ navigation, route }) {
   // const { id } = route.params;
@@ -54,15 +56,9 @@ export default function ClassDetail({ navigation, route }) {
         />
         <Text style={styles.text_header}>{oneClass.name}</Text>
       </View>
-      <Animatable.View
-        style={styles.footer}
-        animation="fadeInUpBig">
+      <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <View style={styles.heartWrapper}>
-          <Entypo
-            name="heart"
-            size={32}
-            color="tomato"
-          />
+          <Entypo name="heart" size={32} color="tomato" />
         </View>
         <ScrollView>
           <View style={styles.descriptionWrapper}>
@@ -102,7 +98,8 @@ export default function ClassDetail({ navigation, route }) {
           <View style={styles.wrapper}>
             <TouchableOpacity
               style={styles.buttonWrapper}
-              onPress={() => alert("ENROLL!!!!")}>
+              onPress={() => alert("ENROLL!!!!")}
+            >
               <Text style={styles.buttonText}>Enroll This Class</Text>
             </TouchableOpacity>
           </View>

@@ -20,7 +20,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CardClasses from "../components/cardClasses";
 import IonIcon from "react-native-vector-icons/Ionicons";
-import {serverUrl} from "../config/url";
+import { serverUrl } from "../config/url";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -60,11 +61,9 @@ export default function ClassList({ route, navigation }) {
             borderRadius: 30,
             alignItems: "center",
             flexDirection: "row",
-          }}>
-          <Icon
-            size={20}
-            name="search"
-          />
+          }}
+        >
+          <Icon size={20} name="search" />
           <TextInput
             style={{ fontSize: 15, marginLeft: 5 }}
             placeholder="Find Your Perfect Class"
@@ -84,13 +83,12 @@ export default function ClassList({ route, navigation }) {
           backgroundColor: colors.white,
         }}
         alwaysOpen={560}
-        scrollViewProps={{ showsVerticalScrollIndicator: false }}>
+        scrollViewProps={{ showsVerticalScrollIndicator: false }}
+      >
         <View style={{ margin: 20, marginTop: 50, marginBottom: 10 }}>
           {classes.map((el) => {
             return (
-              <View
-                key={el.id}
-                style={styles.buttonClass}>
+              <View key={el.id} style={styles.buttonClass}>
                 <View style={{ marginRight: 5, flexDirection: "row" }}>
                   <Image
                     source={require("../assets/face_demo.png")}
@@ -108,7 +106,8 @@ export default function ClassList({ route, navigation }) {
                       marginLeft: 5,
                       flexDirection: "column",
                       justifyContent: "center",
-                    }}>
+                    }}
+                  >
                     <Text style={styles.title}>{el.name}</Text>
                     <Text style={styles.caption1}>
                       By. {el?.Teacher?.fullName}
@@ -128,7 +127,8 @@ export default function ClassList({ route, navigation }) {
                       padding: 10,
 
                       marginRight: 10,
-                    }}>
+                    }}
+                  >
                     <IonIcon
                       name="ios-enter-outline"
                       color={colors.green1}

@@ -19,22 +19,26 @@ import { AsyncStorage } from "react-native";
 import { AuthContext } from "../components/context";
 import { serverUrl } from "../config/url";
 
+import { fetchContacts } from "../actions";
+import socket from "../config/socket";
+
+
 const { height } = Dimensions.get("window");
 
 export default function Login({ navigation }) {
   const [data, setData] = React.useState({
-    email: "",
-    password: "",
+    email: "budi@mail.com",
+    password: "12345",
     check_textInputChange: false,
     secureTextEntry: true,
   });
   const { signIn } = React.useContext(AuthContext);
 
   const submitLogin = async () => {
-    console.log(data);
+    // console.log(data);
     try {
-      console.log("cek");
-      console.log(data, "cek email");
+      // console.log("cek");
+      // console.log(data, "cek email");
       // console.log(data.password);
       const response = await fetch(`${serverUrl}/users/login`, {
         method: "POST",
@@ -48,7 +52,11 @@ export default function Login({ navigation }) {
         throw dataTes.message;
       }
       await AsyncStorage.setItem("access_token", dataTes.access_token);
-      console.log("tes bawah");
+      // console.log({ userId: dataTes.id });
+      const contacts = await fetchContacts(dataTes.id);
+      console.log({ dataTes });
+      socket.auth = dataTes;
+      socket.connect();
       signIn();
     } catch (error) {
       console.log(error);
@@ -117,6 +125,7 @@ export default function Login({ navigation }) {
             style={[styles.textInput]}
             autoCapitalize="none"
             onChangeText={(val) => textInputChange(val)}
+            value={data.email}
           />
           {data.check_textInputChange ? (
             <Animatable.View animation="bounceIn">
@@ -143,6 +152,7 @@ export default function Login({ navigation }) {
             placeholderTextColor={colors.secondaty2}
             style={[styles.textInput]}
             onChangeText={(val) => handlePasswordChange(val)}
+            value={data.password}
           />
           <TouchableOpacity onPress={updateSecureTextEntry}>
             {data.secureTextEntry ? (
