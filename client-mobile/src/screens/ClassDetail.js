@@ -9,7 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
   AsyncStorage,
-  Alert
+  Alert,
 } from "react-native";
 import { Modalize } from "react-native-modalize";
 import colors from "../config/colors";
@@ -28,23 +28,21 @@ export default function ClassDetail({ navigation, route }) {
       `Are you sure want to enroll this class ?`,
       [
         {
-          text: 'No',
-          onPress: () => {
-            
-          }
+          text: "No",
+          onPress: () => {},
         },
         {
-          text: 'Yes',
+          text: "Yes",
           onPress: () => {
-            buyClass(oneClass.id)
-          }
-        }
+            buyClass(oneClass.id);
+          },
+        },
       ]
-    )
-  }
+    );
+  };
   const [oneClass, setOneClass] = useState({});
   const [isBuy, setIsBuy] = useState(false);
-  const [isLoved, setIsLoved] = useState(false)
+  const [isLoved, setIsLoved] = useState(false);
   const fetchOneClass = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -61,7 +59,7 @@ export default function ClassDetail({ navigation, route }) {
     }
   };
 
-  const addWishlist = async() => {
+  const addWishlist = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
       const { data } = await axios({
@@ -71,16 +69,16 @@ export default function ClassDetail({ navigation, route }) {
           access_token,
         },
       });
-      alert("Success add to wishlist")
-      setIsLoved(true)
+      alert("Success add to wishlist");
+      setIsLoved(true);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const removeWishlist = () => {
-    setIsLoved(false)
-  }
+    setIsLoved(false);
+  };
 
   // useEffect(() => {
   //   addWishlist();
@@ -133,7 +131,7 @@ export default function ClassDetail({ navigation, route }) {
     }
   };
   useEffect(() => {
-    cekWishlist()
+    cekWishlist();
     fetchOneClass();
     cekTransaction();
   }, []);
@@ -169,14 +167,13 @@ export default function ClassDetail({ navigation, route }) {
               onPress={removeWishlist}
             />
           ) : (
-              <Entypo
-                onPress={addWishlist}
-                name="heart"
-                size={32}
-                color="grey"
-              />
+            <Entypo
+              onPress={addWishlist}
+              name="heart"
+              size={32}
+              color="grey"
+            />
           )}
-          
         </View>
         <ScrollView>
           <View style={styles.descriptionWrapper}>
@@ -214,7 +211,6 @@ export default function ClassDetail({ navigation, route }) {
             </View>
           </View>
           <View style={styles.wrapper}>
-
             {isBuy ? (
               <TouchableOpacity style={styles.buttonWrapperTrue}>
                 <Text style={styles.buttonTextTrue}>Already Enroll</Text>
@@ -222,7 +218,7 @@ export default function ClassDetail({ navigation, route }) {
             ) : (
               <TouchableOpacity
                 style={styles.buttonWrapperFalse}
-                  onPress={confirmation}>
+                onPress={confirmation}>
                 {/* onPress={() => buyClass(oneClass.id)}> */}
                 <Text style={styles.buttonTextFalse}>Enroll This Class</Text>
               </TouchableOpacity>
