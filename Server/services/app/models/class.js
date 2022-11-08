@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       Class.hasMany(models.Transaction, { foreignKey: "ClassId" });
       Class.belongsTo(models.Subject, { foreignKey: "SubjectId" });
       Class.hasMany(models.Schedule, { foreignKey: "ClassId" });
-      Class.belongsTo(models.Teacher,{foreignKey:"TeacherId"})
+      Class.belongsTo(models.Teacher, { foreignKey: "TeacherId" });
     }
   }
   Class.init(

@@ -5,6 +5,7 @@ const {
   Teacher,
   User,
   Wishlist,
+  Schedule,
 } = require("../models");
 
 class Controller {
@@ -48,9 +49,7 @@ class Controller {
         where: { id: id },
         include: {
           model: Class,
-          include: {
-            model: Transaction,
-          },
+          include: [Transaction, Schedule],
         },
       });
       if (!teacher) {

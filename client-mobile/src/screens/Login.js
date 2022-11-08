@@ -18,8 +18,10 @@ import axios from "axios";
 import { AsyncStorage } from "react-native";
 import { AuthContext } from "../components/context";
 import { serverUrl } from "../config/url";
+
 import { fetchContacts } from "../actions";
 import socket from "../config/socket";
+
 
 const { height } = Dimensions.get("window");
 
@@ -57,6 +59,7 @@ export default function Login({ navigation }) {
       socket.connect();
       signIn();
     } catch (error) {
+      console.log(error);
       return alert(error);
     }
   };

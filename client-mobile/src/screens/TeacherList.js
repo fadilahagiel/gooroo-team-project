@@ -18,6 +18,7 @@ import { Modalize } from "react-native-modalize";
 import colors from "../config/colors";
 import subjects from "../dummySubject";
 import { serverUrl } from "../config/url";
+
 import axios from "axios";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -34,10 +35,9 @@ export default function TeacherList({ navigation }) {
           access_token,
         },
       });
-      console.log(data);
       setTeachers(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function TeacherList({ navigation }) {
                 <View style={styles.cardContainer}>
                   <View>
                     <Image
-                      source={require("../assets/face_demo.png")}
+                      source={{ uri: el.image }}
                       style={styles.cardImageContainer}
                     />
                   </View>

@@ -113,8 +113,6 @@ const App = () => {
         ) : (
           <RootStackScreen />
         )}
-
-        {/*  */}
       </NavigationContainer>
     </AuthContext.Provider>
   );

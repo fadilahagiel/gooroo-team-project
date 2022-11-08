@@ -33,7 +33,7 @@ export default function Home({ navigation }) {
       });
       setUser(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
   useEffect(() => {
@@ -67,6 +67,14 @@ export default function Home({ navigation }) {
               fontSize: 20,
               fontWeight: "bold",
               paddingBottom: 5,
+              color: colors.green2,
+              shadowColor: "#000",
+              shadowOffset: {
+                height: 2,
+                width: 2,
+              },
+              shadowOpacity: 1,
+              shadowRadius: 1,
             }}
           >
             {subject.name}
