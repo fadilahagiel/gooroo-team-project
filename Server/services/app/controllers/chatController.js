@@ -14,7 +14,6 @@ class ChatController {
       const contacts = response.data;
       res.status(200).send(contacts);
     } catch (error) {
-      // console.log(error);
       next(error);
     }
   }

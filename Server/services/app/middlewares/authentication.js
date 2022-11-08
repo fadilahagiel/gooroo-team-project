@@ -7,6 +7,7 @@ const authentication = async (req, res, next) => {
     if (!access_token) {
       throw { name: "invalid_token" };
     }
+    console.log('masuk', access_token);
     const payload = verifyToken(access_token);
     const user = await User.findByPk(payload.id);
     if (!user) {

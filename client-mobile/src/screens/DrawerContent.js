@@ -25,6 +25,7 @@ export function DrawerContent(props) {
           access_token
         }
       })
+      console.log(data);
       const res = await axios({
         url: `${serverUrl}/students`,
         method: 'get',
@@ -34,7 +35,6 @@ export function DrawerContent(props) {
       })
       setStudent(res.data)
       setUser(data)
-      console.log(student.image);
     } catch (error) {
       console.log(error);
     }

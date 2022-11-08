@@ -31,11 +31,7 @@ export default function Login({ navigation }) {
   const { signIn } = React.useContext(AuthContext);
 
   const submitLogin = async () => {
-    console.log(data);
     try {
-      console.log("cek");
-      console.log(data, "cek email");
-      // console.log(data.password);
       const response = await fetch(`${serverUrl}/users/login`, {
         method: "POST",
         headers: {
@@ -48,7 +44,6 @@ export default function Login({ navigation }) {
         throw dataTes.message;
       }
       await AsyncStorage.setItem("access_token", dataTes.access_token);
-      console.log("tes bawah");
       signIn();
     } catch (error) {
       return alert(error);
