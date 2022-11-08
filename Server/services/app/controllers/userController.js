@@ -37,6 +37,7 @@ class UserController {
         access_token: access_token,
         username: user.username,
         id: user.id,
+        role: user.role,
       });
     } catch (error) {
       next(error);

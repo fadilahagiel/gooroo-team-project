@@ -54,10 +54,10 @@ class Controller {
   static async postTeacher(req, res, next) {
     try {
       const { id, role } = req.user;
-      if (role !== 'teacher') {
-        throw { name: "forbidden"}
+      if (role !== "teacher") {
+        throw { name: "forbidden" };
       }
-      const teacherFound = await Teacher.findOne({ where: { UserId: id } })
+      const teacherFound = await Teacher.findOne({ where: { UserId: id } });
 
       if (teacherFound) {
         throw { name: "already_have" };
@@ -80,15 +80,12 @@ class Controller {
     try {
       const { id, role } = req.user;
       const { fullName, bio, image } = req.body;
-      const teacher = await Teacher.findOne({where: {UserId:id}});
+      const teacher = await Teacher.findOne({ where: { UserId: id } });
       if (!teacher) {
         throw { name: "invalid_credentials" };
       }
-      
-      await Teacher.update(
-        { fullName, bio, image },
-        { where: { UserId:id } }
-      );
+
+      await Teacher.update({ fullName, bio, image }, { where: { UserId: id } });
       res.status(200).json({ message: `Teacher profile has been updated` });
     } catch (error) {
       next(error);
