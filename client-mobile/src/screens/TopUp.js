@@ -10,7 +10,7 @@ import {
   AsyncStorage,
 } from "react-native";
 import axios from "axios";
-
+import serverUrl from "../config/url";
 export default function TopUp({ navigation }) {
   const [price, setPrice] = useState("");
 
@@ -22,7 +22,7 @@ export default function TopUp({ navigation }) {
         const access_token = await AsyncStorage.getItem("access_token");
 
         const { data } = await axios({
-          url: `https://335d-139-228-102-240.ap.ngrok.io/users/topup`,
+          url: `${serverUrl}/users/topup`,
           method: "post",
           data: {
             price: prc,
