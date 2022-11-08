@@ -31,7 +31,7 @@ const HomeStackScreen = ({ navigation }) => {
     >
       <HomeStack.Screen
         options={{
-          title: "My Home",
+          title: "Goo Roo",
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -66,7 +66,7 @@ const TeacherStackScreen = ({ navigation }) => {
     >
       <TeacherStack.Screen
         options={{
-          title: "Teacher List",
+          title: "Goo Roo",
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
@@ -81,6 +81,7 @@ const TeacherStackScreen = ({ navigation }) => {
         component={TeacherList}
       />
       <TeacherStack.Screen name="TeacherDetail" component={TeacherDetail} />
+      <TeacherStack.Screen name="ClassDetail" component={ClassDetail} />
     </TeacherStack.Navigator>
   );
 };
