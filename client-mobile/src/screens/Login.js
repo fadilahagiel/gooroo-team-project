@@ -35,15 +35,7 @@ export default function Login({ navigation }) {
   const { signIn } = React.useContext(AuthContext);
 
   const submitLogin = async () => {
-<<<<<<< HEAD
     try {
-=======
-    // console.log(data);
-    try {
-      // console.log("cek");
-      // console.log(data, "cek email");
-      // console.log(data.password);
->>>>>>> ac224a5ff2a0af4ad67d71f787ea4fd8b45576c5
       const response = await fetch(`${serverUrl}/users/login`, {
         method: "POST",
         headers: {
@@ -56,14 +48,12 @@ export default function Login({ navigation }) {
         throw dataTes.message;
       }
       await AsyncStorage.setItem("access_token", dataTes.access_token);
-<<<<<<< HEAD
-=======
+
       // console.log({ userId: dataTes.id });
       const contacts = await fetchContacts(dataTes.id);
       console.log({ dataTes });
       socket.auth = dataTes;
       socket.connect();
->>>>>>> ac224a5ff2a0af4ad67d71f787ea4fd8b45576c5
       signIn();
     } catch (error) {
       console.log(error);

@@ -102,12 +102,8 @@ export default function ClassDetail({ navigation, route }) {
           <View style={styles.wrapper}>
             <TouchableOpacity
               style={styles.buttonWrapper}
-<<<<<<< HEAD
               onPress={() => enrollHandler(oneClass.id)}>
-=======
-              onPress={() => alert("ENROLL!!!!")}
-            >
->>>>>>> ac224a5ff2a0af4ad67d71f787ea4fd8b45576c5
+=
               <Text style={styles.buttonText}>Enroll This Class</Text>
             </TouchableOpacity>
           </View>

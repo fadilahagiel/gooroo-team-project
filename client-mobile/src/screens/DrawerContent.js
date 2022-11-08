@@ -25,34 +25,18 @@ export function DrawerContent(props) {
         url: `${serverUrl}/users`,
         method: "GET",
         headers: {
-<<<<<<< HEAD
-          access_token
-        }
-      })
-      console.log(data);
-=======
           access_token,
         },
       });
->>>>>>> ac224a5ff2a0af4ad67d71f787ea4fd8b45576c5
       const res = await axios({
         url: `${serverUrl}/students`,
         method: "get",
         headers: {
-<<<<<<< HEAD
-          access_token
-        }
-      })
-      setStudent(res.data)
-      setUser(data)
-=======
           access_token,
         },
       });
       setStudent(res.data);
       setUser(data);
-      console.log(student.image);
->>>>>>> ac224a5ff2a0af4ad67d71f787ea4fd8b45576c5
     } catch (error) {
       console.log(error);
     }

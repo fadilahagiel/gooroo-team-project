@@ -1,7 +1,7 @@
 const { Class, Transaction, Student, Teacher, User } = require("../models");
 const axios = require("axios");
 
-const CHAT_API = "http://localhost:3030";
+const CHAT_API = "https://130c-2001-448a-2042-93b9-550a-2fa5-c341-8c0f.ap.ngrok.io";
 
 class ChatController {
   static async findAllContacts(req, res, next) {
@@ -82,7 +82,6 @@ class ChatController {
       const { roomId } = response.data;
       res.status(200).send({ roomId });
     } catch (error) {
-      // console.log(error);
       next(error);
     }
   }
