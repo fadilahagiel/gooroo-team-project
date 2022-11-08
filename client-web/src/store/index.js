@@ -3,9 +3,10 @@ import thunk from 'redux-thunk'
 
 let initialState = {
     classes: [],
+    oneClass: [],
     subjects: [],
     teachers: [],
-    oneClass: []
+    schedules: []
 }
 
 const rootReducer = (state = initialState, action) => {

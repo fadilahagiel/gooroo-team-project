@@ -11,6 +11,8 @@ import WelcomePage from '../pages/WelcomePage'
 import ClassDetail from '../pages/ClassDetail'
 import TeacherProfile from '../pages/TeacherProfile'
 import StudentProfile from '../pages/StudentProfile'
+import ChatPage from '../pages/ChatPage'
+import ChatPage2 from '../pages/ChatPage2'
 
 const router = createBrowserRouter([
     {
@@ -44,6 +46,14 @@ const router = createBrowserRouter([
             {
                 path: 'student-profile',
                 element: <StudentProfile/>
+            },
+            {
+                path: 'chat',
+                element: <ChatPage/>
+            },
+            {
+                path: 'chat2',
+                element: <ChatPage2/>
             },
             {
                 path: 'register',

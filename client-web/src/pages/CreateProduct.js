@@ -20,14 +20,36 @@ function CreateClass() {
 
     })
     
+    const [schedulesInput, setSchedulesInput] = useState([{startDate: '', endDate: ''}])
+
+    // const handleSchedule = (input) => {
+    //     setClassForm({...classForm, Schedules: [...Schedules, input]})
+    // }
+
+    const handleSchedulesInput = (index, e) => {
+        const values = [...schedulesInput];
+        values[index][e.target.name] = e.target.value;
+        setSchedulesInput(values);
+      };
+    
+      const handleAddScheduleInput = () => {
+        setSchedulesInput([...schedulesInput, { imgUrl: "" }]);
+      };
+    
+      const handleRemoveScheduleInput = (index) => {
+        const values = [...schedulesInput];
+        values.splice(index, 1);
+        setSchedulesInput(values);
+      };
 
     const dispatch = useDispatch();
 
     const submitClass = (e) => {
         e.preventDefault();
+        setClassForm({classForm, Schedules: schedulesInput })
         console.log(classForm);
-        dispatch(createClass(classForm))
-        .then(() => navigate('/'))
+        // dispatch(createClass(classForm))
+        // .then(() => navigate('/'))
     }
 
 
@@ -120,6 +142,17 @@ function CreateClass() {
                 <option value={12}>Bahasa Inggris</option>
             </Form.Select>
         </Form.Group><br></br><br></br>
+
+        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Schedule</Form.Label>
+            <button>
+            <Form.Control as="text" rows={3} 
+            placeholder="Enter Class Description.." onChange={(e) => {
+                // console.log(e.target.value);
+                handleAddScheduleInput()
+            }}  />
+            </button>
+        </Form.Group>
 
         <Button variant="primary" type="submit">
             Submit

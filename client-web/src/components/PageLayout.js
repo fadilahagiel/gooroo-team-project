@@ -2,12 +2,9 @@ import {Outlet} from 'react-router-dom'
 import MyNavbar from './Navbar'
 export default function PageLayout () {
     return (
-        <div style={{fontFamily: "monospace", backgroundColor: "rgba(10,10,10,0.2)", height: '100vh'}}>
+        <div style={{fontFamily: "monospace"}}>
             <MyNavbar />
-            <br></br>
-            <br></br>
-            <br></br>
-            <div style={{fontFamily: "monospace"}}>
+            <div style={{paddingTop:" 50px",height: '100vh',fontFamily: "monospace", backgroundColor: "rgba(10,10,10,0.2)"}}>
                 <Outlet />
             </div>
         </div>

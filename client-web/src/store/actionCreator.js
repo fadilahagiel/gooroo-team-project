@@ -1,15 +1,6 @@
-//khusus Heroku function delete dan add product belum bisa, tetapi di localhost sudah bisa semua
-
 export const classesFetchSuccess = (data) => {
     return {
         type: "classes/fetchSuccess",
-        payload: data
-    }
-};
-
-export const oneClassFetchSuccess = (data) => {
-    return {
-        type: "oneClass/fetchSuccess",
         payload: data
     }
 };
@@ -25,6 +16,14 @@ export const teacherFetchSuccess = (data) => {
         type: "teachers/fetchSuccess",
         payload: data
     }
+};
+
+export const oneClassFetchSuccess = (data) => {
+    return {
+        type: "oneClass/fetchSuccess",
+        payload: data
+    }
+    console.log(data, "<<< DATA DI ACTION");
 };
 
 export const fetchCategory = () => {
@@ -105,8 +104,8 @@ export const fetchClasses = () => {
 }
 
 export const fetchOneClass = (id) => {
-    console.log("<<<MASUK ID");
     return (dispatch, getState) => {
+        console.log("<<<MASUK ID");
         const access_token = localStorage.getItem("access_token")
         fetch(`http://localhost:3000/classes/${id}`,{
             method: "GET",
