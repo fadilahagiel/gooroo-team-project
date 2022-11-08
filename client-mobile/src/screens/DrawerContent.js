@@ -10,7 +10,6 @@ import MatrialIcon from "react-native-vector-icons/Octicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import axios from "axios";
 
-
 import { serverUrl } from "../config/url";
 import socket from "../config/socket";
 
@@ -103,7 +102,6 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-
                 <FeatherIcon name="book" color={color} size={size} />
               )}
               label="Contacts"
@@ -128,17 +126,7 @@ export function DrawerContent(props) {
               )}
               label="History"
               onPress={() => {
-                props.navigation.navigate("Settings");
-              }}
-            />
-            <DrawerItem
-              style={{ marginTop: 10 }}
-              icon={({ color, size }) => (
-                <FeatherIcon name="settings" color={color} size={size} />
-              )}
-              label="Settings"
-              onPress={() => {
-                props.navigation.navigate("Settings");
+                props.navigation.navigate("History");
               }}
             />
           </Drawer.Section>
