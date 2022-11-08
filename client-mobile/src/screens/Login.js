@@ -17,7 +17,7 @@ import colors from "../config/colors";
 import axios from "axios";
 import { AsyncStorage } from "react-native";
 import { AuthContext } from "../components/context";
-import serverUrl from "../config/url";
+import {serverUrl} from "../config/url";
 
 const { height } = Dimensions.get("window");
 

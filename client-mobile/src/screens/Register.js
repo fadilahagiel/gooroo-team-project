@@ -19,7 +19,7 @@ import SPACING from "../config/SPACING";
 const { height } = Dimensions.get("window");
 const height_logo = height * 0.28;
 import axios from "axios";
-import serverUrl from "../config/url";
+import {serverUrl} from "../config/url";
 export default function Login({ navigation }) {
   const [data, setData] = React.useState({
     username: "",
@@ -35,7 +35,7 @@ export default function Login({ navigation }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email: data.email, password: data.password, username:data.username })
+      body: JSON.stringify({ email: data.email, password: data.password, username:data.username, role: 'student' })
     })
       .then((response) => {
         return response.json()
@@ -44,11 +44,22 @@ export default function Login({ navigation }) {
         if (data.message) {
           throw data.message
         }
+        navigation.navigate("Login");
         return data
       })
       .catch((error) => {
         return alert(error)
       })
+    // try {
+    //   await axios({
+    //     method: "post",
+    //     url: `${serverUrl}/users/register`,
+    //     data: { ...data, role: "student" },
+    //   });
+    //   navigation.navigate("Login");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const textInputChange = (val) => {

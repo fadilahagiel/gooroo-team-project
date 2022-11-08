@@ -15,7 +15,7 @@ import {
 import * as Animatable from "react-native-animatable";
 import colors from "../config/colors";
 import subjects from "../../assets/dummySubject";
-import serverUrl from "../config/url";
+import {serverUrl} from "../config/url";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -33,7 +33,7 @@ export default function Home({ navigation }) {
       })
       setUser(data)
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
   useEffect(() => {
