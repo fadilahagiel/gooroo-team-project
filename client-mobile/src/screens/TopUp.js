@@ -10,7 +10,7 @@ import {
   AsyncStorage,
 } from "react-native";
 import axios from "axios";
-import serverUrl from "../config/url";
+import { serverUrl } from "../config/url";
 export default function TopUp({ navigation }) {
   const [price, setPrice] = useState("");
 

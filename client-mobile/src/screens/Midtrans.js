@@ -1,7 +1,7 @@
 import { WebView } from "react-native-webview";
 import axios from "axios";
 import { AsyncStorage } from "react-native";
-import serverUrl from "../config/url";
+import { serverUrl } from "../config/url";
 export default function Midtrans({ navigation, route }) {
   const { url, price } = route.params;
   const updateSaldo = async (prc) => {

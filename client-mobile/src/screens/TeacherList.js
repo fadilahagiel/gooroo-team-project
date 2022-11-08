@@ -17,7 +17,7 @@ import * as Animatable from "react-native-animatable";
 import { Modalize } from "react-native-modalize";
 import colors from "../config/colors";
 import subjects from "../dummySubject";
-import serverUrl from "../config/url";
+import { serverUrl } from "../config/url";
 import axios from "axios";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -62,7 +62,8 @@ export default function TeacherList({ navigation }) {
           backgroundColor: colors.white,
         }}
         alwaysOpen={630}
-        scrollViewProps={{ showsVerticalScrollIndicator: false }}>
+        scrollViewProps={{ showsVerticalScrollIndicator: false }}
+      >
         <View style={{ margin: 20, marginTop: 50, marginBottom: 80 }}>
           {teachers.map((el) => {
             return (
@@ -79,14 +80,16 @@ export default function TeacherList({ navigation }) {
                       style={{
                         flexDirection: "row",
                         justifyContent: "space-between",
-                      }}>
+                      }}
+                    >
                       <View style={{ flex: 2 }}>
                         <Text
                           style={{
                             // fontWeight: "bold",
                             color: colors.primary,
                             fontSize: 20,
-                          }}>
+                          }}
+                        >
                           {el.fullName}
                         </Text>
                       </View>
@@ -104,7 +107,8 @@ export default function TeacherList({ navigation }) {
                       style={{
                         flexDirection: "row",
                         justifyContent: "space-between",
-                      }}>
+                      }}
+                    >
                       <View style={{ marginTop: 10 }}>
                         <Text style={styles.infoTitle}>TOTAL CLASS</Text>
                         <View style={styles.infoTextWrapper}>
@@ -118,7 +122,8 @@ export default function TeacherList({ navigation }) {
                         style={{ justifyContent: "flex-end" }}
                         onPress={() =>
                           navigation.navigate("TeacherDetail", { id: el.id })
-                        }>
+                        }
+                      >
                         <View>
                           <Text style={{ color: colors.green1 }}>See More</Text>
                         </View>
