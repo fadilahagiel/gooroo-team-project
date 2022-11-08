@@ -9,12 +9,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MatrialIcon from "react-native-vector-icons/Octicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import axios from "axios";
+
+
 import { serverUrl } from "../config/url";
+import socket from "../config/socket";
 
 export function DrawerContent(props) {
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
+
   const fetchUser = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -46,6 +50,7 @@ export function DrawerContent(props) {
 
   const submitLogout = async () => {
     await AsyncStorage.clear();
+    socket.disconnect();
     signOut();
   };
   return (
@@ -94,6 +99,17 @@ export function DrawerContent(props) {
               label="Profile"
               onPress={() => {
                 props.navigation.navigate("My Profile");
+              }}
+            />
+            <DrawerItem
+              style={{ marginTop: 10 }}
+              icon={({ color, size }) => (
+
+                <FeatherIcon name="book" color={color} size={size} />
+              )}
+              label="Contacts"
+              onPress={() => {
+                props.navigation.navigate("Contacts");
               }}
             />
             <DrawerItem

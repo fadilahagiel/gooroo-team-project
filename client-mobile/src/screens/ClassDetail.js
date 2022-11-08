@@ -17,11 +17,14 @@ import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {serverUrl} from "../config/url";
+
+import { serverUrl } from "../config/url";
 
 export default function ClassDetail({ navigation, route }) {
   // const { id } = route.params;
+  // console.log(navigation, "INI NAVIGATI");
   const [oneClass, setOneClass] = useState({});
+  const [isBuy, setIsBuy] = useState(false);
   const fetchOneClass = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -39,9 +42,43 @@ export default function ClassDetail({ navigation, route }) {
       console.log(error);
     }
   };
+  const cekTransaction = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/transactions/cek/${route.params.id}`,
+        headers: {
+          access_token,
+        },
+      });
+      setIsBuy(data);
+    } catch (error) {
+      console.log();
+    }
+  };
+  const buyClass = async (id) => {
+    try {
+      const access_token = await AsyncStorage.getItem("access_token");
+      await axios({
+        method: "post",
+        url: `${serverUrl}/transactions/${id}`,
+        headers: {
+          access_token,
+        },
+      });
+      setIsBuy(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     fetchOneClass();
+    cekTransaction();
   }, []);
+  useEffect(() => {
+    cekTransaction();
+  }, [isBuy]);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -100,11 +137,17 @@ export default function ClassDetail({ navigation, route }) {
             </View>
           </View>
           <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.buttonWrapper}
-              onPress={() => alert("ENROLL!!!!")}>
-              <Text style={styles.buttonText}>Enroll This Class</Text>
-            </TouchableOpacity>
+            {isBuy ? (
+              <TouchableOpacity style={styles.buttonWrapperTrue}>
+                <Text style={styles.buttonTextTrue}>Enroll This Class</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.buttonWrapperFalse}
+                onPress={() => buyClass(oneClass.id)}>
+                <Text style={styles.buttonTextFalse}>Enroll This Class</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </ScrollView>
       </Animatable.View>
@@ -200,7 +243,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-  buttonWrapper: {
+  buttonWrapperTrue: {
     marginHorizontal: 20,
     marginTop: 40,
     backgroundColor: colors.green2,
@@ -208,7 +251,20 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
   },
-  buttonText: {
+  buttonWrapperFalse: {
+    marginHorizontal: 20,
+    marginTop: 40,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    paddingVertical: 15,
+    borderRadius: 10,
+  },
+  buttonTextTrue: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.white,
+  },
+  buttonTextFalse: {
     fontSize: 18,
     fontWeight: "bold",
     color: colors.white,

@@ -21,6 +21,7 @@ import axios from "axios";
 import CardClasses from "../components/cardClasses";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import { serverUrl } from "../config/url";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
@@ -96,6 +97,7 @@ export default function ClassList({ route, navigation }) {
               >
                 <View style={{ flexDirection: "column" }}>
                   <Text
+
                     style={{
                       color: colors.primary,
                       fontSize: 20,
@@ -152,6 +154,7 @@ export default function ClassList({ route, navigation }) {
                     <Text>3</Text>
                     <Text style={styles.infoSubText}> Days</Text>
                   </View>
+
                 </View>
               </View>
             </View>

@@ -14,7 +14,6 @@ class ChatController {
       const contacts = response.data;
       res.status(200).send(contacts);
     } catch (error) {
-      // console.log(error);
       next(error);
     }
   }
@@ -34,20 +33,45 @@ class ChatController {
     }
   }
 
+  static async getImage(role, id) {
+    try {
+      let result;
+      if (role === "teacher") {
+        result = await Teacher.findAll({ where: { UserId: id } });
+      }
+      if (role === "student") {
+        result = await Student.findAll({ where: { UserId: id } });
+      }
+      result = result[0].image;
+      return result;
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async addContact(req, res, next) {
     try {
       const { contactId } = req.params;
       const contactDetail = await User.findByPk(contactId);
-      // console.log(contactDetail);
+      const contactImage = await ChatController.getImage(
+        contactDetail.role,
+        contactId
+      );
+      const userImage = await ChatController.getImage(
+        req.user.role,
+        req.user.id
+      );
       const user = {
         userId: req.user.id,
         username: req.user.username,
         role: req.user.role,
+        userImage,
       };
       const contact = {
         contactId: contactDetail.id,
         contactName: contactDetail.username,
         contactRole: contactDetail.role,
+        contactImage,
       };
       const payload = { user, contact };
       const response = await axios({
