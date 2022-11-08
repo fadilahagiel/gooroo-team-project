@@ -30,18 +30,26 @@ export default function Login({ navigation }) {
     secureTextEntry: true,
   });
   const register = async () => {
-    try {
-      await axios({
-        method: "post",
-        url: `${serverUrl}/users/register`,
-        data: { ...data, role: "student" },
-      });
-      navigation.navigate("Login");
-    } catch (error) {
-      console.log(error);
-    }
+    fetch(`${serverUrl}/users/register`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: data.email, password: data.password, username:data.username })
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        if (data.message) {
+          throw data.message
+        }
+        return data
+      })
+      .catch((error) => {
+        return alert(error)
+      })
   };
-  const submitRegister = () => {};
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {

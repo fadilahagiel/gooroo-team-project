@@ -33,22 +33,25 @@ export default function Login({ navigation }) {
 
   const submitLogin = async () => {
     // console.log(data);
-
-    try {
-      const resdata = await axios({
-        method: "post",
-        url: `${serverUrl}/users/login`,
-        data: {
-          email: data.email,
-          password: data.password,
-        },
-      });
-      await AsyncStorage.setItem("access_token", resdata.data.access_token);
-      const token = await AsyncStorage.getItem("access_token");
-      signIn();
-    } catch (error) {
-      console.log(error, "error");
-    }
+    fetch(`${serverUrl}/users/login`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({email: data.email, password: data.password})
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((data) => {
+        if (data.message) {
+          throw data.message
+        }
+        return data
+      })
+      .catch((error) => {
+        return alert(error)
+      })
   };
 
   const textInputChange = (val) => {
