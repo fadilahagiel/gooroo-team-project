@@ -25,17 +25,17 @@ export default function MyNavbar () {
   }
 
   return ( 
-    <Navbar variant="dark" expand="lg" style={{fontFamily: "monospace", backgroundColor: "#090B48"  }}>
+    <Navbar variant="dark" expand="lg" style={{fontFamily: "monospace", backgroundColor: "#090B48", paddingRight: '40px'}}>
       {/* <Container> */}
-        <Navbar.Brand href="/"><img className="img-fluid" style={{width: "100px"}} src='/GooRoo_LOGO2.png'/></Navbar.Brand>
+        <Navbar.Brand href="/"><img className="img-fluid" style={{width: "200px"}} src='/GooRoo_LOGO2.png'/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link className={"m-3"} style={{color: 'white'}}to="/">Home</Link>
-            <Link className={"m-3"} style={{color: 'white'}}to={"product"}>Add Class</Link>
-            <Link className={"m-3"} style={{color: 'white'}}to={"categories"}>Subjects</Link>
-            <Link className={"m-3"} style={{color: 'white'}}to={"teacher-profile"}>My Profile</Link>
-            <Link className={"m-3"} style={{color: 'white'}}to={"register"}>Teacher Registration</Link>
+            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to="/">Home</Link>
+            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"product"}>Add Class</Link>
+            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"categories"}>Subjects</Link>
+            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"teacher-profile"}>My Profile</Link>
+            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"register"}>Teacher Registration</Link>
            
           </Nav>
             <Button className={"btn-danger"} style={{backgroundColor: "#A41313"}} onClick={submitLogout}>Logout </Button>

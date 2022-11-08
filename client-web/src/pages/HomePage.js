@@ -1,7 +1,7 @@
 import Table from 'react-bootstrap/Table';
 import { useSelector, useDispatch} from 'react-redux'
 import {useEffect} from 'react'
-import ProductRow from '../components/ProductRow';
+import ProductRow from '../components/ClassRow';
 import Header from '../components/Header'
 import {fetchProducts} from '../store/actionCreator'
 

@@ -10,6 +10,7 @@ import RegisterPage from '../pages/RegisterPage'
 import WelcomePage from '../pages/WelcomePage'
 import ClassDetail from '../pages/ClassDetail'
 import TeacherProfile from '../pages/TeacherProfile'
+import StudentProfile from '../pages/StudentProfile'
 
 const router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path: 'teacher-profile',
                 element: <TeacherProfile/>
+            },
+            {
+                path: 'student-profile',
+                element: <StudentProfile/>
             },
             {
                 path: 'register',
