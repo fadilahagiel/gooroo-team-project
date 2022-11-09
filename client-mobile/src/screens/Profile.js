@@ -22,6 +22,12 @@ import { useFocusEffect } from "@react-navigation/native";
 export default function Profile({ navigation, route }) {
   const [student, setStudent] = useState({});
   const [myClasses, setMyClasses] = useState([]);
+  const [enrolledClasses, setEnrolledClasses] = useState([])
+  const [finishedClasses, setFinishedClasses] = useState([])
+  const [data, setData] = useState({
+    rating: "",
+    testimoni: "",
+  });
   const fetchStudent = async () => {
     try {
       const access_token = await AsyncStorage.getItem("access_token");
@@ -49,6 +55,10 @@ export default function Profile({ navigation, route }) {
         },
       });
       setMyClasses(data);
+      const arr = data.filter(el => el.status != 'done' && el.status != 'collected')
+      setEnrolledClasses(arr)
+      const arrFinished = data.filter(el => el.status == 'done' || el.status == 'collected')
+      setFinishedClasses(arrFinished)
     } catch (error) {
       console.log(error);
     }
@@ -60,12 +70,44 @@ export default function Profile({ navigation, route }) {
     }, [])
   );
 
+  const textInputChange = (val) => {
+    setData({
+      ...data,
+      rating: val,
+    });
+  };
+
+  const testimoniInputChange = (val) => {
+    setData({
+      ...data,
+      testimoni: val,
+    });
+  };
+
+  const response = async (id) => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const { data } = await axios({
+      method: "get",
+      url: `${serverUrl}/transactions/response/${id}`,
+      headers: {
+        access_token,
+      }, 
+    })
+    const transactionId = data.id
+    // const response = await axios({
+    //   method: "put",
+    //   url: `${serverUrl}/transactions/${transactionId}`,
+    //   headers: {
+    //     access_token,
+    //   },
+    // })
+    }
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
         <View style={styles.inner}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={{ alignSelf: "center" }}>
@@ -142,7 +184,7 @@ export default function Profile({ navigation, route }) {
                 showsHorizontalScrollIndicator={false}
                 style={{ height: 170 }}
               >
-                {myClasses.map((el) => {
+                {enrolledClasses.map((el) => {
                   return (
                     <View key={el.id} style={styles.classWarpper}>
                       <View style={{ flex: 1 }}>
@@ -245,100 +287,111 @@ export default function Profile({ navigation, route }) {
                 showsHorizontalScrollIndicator={false}
                 style={{ height: 350 }}
               >
-                <View style={styles.classWarpper2}>
-                  <View style={{ flex: 1 }}>
-                    <View
-                      style={{
-                        flex: 2,
-                      }}
-                    >
-                      <View>
-                        <Text
+                {finishedClasses.map((el) => {
+                  return (
+                    <View style={styles.classWarpper2}>
+                      <View style={{ flex: 1 }}>
+                        <View
                           style={{
-                            color: colors.primary,
-                            fontSize: 20,
+                            flex: 2,
                           }}
                         >
-                          Class's Name
-                        </Text>
-                      </View>
-                      <View>
-                        <Text
-                          style={{
-                            color: colors.secondaty2,
-                            fontSize: 16,
-                          }}
-                        >
-                          By, Class's Teacher
-                        </Text>
-                      </View>
-                      <View style={{ flex: 1, marginTop: 10 }}>
-                        <Text style={{ color: colors.secondaty2 }}>RATING</Text>
-                        <TextInput
-                          placeholder="rate between 1-10"
-                          placeholderTextColor={colors.secondaty2}
-                          editable={true}
-                          style={{
-                            height: 40,
-                            borderWidth: 1,
-                            borderColor: colors.primary,
-                            padding: 10,
-                            borderRadius: 10,
-                            marginTop: 5,
-                            backgroundColor: colors.white,
-                          }}
-                        />
-                      </View>
+                          <View>
+                            <Text
+                              style={{
+                                color: colors.primary,
+                                fontSize: 20,
+                              }}
+                            >
+                              {el.name}
+                            </Text>
+                          </View>
+                          <View>
+                            <Text
+                              style={{
+                                color: colors.secondaty2,
+                                fontSize: 16,
+                              }}
+                            >
+                              By {el?.Teacher?.fullName}
+                            </Text>
+                          </View>
+                          <View style={{ flex: 1, marginTop: 10 }}>
+                            <Text style={{ color: colors.secondaty2 }}>RATING</Text>
+                            <TextInput
+                              placeholder="rate between 1-10"
+                              placeholderTextColor={colors.secondaty2}
+                              editable={true}
+                              onChangeText={(val) => textInputChange(val)}
+                              value={data.rating}
+                              keyboardType="numeric"
+                              style={{
+                                height: 40,
+                                borderWidth: 1,
+                                borderColor: colors.primary,
+                                padding: 10,
+                                borderRadius: 10,
+                                marginTop: 5,
+                                backgroundColor: colors.white,
+                              }}
+                            />
+                          </View>
 
-                      <View style={{ flex: 2, marginTop: 20 }}>
-                        <Text style={{ color: colors.secondaty2 }}>REVIEW</Text>
-                        <TextInput
-                          placeholder="state your review"
-                          placeholderTextColor={colors.secondaty2}
-                          multiline
-                          numberOfLines={4}
-                          editable={true}
-                          style={{
-                            height: 80,
-                            borderWidth: 1,
-                            borderColor: colors.primary,
-                            paddingLeft: 10,
-                            marginTop: 5,
-                            backgroundColor: colors.white,
-                            borderRadius: 10,
-                          }}
-                        />
-                      </View>
+                          <View style={{ flex: 2, marginTop: 20 }}>
+                            <Text style={{ color: colors.secondaty2 }}>REVIEW</Text>
+                            <TextInput
+                              placeholder="state your review"
+                              placeholderTextColor={colors.secondaty2}
+                              multiline
+                              onChangeText={(val) => testimoniInputChange(val)}
+                              value={data.testimoni}
+                              numberOfLines={4}
+                              editable={true}
+                              style={{
+                                height: 80,
+                                borderWidth: 1,
+                                borderColor: colors.primary,
+                                paddingLeft: 10,
+                                marginTop: 5,
+                                backgroundColor: colors.white,
+                                borderRadius: 10,
+                              }}
+                            />
+                          </View>
 
-                      <View
-                        style={{
-                          flex: 1,
-                          alignItems: "flex-end",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <TouchableOpacity
-                          style={{
-                            marginTop: 10,
-                            backgroundColor: colors.green2,
-                            width: 80,
-                            height: 30,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            borderRadius: 30,
-                          }}
-                        >
-                          <Text style={{ color: colors.white }}>Submit</Text>
-                        </TouchableOpacity>
+                          <View
+                            style={{
+                              flex: 1,
+                              alignItems: "flex-end",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <TouchableOpacity
+                              style={{
+                                marginTop: 10,
+                                backgroundColor: colors.green2,
+                                width: 80,
+                                height: 30,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderRadius: 30,
+                              }}
+                              onPress={() => {  response(el.id) }}
+                            >
+                              <Text style={{ color: colors.white }}>Submit</Text>
+                            </TouchableOpacity>
+                          </View>
+                        </View>
                       </View>
                     </View>
-                  </View>
-                </View>
+                  )
+                })
+                }
               </ScrollView>
             </View>
           </ScrollView>
         </View>
-      </TouchableWithoutFeedback>
+      {/* </TouchableWithoutFeedback> */}
     </KeyboardAvoidingView>
   );
 }

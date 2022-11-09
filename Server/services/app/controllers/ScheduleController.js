@@ -74,6 +74,16 @@ class Controller {
       next(error);
     }
   }
+
+  static async schedulesClass(req, res, next) {
+    try {
+      const { ClassId } = req.params
+      const schedules = await Schedule.findAll({ where: { ClassId } })
+      res.status(200).json(schedules)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = Controller;
