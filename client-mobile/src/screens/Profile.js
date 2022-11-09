@@ -114,7 +114,7 @@ export default function Profile({ navigation, route }) {
                 />
               ) : (
                 <Image
-                  source={require("../assets/face_demo.png")}
+                  source={require("../assets/defaultpict.jpg")}
                   style={styles.image}
                   resizeMode="center"
                 />
@@ -183,9 +183,7 @@ export default function Profile({ navigation, route }) {
             style={[styles.topUpButton]}
             onPress={() => navigation.navigate("TopUp")}
           >
-            <Text style={{ color: colors.white, fontWeight: "bold" }}>
-              TopUp
-            </Text>
+            <Text style={{ color: "yellow", fontWeight: "bold" }}>TopUp</Text>
           </TouchableOpacity>
 
           <View
@@ -193,7 +191,7 @@ export default function Profile({ navigation, route }) {
               marginTop: 10,
             }}
           >
-            <Text style={{ color: colors.secondary1, marginLeft: 20 }}>
+            <Text style={{ color: colors.secondaty2, marginLeft: 20 }}>
               ENROLLED CLASS
             </Text>
             <ScrollView
@@ -214,7 +212,7 @@ export default function Profile({ navigation, route }) {
                         <View>
                           <Text
                             style={{
-                              color: colors.primary,
+                              color: colors.white,
                               fontSize: 20,
                             }}
                           >
@@ -241,7 +239,7 @@ export default function Profile({ navigation, route }) {
                         >
                           <Text style={styles.infoTitle}>PRICE</Text>
                           <View style={styles.infoTextWrapper}>
-                            <Text>{el?.price}</Text>
+                            <Text style={{ color: "yellow" }}>{el?.price}</Text>
                             <Text style={styles.infoSubText}></Text>
                           </View>
                         </View>
@@ -253,7 +251,9 @@ export default function Profile({ navigation, route }) {
                         >
                           <Text style={styles.infoTitle}>QUOTA</Text>
                           <View style={styles.infoTextWrapper}>
-                            <Text>{el?.Transactions?.length}</Text>
+                            <Text style={{ color: "yellow" }}>
+                              {el?.Transactions?.length}
+                            </Text>
                             <Text style={styles.infoSubText}>
                               {" "}
                               /{el?.quota}
@@ -268,7 +268,9 @@ export default function Profile({ navigation, route }) {
                         >
                           <Text style={styles.infoTitle}>DURATION</Text>
                           <View style={styles.infoTextWrapper}>
-                            <Text>{el?.Schedules?.length}</Text>
+                            <Text style={{ color: "yellow" }}>
+                              {el?.Schedules?.length}
+                            </Text>
                             <Text style={styles.infoSubText}> Sessions</Text>
                           </View>
                         </View>
@@ -286,7 +288,7 @@ export default function Profile({ navigation, route }) {
                         }}
                       >
                         <View>
-                          <Text style={{ color: colors.green1 }}>See More</Text>
+                          <Text style={{ color: "yellow" }}>See More</Text>
                         </View>
                       </TouchableOpacity>
                     </View>
@@ -295,7 +297,7 @@ export default function Profile({ navigation, route }) {
               })}
             </ScrollView>
             {/* CLASS FINISHED */}
-            <Text style={{ color: colors.secondary1, marginLeft: 20 }}>
+            <Text style={{ color: colors.secondaty2, marginLeft: 20 }}>
               FINISHED CLASS
             </Text>
             <ScrollView
@@ -311,7 +313,7 @@ export default function Profile({ navigation, route }) {
                         <View>
                           <Text
                             style={{
-                              color: colors.primary,
+                              color: colors.white,
                               fontSize: 20,
                             }}
                           >
@@ -338,7 +340,7 @@ export default function Profile({ navigation, route }) {
                           <TouchableOpacity
                             style={{
                               marginTop: 10,
-                              backgroundColor: colors.green2,
+                              backgroundColor: colors.green1,
                               width: 120,
                               height: 30,
                               alignItems: "center",
@@ -349,7 +351,7 @@ export default function Profile({ navigation, route }) {
                               navigation.navigate("Response", { id: el?.id })
                             }
                           >
-                            <Text style={{ color: colors.white }}>
+                            <Text style={{ color: "yellow" }}>
                               Give Response
                             </Text>
                           </TouchableOpacity>
@@ -416,7 +418,7 @@ export default function Profile({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.secondaty2,
+    backgroundColor: colors.primary,
     height: "100%",
   },
   inner: {
@@ -428,7 +430,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   text: {
-    color: colors.secondary1,
+    color: colors.secondaty2,
     fontSize: 16,
     marginTop: 5,
   },
@@ -445,7 +447,7 @@ const styles = StyleSheet.create({
     width: undefined,
   },
   edit: {
-    backgroundColor: colors.secondary1,
+    backgroundColor: colors.secondaty2,
     position: "absolute",
     bottom: 0,
     right: 10,
@@ -474,7 +476,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "flex-end",
-    backgroundColor: colors.green2,
+    backgroundColor: colors.green1,
     marginRight: 25,
     marginTop: 15,
     height: 30,
@@ -482,7 +484,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   classWarpper: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.secondary1,
     height: 140,
     width: 250,
     marginTop: 10,
@@ -498,7 +500,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   classWarpper2: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.secondary1,
     height: 110,
     width: 250,
     marginTop: 10,
@@ -515,7 +517,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-
     borderColor: colors.primary,
     paddingLeft: 10,
     color: colors.primary,
@@ -526,7 +527,7 @@ const styles = StyleSheet.create({
   },
   infoTitle: {
     fontSize: 12,
-    color: colors.secondaty2,
+    color: colors.white,
   },
   infoTextWrapper: {
     flexDirection: "row",
@@ -539,6 +540,6 @@ const styles = StyleSheet.create({
   },
   infoSubText: {
     fontSize: 14,
-    color: colors.secondaty2,
+    color: colors.white,
   },
 });

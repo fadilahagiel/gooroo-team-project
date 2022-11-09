@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
   },
   contactName: {
     fontSize: 22,
+    color: colors.white,
   },
   username: {
     alignSelf: "flex-start",
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
   sentMsg: {
     backgroundColor: colors.green2,
     fontSize: 15,
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -222,7 +223,7 @@ const styles = StyleSheet.create({
   receivedMsg: {
     backgroundColor: colors.secondary1,
     fontSize: 15,
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,

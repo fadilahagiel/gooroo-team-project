@@ -15,7 +15,7 @@ const ProfileStackScreen = ({ navigation }) => {
     <ProfileStack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: colors.secondaty2,
+          backgroundColor: colors.primary,
           borderBottomWidth: 0,
         },
         headerTintColor: colors.white,
@@ -29,7 +29,7 @@ const ProfileStackScreen = ({ navigation }) => {
           headerLeft: () => (
             <Icon.Button
               name="ios-menu"
-              backgroundColor={colors.secondaty2}
+              backgroundColor={colors.primary}
               onPress={() => {
                 navigation.openDrawer();
               }}
@@ -46,7 +46,7 @@ const ProfileStackScreen = ({ navigation }) => {
           headerLeft: () => (
             <Icon.Button
               name="ios-arrow-back"
-              backgroundColor={colors.secondaty2}
+              backgroundColor={colors.primary}
               onPress={() => {
                 navigation.navigate("Profile");
               }}
@@ -62,7 +62,7 @@ const ProfileStackScreen = ({ navigation }) => {
           headerLeft: () => (
             <Icon.Button
               name="ios-arrow-back"
-              backgroundColor={colors.secondaty2}
+              backgroundColor={colors.primary}
               onPress={() => {
                 navigation.navigate("TopUp");
               }}
@@ -78,7 +78,7 @@ const ProfileStackScreen = ({ navigation }) => {
           headerLeft: () => (
             <Icon.Button
               name="ios-arrow-back"
-              backgroundColor={colors.secondaty2}
+              backgroundColor={colors.primary}
               onPress={() => {
                 navigation.navigate("Profile");
               }}
@@ -94,7 +94,7 @@ const ProfileStackScreen = ({ navigation }) => {
           headerLeft: () => (
             <Icon.Button
               name="ios-arrow-back"
-              backgroundColor={colors.secondaty2}
+              backgroundColor={colors.primary}
               onPress={() => {
                 navigation.navigate("Profile");
               }}
