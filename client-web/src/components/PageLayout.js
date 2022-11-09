@@ -1,12 +1,21 @@
-import {Outlet} from 'react-router-dom'
-import MyNavbar from './Navbar'
-export default function PageLayout () {
-    return (
-        <div style={{fontFamily: "monospace"}}>
-            <MyNavbar />
-            <div style={{paddingTop:" 50px",height: '100vh',fontFamily: "monospace", backgroundColor: "rgba(10,10,10,0.2)"}}>
-                <Outlet />
-            </div>
-        </div>
-    )
+import { Outlet } from "react-router-dom";
+import MyNavbar from "./Navbar";
+import Footer from './Footer'
+export default function PageLayout() {
+  return (
+    <div style={{ fontFamily: "monospace" }}>
+      <MyNavbar />
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          fontFamily: "monospace",
+          backgroundColor: "rgba(10,10,10,0.2)",
+        }}
+      >
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
+  );
 }
