@@ -7,18 +7,18 @@
         "averageRating": 8,
         "status": "upcoming",
         "SubjectId": 1,
-        "description": "belajar matematika",
+        "description": "belajar matematika dasar untuk UN dan SBMPTN",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
     {
         "TeacherId": 2,
-        "name": "Matematika Class for SBMPTN ",
+        "name": "Algoritma Class ",
         "price": 100000,
         "quota": 5,
         "averageRating": 8,
         "status": "upcoming",
         "SubjectId": 1,
-        "description": "belajar matematika untuk SBMPTN",
+        "description": "Belajar algoritma untuk persiapan SBMPTN",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
     {
@@ -29,7 +29,7 @@
         "averageRating": 9,
         "status": "upcoming",
         "SubjectId": 3,
-        "description": "Belajar Fisika dengan menyenangkan",
+        "description": "Belajar Fisika dengan jurus kilat persiapan SBMPTN",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
     {
@@ -73,7 +73,7 @@
         "averageRating": 8.5,
         "status": "upcoming",
         "SubjectId": 6,
-        "description": "Belajar ekonomi untuk masuk perguruan tinggi negri",
+        "description": "Belajar ekonomi untuk persiapan SBMPTN",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
     {
@@ -84,7 +84,7 @@
         "averageRating": 8.5,
         "status": "upcoming",
         "SubjectId": 7,
-        "description": "Pintar geografi, dijamin mendapat nilai 100 di kelas ",
+        "description": "Belajar permukaan tanah, batuan, dan gunung",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
     {
@@ -95,7 +95,7 @@
         "averageRating": 8.5,
         "status": "upcoming",
         "SubjectId": 8,
-        "description": "Semakin pandai dalam pelajaran akuntansi",
+        "description": "Persiapan akuntansi untuk SBMPTN 2023",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
     {
@@ -106,7 +106,7 @@
         "averageRating": 7.5,
         "status": "upcoming",
         "SubjectId": 9,
-        "description": "Semakin pandai dalam pelajaran Sosiologi",
+        "description": "Siap menghadapi SBMPTN 2023",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
     {
@@ -117,29 +117,29 @@
         "averageRating": 7,
         "status": "upcoming",
         "SubjectId": 10,
-        "description": "Pintar belajar sejarah - sejarah Indonesia dan Dunia",
+        "description": "Belajar sejarah untuk persiapan SBMPTN",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
     {
         "TeacherId": 3,
-        "name": "Persiapan Bahasa Indonesia untuk SBMPTN",
+        "name": "B. Indonesia II",
         "price": 50000,
         "quota": 5,
         "averageRating": 8,
         "status": "upcoming",
         "SubjectId": 11,
-        "description": "Semakin pandai Berbahasa Indonesia",
+        "description": "Persiapan untuk SBMPTN",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
     {
         "TeacherId": 3,
-        "name": "English Class With Mr. Yanto",
+        "name": "Grammar Class",
         "price": 90000,
         "quota": 5,
         "averageRating": 7,
         "status": "upcoming",
         "SubjectId": 11,
-        "description": "Be good at speaking, writing, listening, and reading english",
+        "description": "Be good at speaking and writing English",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     }
 ]

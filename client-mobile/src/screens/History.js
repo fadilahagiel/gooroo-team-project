@@ -36,7 +36,7 @@ export default function History({ navigation }) {
   }
   useEffect(() => {
     fetchHistories()
-  }, [balance])
+  }, [])
 
 
   return (
