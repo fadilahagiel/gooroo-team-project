@@ -2,19 +2,19 @@
     {
         "ClassId": 1,
         "StudentId": 1,
-        "rating": 0,
-        "testimoni": null
+        "rating": 8,
+        "testimoni": "Gurunya cakep banget"
     },
     {
         "ClassId": 1,
         "StudentId": 2,
-        "rating": 0,
-        "testimoni": null
+        "rating": 9,
+        "testimoni": "jadi semakin pintar"
     },
     {
         "ClassId": 1,
         "StudentId": 3,
-        "rating": 0,
-        "testimoni": null
+        "rating": 9,
+        "testimoni": "Kelasnya seru"
     }
 ]

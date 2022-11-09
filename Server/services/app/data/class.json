@@ -17,7 +17,7 @@
         "quota": 5,
         "averageRating": 8,
         "status": "upcoming",
-        "SubjectId": 1,
+        "SubjectId": 2,
         "description": "Belajar algoritma untuk persiapan SBMPTN",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     },
@@ -138,7 +138,7 @@
         "quota": 5,
         "averageRating": 7,
         "status": "upcoming",
-        "SubjectId": 11,
+        "SubjectId": 12,
         "description": "Be good at speaking and writing English",
         "url": "https://meet.google.com/ycq-nvkx-qge"
     }

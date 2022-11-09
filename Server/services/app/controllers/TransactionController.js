@@ -224,6 +224,22 @@ class Controller {
     }
   }
 
+  static async findOneResponseTransation(req, res, next) {
+    try {
+      const { ClassId } = req.params;
+      const UserId = req.user.id;
+      const studentFound = await Student.findOne({ where: { UserId } });
+      const findTrans = await Transaction.findOne({
+        where: {
+          ClassId,
+          StudentId: studentFound.id,
+        },
+      });
+      res.status(200).json(findTrans)
+    } catch (error) {
+      next(error);
+    }
+  }
   static async myTransaction(req, res, next) {
     try {
       const { TeacherId } = req.params;

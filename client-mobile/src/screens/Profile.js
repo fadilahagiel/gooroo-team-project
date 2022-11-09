@@ -23,6 +23,12 @@ import { useFocusEffect } from "@react-navigation/native";
 export default function Profile({ navigation, route }) {
   const [student, setStudent] = useState({});
   const [myClasses, setMyClasses] = useState([]);
+  const [enrolledClasses, setEnrolledClasses] = useState([]);
+  const [finishedClasses, setFinishedClasses] = useState([]);
+  const [data, setData] = useState({
+    rating: "",
+    testimoni: "",
+  });
   const fetchStudent = async () => {
     try {
       const access_token = await AsyncStorage.getItem("access_token");
@@ -50,6 +56,14 @@ export default function Profile({ navigation, route }) {
         },
       });
       setMyClasses(data);
+      const arr = data.filter(
+        (el) => el.status != "done" && el.status != "collected"
+      );
+      setEnrolledClasses(arr);
+      const arrFinished = data.filter(
+        (el) => el.status == "done" || el.status == "collected"
+      );
+      setFinishedClasses(arrFinished);
     } catch (error) {
       console.log(error);
     }
@@ -61,6 +75,38 @@ export default function Profile({ navigation, route }) {
     }, [])
   );
 
+  const textInputChange = (val) => {
+    setData({
+      ...data,
+      rating: val,
+    });
+  };
+
+  const testimoniInputChange = (val) => {
+    setData({
+      ...data,
+      testimoni: val,
+    });
+  };
+
+  const response = async (id) => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const { data } = await axios({
+      method: "get",
+      url: `${serverUrl}/transactions/response/${id}`,
+      headers: {
+        access_token,
+      },
+    });
+    const transactionId = data.id;
+    // const response = await axios({
+    //   method: "put",
+    //   url: `${serverUrl}/transactions/${transactionId}`,
+    //   headers: {
+    //     access_token,
+    //   },
+    // })
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.inner}>
