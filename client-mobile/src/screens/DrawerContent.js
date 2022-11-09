@@ -17,7 +17,7 @@ export function DrawerContent(props) {
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
-  console.log;
+
   const fetchUser = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -37,7 +37,6 @@ export function DrawerContent(props) {
       });
       setStudent(res.data);
       setUser(data);
-      console.log(student.image);
     } catch (error) {
       console.log(error);
     }
@@ -148,6 +147,7 @@ export function DrawerContent(props) {
               label="Settings"
               onPress={() => {
                 props.navigation.navigate("Settings");
+                props.navigation.navigate("History");
               }}
             /> */}
           </Drawer.Section>

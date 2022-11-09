@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: {
           args: true,
-          msg: "Email alrady exist"
+          msg: "Email already exist"
         },
         validate: {
           notEmpty: { msg: `Please input email` },
@@ -58,11 +58,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       role: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notEmpty: { msg: `Please input role` },
-          notNull: { msg: `Please input role` },
-        },
+        // allowNull: false,
+        // validate: {
+        //   notEmpty: { msg: `Please input role` },
+        //   notNull: { msg: `Please input role` },
+        // },
       },
       saldo: { type: DataTypes.INTEGER },
     },

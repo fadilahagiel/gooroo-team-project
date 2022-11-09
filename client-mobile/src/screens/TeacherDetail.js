@@ -21,6 +21,7 @@ import axios from "axios";
 import { serverUrl } from "../config/url";
 import { addContact, fetchContacts } from "../actions";
 
+
 export default function ClassDetail({ navigation, route }) {
   const { id } = route.params;
   const [teacher, setTeacher] = useState({});
@@ -28,6 +29,7 @@ export default function ClassDetail({ navigation, route }) {
   const fetchTeacher = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
+      console.log("masuk");
       const { data } = await axios({
         method: "get",
         url: `${serverUrl}/teachers/${id}`,
@@ -61,10 +63,7 @@ export default function ClassDetail({ navigation, route }) {
       <Animatable.View style={styles.header}>
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: "row" }}>
-            <Avatar.Image
-              source={require("../assets/face_demo.png")}
-              size={70}
-            />
+            <Avatar.Image source={{ uri: teacher.image }} size={70} />
             <View style={{ marginLeft: 25, flexDirection: "column", flex: 2 }}>
               <Title style={styles.title}>{teacher.fullName}</Title>
               <Caption style={styles.caption}>{teacher.username}</Caption>

@@ -1,4 +1,12 @@
-const { Student, Teacher, Class, Transaction } = require("../models");
+const {
+  Student,
+  Teacher,
+  Class,
+  Transaction,
+  User,
+  Wishlist,
+  Schedule,
+} = require("../models");
 
 class StudentController {
   static async getMyStudent(req, res, next) {
@@ -61,7 +69,10 @@ class StudentController {
   static async showOneStudent(req, res, next) {
     try {
       const { id } = req.user;
-      const student = await Student.findOne({ where: { UserId: id } });
+      const student = await Student.findOne({
+        where: { UserId: id },
+        include: [User, Wishlist],
+      });
       if (!student) {
         throw { name: "invalid_credentials" };
       }

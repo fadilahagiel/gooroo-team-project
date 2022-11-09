@@ -25,8 +25,8 @@ const { height } = Dimensions.get("window");
 
 export default function Login({ navigation }) {
   const [data, setData] = React.useState({
-    email: "budi@mail.com",
-    password: "12345",
+    email: "",
+    password: "",
     check_textInputChange: false,
     secureTextEntry: true,
   });
@@ -42,9 +42,11 @@ export default function Login({ navigation }) {
         body: JSON.stringify({ email: data.email, password: data.password }),
       });
       const dataTes = await response.json();
+
       if (dataTes.message) {
         throw dataTes.message;
       }
+
       await AsyncStorage.setItem("access_token", dataTes.access_token);
       await AsyncStorage.setItem("user", JSON.stringify(dataTes));
       await fetchContacts();
