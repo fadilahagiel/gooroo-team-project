@@ -11,7 +11,11 @@ const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const { mongoConnect } = require("./config/mongodb");
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 const User = require("./models/user");
 const Chat = require("./models/chat");
 const PORT = process.env.PORT || 3030;
@@ -20,22 +24,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-/** TO-DO
- *
- * Private message - done
- * Save Contacts - done
- * Chat history
- *
- */
+// const whitelist = ["http://localhost:3000", "http://localhost:3001"];
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+// };
 
-// io.use((socket, next) => {
-//   const { userId } = socket.handshake.auth.userId;
-//   if (!userId) {
-//     return next(new Error("invalid username"));
-//   }
-//   socket.user = { username, userId, role };
-//   next();
-// });
+// app.use(cors(corsOptions));
 
 io.use((socket, next) => {
   const user = socket.handshake.auth;

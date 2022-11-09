@@ -18,7 +18,7 @@ export const fetchContacts = async () => {
     await AsyncStorage.setItem("contacts", JSON.stringify(data));
     return data;
   } catch (error) {
-    alert(error);
+    // alert(error);
   }
 };
 
@@ -33,7 +33,7 @@ export const fetchChatLogs = async (roomId) => {
     const chatLogs = data;
     return chatLogs;
   } catch (error) {
-    alert(error);
+    // alert(error);
   }
 };
 
