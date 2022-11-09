@@ -73,7 +73,11 @@ export default function Profile({ navigation, route }) {
             />
           </View>
           <TouchableOpacity style={styles.edit}>
-            <Feather name="edit-2" size={20} color={colors.white} />
+            <Feather
+              name="edit-2"
+              size={20}
+              color={colors.white}
+            />
           </TouchableOpacity>
         </View>
 
@@ -95,8 +99,7 @@ export default function Profile({ navigation, route }) {
                 borderLeftWidth: 1,
                 borderRightWidth: 1,
               },
-            ]}
-          >
+            ]}>
             <Text style={styles.textTitle}>{myClasses.length}</Text>
             <Text style={[styles.text]}>Class Enrolled</Text>
           </View>
@@ -113,31 +116,31 @@ export default function Profile({ navigation, route }) {
 
         <TouchableOpacity
           style={styles.topUpButton}
-          onPress={() => navigation.navigate("TopUp")}
-        >
+          onPress={() => navigation.navigate("TopUp")}>
           <Text style={{ color: colors.white, fontWeight: "bold" }}>TopUp</Text>
         </TouchableOpacity>
 
         <View style={{ margin: 20, marginTop: 30, height: "100%" }}>
           <Text style={{ color: colors.secondary1 }}>ENROLLED CLASS</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}>
             {myClasses.map((el) => {
               return (
-                <View key={el.id} style={styles.classWarpper}>
+                <View
+                  key={el.id}
+                  style={styles.classWarpper}>
                   <View style={{ flex: 1 }}>
                     <View
                       style={{
                         flex: 2,
-                        // justifyContent: "space-between",
-                      }}
-                    >
+                      }}>
                       <View>
                         <Text
                           style={{
                             color: colors.primary,
                             fontSize: 20,
-                          }}
-                        >
+                          }}>
                           {el.name}
                         </Text>
                       </View>
@@ -146,8 +149,7 @@ export default function Profile({ navigation, route }) {
                           style={{
                             color: colors.secondaty2,
                             fontSize: 16,
-                          }}
-                        >
+                          }}>
                           {el?.Teacher?.fullName}
                         </Text>
                       </View>
@@ -157,8 +159,7 @@ export default function Profile({ navigation, route }) {
                         style={{
                           justifyContent: "flex-end",
                           alignItems: "flex-end",
-                        }}
-                      >
+                        }}>
                         <Text style={styles.infoTitle}>PRICE</Text>
                         <View style={styles.infoTextWrapper}>
                           <Text>{el?.price}</Text>
@@ -169,8 +170,7 @@ export default function Profile({ navigation, route }) {
                         style={{
                           justifyContent: "flex-end",
                           alignItems: "flex-end",
-                        }}
-                      >
+                        }}>
                         <Text style={styles.infoTitle}>QUOTA</Text>
                         <View style={styles.infoTextWrapper}>
                           <Text>{el?.Transactions?.length}</Text>
@@ -181,8 +181,7 @@ export default function Profile({ navigation, route }) {
                         style={{
                           justifyContent: "flex-end",
                           alignItems: "flex-end",
-                        }}
-                      >
+                        }}>
                         <Text style={styles.infoTitle}>DURATION</Text>
                         <View style={styles.infoTextWrapper}>
                           <Text>{el?.Schedules?.length}</Text>
@@ -200,8 +199,7 @@ export default function Profile({ navigation, route }) {
                         flex: 1,
                         justifyContent: "flex-end",
                         alignItems: "flex-end",
-                      }}
-                    >
+                      }}>
                       <View>
                         <Text style={{ color: colors.green1 }}>See More</Text>
                       </View>
