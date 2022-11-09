@@ -464,6 +464,8 @@ export const fetchContacts = () => {
         type: "contacts/fetch",
         payload: data,
       });
+      console.log({ data });
+      // localStorage.setItem("contacts")
       return data;
     } catch (error) {
       console.log(error);
