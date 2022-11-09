@@ -64,7 +64,7 @@ export default function MyNavbar() {
           <Link
             className={"m-3"}
             style={{ color: "white", fontSize: "20px" }}
-            to={"categories"}
+            to={"subjects"}
           >
             Subjects
           </Link>
@@ -78,9 +78,9 @@ export default function MyNavbar() {
           <Link
             className={"m-3"}
             style={{ color: "white", fontSize: "20px" }}
-            to={"register"}
+            to={"add-profile"}
           >
-            Teacher Registration
+            Add Profile
           </Link>
         </Nav>
         <Button

@@ -13,6 +13,7 @@ import StudentProfile from "../pages/StudentProfile";
 import ChatPage from "../pages/ChatPage";
 import ChatPage2 from "../pages/ChatPage2";
 import EditClass from "../pages/EditClass";
+import CreateTeacherProfile from '../pages/CreateTeacherProfile'
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
         element: <TeacherProfile />,
       },
       {
+        path: "add-profile",
+        element: <CreateTeacherProfile />,
+      },
+      {
         path: "student-profile",
         element: <StudentProfile />,
       },
@@ -63,7 +68,7 @@ const router = createBrowserRouter([
         element: <RegisterPage />,
       },
       {
-        path: "categories",
+        path: "subjects",
         element: <CategoriesPage />,
       },
     ],

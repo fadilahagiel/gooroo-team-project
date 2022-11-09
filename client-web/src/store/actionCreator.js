@@ -258,7 +258,7 @@ export const createClass = (classForm) => {
       .then((res) => {
         console.log("<< MASUK ACTION 2");
         if (!res.ok) {
-          throw new Error("hadrcoded Error");
+          throw new Error(res);
         }
         return res.json();
       })
