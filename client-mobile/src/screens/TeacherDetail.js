@@ -19,10 +19,13 @@ import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { serverUrl } from "../config/url";
+import { addContact, fetchContacts } from "../actions";
+
 
 export default function ClassDetail({ navigation, route }) {
   const { id } = route.params;
   const [teacher, setTeacher] = useState({});
+
   const fetchTeacher = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -30,9 +33,7 @@ export default function ClassDetail({ navigation, route }) {
       const { data } = await axios({
         method: "get",
         url: `${serverUrl}/teachers/${id}`,
-        headers: {
-          access_token,
-        },
+        headers: { access_token },
       });
       const idUser = data.UserId;
       const user = await axios({
@@ -45,9 +46,17 @@ export default function ClassDetail({ navigation, route }) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchTeacher();
   }, []);
+
+  const handleChat = async (id) => {
+    const roomId = await addContact(id);
+    await fetchContacts();
+    navigation.navigate("ChatScreen", roomId);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -92,6 +101,7 @@ export default function ClassDetail({ navigation, route }) {
                   name="ios-chatbox-ellipses-outline"
                   color={colors.green2}
                   size={30}
+                  onPress={() => handleChat(teacher.UserId)}
                 />
               </TouchableOpacity>
             </View>

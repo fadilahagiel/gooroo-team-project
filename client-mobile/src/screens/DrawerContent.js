@@ -126,9 +126,30 @@ export function DrawerContent(props) {
               )}
               label="History"
               onPress={() => {
-                props.navigation.navigate("History");
+                props.navigation.navigate("Settings");
               }}
             />
+            <DrawerItem
+              style={{ marginTop: 10 }}
+              icon={({ color, size }) => (
+                <MatrialIcon name="history" color={color} size={size} />
+              )}
+              label="ChatScreen"
+              onPress={() => {
+                props.navigation.navigate("ChatScreen");
+              }}
+            />
+            {/* <DrawerItem
+              style={{ marginTop: 10 }}
+              icon={({ color, size }) => (
+                <FeatherIcon name="settings" color={color} size={size} />
+              )}
+              label="Settings"
+              onPress={() => {
+                props.navigation.navigate("Settings");
+                props.navigation.navigate("History");
+              }}
+            /> */}
           </Drawer.Section>
         </View>
       </DrawerContentScrollView>
