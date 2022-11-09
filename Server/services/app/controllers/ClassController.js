@@ -14,7 +14,7 @@ class Controller {
   static async postClass(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      console.log('masuk', req.body);
+      console.log("masuk", req.body);
       if (req.user.role != "teacher") {
         throw { name: "forbidden" };
       }
@@ -129,6 +129,24 @@ class Controller {
         throw { name: "class not found" };
       }
       res.status(200).json(findClass);
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async getOneClassStudent(req, res, next) {
+    try {
+      const { ClassId } = req.params;
+      const findClass = await Class.findOne({
+        where: {
+          id: ClassId,
+        },
+        include: { model: Transaction, include: Student },
+      });
+      let newArr = [];
+      findClass.Transactions.forEach((el) => {
+        newArr.push(el.Student);
+      });
+      res.status(200).json(newArr);
     } catch (error) {
       next(error);
     }
