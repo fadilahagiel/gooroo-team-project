@@ -71,7 +71,7 @@ class StudentController {
       const { id } = req.user;
       const student = await Student.findOne({
         where: { UserId: id },
-        include: [User, Wishlist],
+        include: [User, Wishlist, Transaction],
       });
 
       res.status(200).json(student);

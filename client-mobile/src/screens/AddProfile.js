@@ -11,6 +11,21 @@ import {
 import colors from "../config/colors";
 
 export default function AddProfile() {
+
+  const handleUploadPhoto = () => {
+    fetch(`${SERVER_URL}/api/upload`, {
+      method: 'POST',
+      body: createFormData(photo, { userId: '123' }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log('response', response);
+      })
+      .catch((error) => {
+        console.log('error', error);
+      });
+  };
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
