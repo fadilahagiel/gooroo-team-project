@@ -18,15 +18,15 @@
 //     const dispatch = useDispatch();
 //     const categories = useSelector((state) => state.categories)
     
-//     const [editProduct, setEditProduct] = useState({
-//         name: '',
-//         description: '',
-//         mainImg: '',
-//         stock: 0,
-//         price: 0,
-//         categoryId: '',
+    // const [editProduct, setEditProduct] = useState({
+    //     name: '',
+    //     description: '',
+    //     mainImg: '',
+    //     stock: 0,
+    //     price: 0,
+    //     categoryId: '',
 
-//     })
+    // })
 
 //     const [editPicture, setEditPicture] = useState({
 //         imgUrl1:'',

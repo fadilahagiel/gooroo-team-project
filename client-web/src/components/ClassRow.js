@@ -43,7 +43,7 @@ export default function ClassRow
         <td>{oneClass.averageRating}</td>
         <td>
           <Button onClick={deleteClassButton} className={"btn-sm btn-danger"}>Delete</Button>
-          <Button onClick={updateClassButton} className={"btn-sm btn-success"}>Update</Button>
+          <Button onClick={() => navigate(`/edit-class/${oneClass.id}`)} className={"btn-sm btn-success"}>Update</Button>
           <Button onClick={() => navigate(`/class/${oneClass.id}`)} className={"btn-sm"}>Details</Button>
         </td>
       </tr>

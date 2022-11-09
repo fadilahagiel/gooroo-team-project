@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 export default function ClassDetail () {
     const navigate = useNavigate();
     const oneClass = useSelector((state) => state.oneClass)
-    const teacher = useSelector((state) => state.oneClass.Teacher)
+    // const teacher = useSelector((state) => state.oneClass.Teacher)
     const dispatch = useDispatch()
     const params = useParams();
     const id = params.id
@@ -28,8 +28,8 @@ export default function ClassDetail () {
         <>
         <Container style={{display: "flex", height: "100vh", marginTop: '30px', }}>
             <Container style={{backgroundColor:"red", flex: '2', textAlign: 'center', paddingTop: '15%', borderStartStartRadius: '20px', backgroundColor:'rgba(9, 11, 72, 0.5)'}}>
-                <img src={oneClass.image} style={{marginBottom: '10px',maxHeight: "30%", borderRadius:'100%'}}/>
-                <h2>{oneClass.fullName}</h2>
+                <img src={oneClass.Teacher?.image} style={{marginBottom: '10px',maxHeight: "30%", borderRadius:'100%'}}/>
+                <h2>{oneClass.Teacher?.fullName}</h2>
                 <h2>-Schedule?</h2>
             </Container>
             <Container style={{backgroundColor:"rgba(9, 11, 72, 0.1)", flex: '5', textAlign: 'center', padding: '10%', borderStartEndRadius: '20px'}}>

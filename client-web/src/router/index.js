@@ -13,6 +13,7 @@ import TeacherProfile from '../pages/TeacherProfile'
 import StudentProfile from '../pages/StudentProfile'
 import ChatPage from '../pages/ChatPage'
 import ChatPage2 from '../pages/ChatPage2'
+import EditClass from '../pages/EditClass'
 
 const router = createBrowserRouter([
     {
@@ -33,6 +34,11 @@ const router = createBrowserRouter([
             {
                 path: 'add-class',
                 element: <CreateProduct />
+                
+            },
+            {
+                path: 'edit-class/:id',
+                element: <EditClass />
                 
             },
             {
