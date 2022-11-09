@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "postgres",
-    "password": "KotaBandung",
+    "password": "fadilahagiel",
     "database": "gooroo_db",
     "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "KotaBandung",
+    "password": "fadilahagiel",
     "database": "gooroo_test",
     "host": "localhost",
     "dialect": "postgres"
