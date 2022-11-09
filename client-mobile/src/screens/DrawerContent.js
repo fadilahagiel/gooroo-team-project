@@ -8,6 +8,7 @@ import { AuthContext } from "../components/context";
 import Icon from "react-native-vector-icons/Ionicons";
 import MatrialIcon from "react-native-vector-icons/Octicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import axios from "axios";
 
 import { serverUrl } from "../config/url";
@@ -66,10 +67,7 @@ export function DrawerContent(props) {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image
-                source={{ uri: student.image }}
-                size={50}
-              />
+              <Avatar.Image source={{ uri: student.image }} size={50} />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
                 <Title style={styles.title}>{user.username}</Title>
                 <Caption style={styles.caption}>{student.fullName}</Caption>
@@ -94,11 +92,7 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <MatrialIcon
-                  name="home"
-                  color={color}
-                  size={size}
-                />
+                <MatrialIcon name="home" color={color} size={size} />
               )}
               label="Home"
               onPress={() => {
@@ -108,11 +102,7 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon
-                  name="user"
-                  color={color}
-                  size={size}
-                />
+                <FeatherIcon name="user" color={color} size={size} />
               )}
               label="Profile"
               onPress={() => {
@@ -122,11 +112,7 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon
-                  name="book"
-                  color={color}
-                  size={size}
-                />
+                <AntDesign name="contacts" color={color} size={size} />
               )}
               label="Contacts"
               onPress={() => {
@@ -136,13 +122,13 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon
-                  name="bookmark"
+                <Icon
+                  name="ios-chatbox-ellipses-outline"
                   color={color}
                   size={size}
                 />
               )}
-              label="ChatScreen"
+              label="Chat"
               onPress={() => {
                 props.navigation.navigate("ChatScreen");
               }}
@@ -150,27 +136,17 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-
-                <MatrialIcon
-                  name="history"
-                  color={color}
-                  size={size}
-                />
+                <FeatherIcon name="bookmark" color={color} size={size} />
               )}
               label="Bookmark"
               onPress={() => {
                 props.navigation.navigate("Bookmark");
-
               }}
             />
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <MatrialIcon
-                  name="history"
-                  color={color}
-                  size={size}
-                />
+                <MatrialIcon name="history" color={color} size={size} />
               )}
               label="History"
               onPress={() => {
@@ -194,11 +170,7 @@ export function DrawerContent(props) {
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem
           icon={({ color, size }) => (
-            <Icon
-              name="ios-exit-outline"
-              color={color}
-              size={size}
-            />
+            <Icon name="ios-exit-outline" color={color} size={size} />
           )}
           label="Sign Out"
           onPress={submitLogout}
