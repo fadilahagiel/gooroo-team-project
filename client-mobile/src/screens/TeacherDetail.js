@@ -21,6 +21,7 @@ import axios from "axios";
 import { serverUrl } from "../config/url";
 import { addContact, fetchContacts } from "../actions";
 
+
 export default function ClassDetail({ navigation, route }) {
   const { id } = route.params;
   const [teacher, setTeacher] = useState({});

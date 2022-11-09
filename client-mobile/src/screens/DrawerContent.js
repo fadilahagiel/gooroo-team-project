@@ -139,6 +139,17 @@ export function DrawerContent(props) {
                 props.navigation.navigate("History");
               }}
             />
+            {/* <DrawerItem
+              style={{ marginTop: 10 }}
+              icon={({ color, size }) => (
+                <FeatherIcon name="settings" color={color} size={size} />
+              )}
+              label="Settings"
+              onPress={() => {
+                props.navigation.navigate("Settings");
+                props.navigation.navigate("History");
+              }}
+            /> */}
           </Drawer.Section>
         </View>
       </DrawerContentScrollView>

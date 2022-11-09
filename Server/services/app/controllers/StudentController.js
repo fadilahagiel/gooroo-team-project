@@ -73,7 +73,6 @@ class StudentController {
         where: { UserId: id },
         include: [User, Wishlist],
       });
-
       if (!student) {
         throw { name: "invalid_credentials" };
       }
