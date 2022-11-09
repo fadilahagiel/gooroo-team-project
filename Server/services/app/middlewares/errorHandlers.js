@@ -1,7 +1,8 @@
 const errorHandlers = async (err, req, res, next) => {
-  console.log(err, "ini error");
+  console.log(err, "dari error handler");
   let code = 500;
   let message = "Internal Server Error";
+  console.log(err, 'ini err');
   if (
     err.name == "SequelizeValidationError" ||
     err.name == "SequelizeUniqueConstraintError"

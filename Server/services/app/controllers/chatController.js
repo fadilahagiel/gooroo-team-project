@@ -22,6 +22,7 @@ class ChatController {
         headers: payload,
       });
       const contacts = response.data;
+      console.log(contacts);
       res.status(200).send(contacts);
     } catch (error) {
       next(error);
@@ -92,7 +93,6 @@ class ChatController {
       const { roomId } = response.data;
       res.status(200).send({ roomId });
     } catch (error) {
-      // console.log(error);
       next(error);
     }
   }

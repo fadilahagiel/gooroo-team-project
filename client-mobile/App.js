@@ -9,7 +9,7 @@ import RootStackScreen from "./src/screens/RootStackScreen";
 import ProfileScreen from "./src/screens/ProfileStackScreen";
 import MainTabScreen from "./src/screens/MainTabScreen";
 import Bookmark from "./src/screens/BookMark";
-import Settings from "./src/screens/Settings";
+import History from "./src/screens/History";
 import ContactsScreen from "./src/screens/ContactsScreen";
 
 import { AuthContext } from "./src/components/context";
@@ -109,7 +109,7 @@ const App = () => {
             <Drawer.Screen name="My Profile" component={ProfileScreen} />
             <Drawer.Screen name="Bookmark" component={Bookmark} />
             <Drawer.Screen name="Contacts" component={ContactsScreen} />
-            {/* <Drawer.Screen name="Settings" component={Settings} /> */}
+            <Drawer.Screen name="History" component={History} />
             <Drawer.Screen name="ChatScreen" component={ChatScreen} />
           </Drawer.Navigator>
         ) : (

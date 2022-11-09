@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
   AsyncStorage,
+  Alert,
 } from "react-native";
 import { Modalize } from "react-native-modalize";
 import colors from "../config/colors";
@@ -20,18 +21,34 @@ import axios from "axios";
 
 import { serverUrl } from "../config/url";
 
-
 export default function ClassDetail({ navigation, route }) {
-  // const { id } = route.params;
+  const confirmation = () => {
+    Alert.alert(
+      `${oneClass.name}`,
+      `Are you sure want to enroll this class ?`,
+      [
+        {
+          text: "No",
+          onPress: () => {},
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            buyClass(oneClass.id);
+          },
+        },
+      ]
+    );
+  };
   const [oneClass, setOneClass] = useState({});
+  const [isBuy, setIsBuy] = useState(false);
+  const [isLoved, setIsLoved] = useState(false);
   const fetchOneClass = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
       const { data } = await axios({
         method: "get",
-
         url: `${serverUrl}/classes/${route.params.id}`,
-
         headers: {
           access_token,
         },
@@ -41,24 +58,122 @@ export default function ClassDetail({ navigation, route }) {
       console.log(error);
     }
   };
+
+  const addWishlist = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: `${serverUrl}/wishlists/${oneClass.id}`,
+        headers: {
+          access_token,
+        },
+      });
+      alert("Success add to wishlist");
+      setIsLoved(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeWishlist = () => {
+    setIsLoved(false);
+  };
+
+  // useEffect(() => {
+  //   addWishlist();
+  // }, [isLoved]);
+
+  const cekWishlist = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/wishlists/cek/${route.params.id}`,
+        headers: {
+          access_token,
+        },
+      });
+      setIsLoved(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const cekTransaction = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/transactions/cek/${route.params.id}`,
+        headers: {
+          access_token,
+        },
+      });
+      setIsBuy(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const buyClass = async (id) => {
+    try {
+      const access_token = await AsyncStorage.getItem("access_token");
+      await axios({
+        method: "post",
+        url: `${serverUrl}/transactions/${id}`,
+        headers: {
+          access_token,
+        },
+      });
+      setIsBuy(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
+    cekWishlist();
     fetchOneClass();
+    cekTransaction();
   }, []);
+
+  useEffect(() => {
+    cekWishlist();
+  }, [isLoved]);
+
+  useEffect(() => {
+    cekTransaction();
+  }, [isBuy]);
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.header}>
         <Image
           source={{
-            uri: "https://saintif.com/wp-content/uploads/2019/05/Bilangan-prima.png",
+            uri: oneClass?.Subject?.image,
           }}
           style={styles.image_logo}
         />
         <Text style={styles.text_header}>{oneClass.name}</Text>
       </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig">
         <View style={styles.heartWrapper}>
-          <Entypo name="heart" size={32} color="tomato" />
+          {isLoved ? (
+            <Entypo
+              name="heart"
+              size={32}
+              color="tomato"
+              onPress={removeWishlist}
+            />
+          ) : (
+            <Entypo
+              onPress={addWishlist}
+              name="heart"
+              size={32}
+              color="grey"
+            />
+          )}
         </View>
         <ScrollView>
           <View style={styles.descriptionWrapper}>
@@ -96,12 +211,18 @@ export default function ClassDetail({ navigation, route }) {
             </View>
           </View>
           <View style={styles.wrapper}>
-            <TouchableOpacity
-              style={styles.buttonWrapper}
-              onPress={() => alert("ENROLL!!!!")}
-            >
-              <Text style={styles.buttonText}>Enroll This Class</Text>
-            </TouchableOpacity>
+            {isBuy ? (
+              <TouchableOpacity style={styles.buttonWrapperTrue}>
+                <Text style={styles.buttonTextTrue}>Already Enroll</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.buttonWrapperFalse}
+                onPress={confirmation}>
+                {/* onPress={() => buyClass(oneClass.id)}> */}
+                <Text style={styles.buttonTextFalse}>Enroll This Class</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </ScrollView>
       </Animatable.View>
@@ -197,7 +318,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-  buttonWrapper: {
+  buttonWrapperTrue: {
     marginHorizontal: 20,
     marginTop: 40,
     backgroundColor: colors.green2,
@@ -205,7 +326,20 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
   },
-  buttonText: {
+  buttonWrapperFalse: {
+    marginHorizontal: 20,
+    marginTop: 40,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    paddingVertical: 15,
+    borderRadius: 10,
+  },
+  buttonTextTrue: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.white,
+  },
+  buttonTextFalse: {
     fontSize: 18,
     fontWeight: "bold",
     color: colors.white,

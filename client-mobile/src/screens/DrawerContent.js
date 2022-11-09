@@ -17,7 +17,7 @@ export function DrawerContent(props) {
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
-  console.log;
+
   const fetchUser = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -37,7 +37,6 @@ export function DrawerContent(props) {
       });
       setStudent(res.data);
       setUser(data);
-      console.log(student.image);
     } catch (error) {
       console.log(error);
     }
@@ -113,6 +112,16 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
+                <MatrialIcon name="history" color={color} size={size} />
+              )}
+              label="ChatScreen"
+              onPress={() => {
+                props.navigation.navigate("ChatScreen");
+              }}
+            />
+            <DrawerItem
+              style={{ marginTop: 10 }}
+              icon={({ color, size }) => (
                 <FeatherIcon name="bookmark" color={color} size={size} />
               )}
               label="Bookmark"
@@ -127,29 +136,9 @@ export function DrawerContent(props) {
               )}
               label="History"
               onPress={() => {
-                props.navigation.navigate("Settings");
+                props.navigation.navigate("History");
               }}
             />
-            <DrawerItem
-              style={{ marginTop: 10 }}
-              icon={({ color, size }) => (
-                <MatrialIcon name="history" color={color} size={size} />
-              )}
-              label="ChatScreen"
-              onPress={() => {
-                props.navigation.navigate("ChatScreen");
-              }}
-            />
-            {/* <DrawerItem
-              style={{ marginTop: 10 }}
-              icon={({ color, size }) => (
-                <FeatherIcon name="settings" color={color} size={size} />
-              )}
-              label="Settings"
-              onPress={() => {
-                props.navigation.navigate("Settings");
-              }}
-            /> */}
           </Drawer.Section>
         </View>
       </DrawerContentScrollView>
