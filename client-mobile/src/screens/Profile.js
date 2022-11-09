@@ -103,7 +103,12 @@ export default function Profile({ navigation, route }) {
             <Text style={[styles.text]}>Class Enrolled</Text>
           </View>
           <View style={styles.StatBox}>
-            <Text style={styles.textTitle}>{student?.User?.saldo}</Text>
+            <Text style={styles.textTitle}>
+              Rp{" "}
+              {student?.User?.saldo
+                ?.toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+            </Text>
             <Text style={[styles.text]}>Balance</Text>
           </View>
         </View>
@@ -148,7 +153,7 @@ export default function Profile({ navigation, route }) {
                       <Text style={styles.infoTitle}>DURATION</Text>
                       <View style={styles.infoTextWrapper}>
                         <Text>{el?.Schedules?.length}</Text>
-                        <Text style={styles.infoSubText}> Sessions</Text>
+                        <Text style={styles.infoSubText}>Sessions</Text>
                       </View>
                     </View>
                     <TouchableOpacity
@@ -170,87 +175,6 @@ export default function Profile({ navigation, route }) {
                 </View>
               );
             })}
-
-            {/* <View style={styles.classWarpper}>
-              <View style={{ flex: 1 }}>
-                <View
-                  style={{
-                    flex: 2,
-                    justifyContent: "space-between",
-                  }}>
-                  <View>
-                    <Text
-                      style={{
-                        color: colors.primary,
-                        fontSize: 20,
-                      }}>
-                      Nama Kelas
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
-                  }}>
-                  <Text style={styles.infoTitle}>DURATION</Text>
-                  <View style={styles.infoTextWrapper}>
-                    <Text>3</Text>
-                    <Text style={styles.infoSubText}> Sessions</Text>
-                  </View>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    flex: 1,
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
-                  }}>
-                  <View>
-                    <Text style={{ color: colors.green1 }}>See More</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={styles.classWarpper}>
-              <View style={{ flex: 1 }}>
-                <View
-                  style={{
-                    flex: 2,
-                    justifyContent: "space-between",
-                  }}>
-                  <View>
-                    <Text
-                      style={{
-                        color: colors.primary,
-                        fontSize: 20,
-                      }}>
-                      Nama Kelas
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
-                  }}>
-                  <Text style={styles.infoTitle}>DURATION</Text>
-                  <View style={styles.infoTextWrapper}>
-                    <Text>3</Text>
-                    <Text style={styles.infoSubText}> Sessions</Text>
-                  </View>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    flex: 1,
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
-                  }}>
-                  <View>
-                    <Text style={{ color: colors.green1 }}>See More</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View> */}
           </ScrollView>
         </View>
       </ScrollView>

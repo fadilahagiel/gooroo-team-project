@@ -17,6 +17,7 @@ export function DrawerContent(props) {
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
+  const [classes, setClasses] = useState(0);
 
   const fetchUser = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -35,6 +36,14 @@ export function DrawerContent(props) {
           access_token,
         },
       });
+      const classes = await axios({
+        method: "get",
+        url: `${serverUrl}/classes/myClassesStudent`,
+        headers: {
+          access_token,
+        },
+      });
+      setClasses(classes.data.length);
       setStudent(res.data);
       setUser(data);
     } catch (error) {
@@ -66,13 +75,13 @@ export function DrawerContent(props) {
             <View style={styles.row}>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  13
+                  {student?.Wishlists?.length}
                 </Paragraph>
                 <Caption style={styles.caption}>Bookmark</Caption>
               </View>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  2
+                  {classes}
                 </Paragraph>
                 <Caption style={styles.caption}>Class Enrolled</Caption>
               </View>
@@ -112,7 +121,7 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <MatrialIcon name="history" color={color} size={size} />
+                <FeatherIcon name="bookmark" color={color} size={size} />
               )}
               label="ChatScreen"
               onPress={() => {
@@ -122,11 +131,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon name="bookmark" color={color} size={size} />
+                <MatrialIcon name="history" color={color} size={size} />
               )}
               label="Bookmark"
               onPress={() => {
-                props.navigation.navigate("Bookmark");
+                props.navigation.navigate("History");
               }}
             />
             <DrawerItem

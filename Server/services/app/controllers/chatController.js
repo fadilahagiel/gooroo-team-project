@@ -1,22 +1,19 @@
 const { Class, Transaction, Student, Teacher, User } = require("../models");
 const axios = require("axios");
+const getImage = require("../helpers/getImage");
 
-const CHAT_API = "https://localhost:3030";
+const CHAT_API = "http://localhost:3030";
 
 class ChatController {
   static async findAllContacts(req, res, next) {
     try {
       const userId = req.user.id;
-      const userImage = await ChatController.getImage(
-        req.user.role,
-        req.user.id
-      );
+      const userImage = await getImage(req.user.role, req.user.id);
       const payload = {
         username: req.user.username,
         role: req.user.role,
         userImage,
       };
-      console.log({ payload });
       const response = await axios({
         url: `${CHAT_API}/${userId}`,
         method: "get",
@@ -45,34 +42,12 @@ class ChatController {
     }
   }
 
-  static async getImage(role, id) {
-    try {
-      let result;
-      if (role === "teacher") {
-        result = await Teacher.findAll({ where: { UserId: id } });
-      }
-      if (role === "student") {
-        result = await Student.findAll({ where: { UserId: id } });
-      }
-      result = result[0].image;
-      return result;
-    } catch (error) {
-      next(error);
-    }
-  }
-
   static async addContact(req, res, next) {
     try {
       const { contactId } = req.params;
       const contactDetail = await User.findByPk(contactId);
-      const contactImage = await ChatController.getImage(
-        contactDetail.role,
-        contactId
-      );
-      const userImage = await ChatController.getImage(
-        req.user.role,
-        req.user.id
-      );
+      const contactImage = await getImage(contactDetail.role, contactId);
+      const userImage = await getImage(req.user.role, req.user.id);
       const user = {
         userId: req.user.id,
         username: req.user.username,
