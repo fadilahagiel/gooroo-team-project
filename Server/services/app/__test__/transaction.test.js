@@ -485,3 +485,21 @@ describe(`PUT transaction, student response /transactions/:id`, () => {
     })
 
 })
+
+describe(`GET check Transactions /transactions/cek/:ClassId`, () => {
+    test(`success GET check transaction`, (done) => {
+        request(app)
+            .get('/transactions/cek/1')
+            .set("access_token", validToken)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(200);
+                return done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+
+
+})

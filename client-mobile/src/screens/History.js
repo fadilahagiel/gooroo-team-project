@@ -10,14 +10,35 @@ import {
   Dimensions,
   TextInput,
   Image,
+  AsyncStorage
 } from "react-native";
 import colors from "../config/colors";
-
+import axios from 'axios'
 import { Modalize } from "react-native-modalize";
-
+import { serverUrl } from "../config/url";
 import IonIcon from "react-native-vector-icons/Ionicons";
+import { useEffect, useState } from "react";
 
 export default function History({ navigation }) {
+  const [histories, setHistories] = useState([])
+  const [balance, setBalance] = useState(0)
+  const fetchHistories = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    const { data } = await axios({
+      url: `${serverUrl}/histories`,
+      method: 'GET',
+      headers: {
+        access_token
+      }
+    })
+    setHistories(data)
+    setBalance(histories[histories.length - 1].balance)
+  }
+  useEffect(() => {
+    fetchHistories()
+  }, [balance])
+
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -35,7 +56,10 @@ export default function History({ navigation }) {
           }}
         >
           <Text style={styles.text_header}>TOTAL BALANCE</Text>
-          <Text style={styles.Text_header2}>Rp. 3050000</Text>
+          <Text style={styles.Text_header2}> Rp.{" "}
+            {balance
+              ?.toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Text>
         </View>
       </View>
 
@@ -54,104 +78,115 @@ export default function History({ navigation }) {
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
       >
         <View style={styles.mainWarpper}>
-          <View style={styles.classWarpper}>
-            <View style={{ flex: 1 }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  // justifyContent: "space-between",
-                }}
-              >
-                <View style={{ flexDirection: "column" }}>
-                  <Text
-                    style={{
-                      color: "yellow",
-                      fontSize: 20,
-                    }}
-                  >
-                    + 50000
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.white,
-                      fontSize: 16,
-                      marginTop: 5,
-                    }}
-                  >
-                    TopUp balance
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-end",
-                  }}
-                >
-                  <View>
-                    <Text style={{ color: colors.white }}>30 Nov 2022</Text>
+          {histories.map(el => {
+  
+            if (el.category == 'debit') {
+              return (
+                <View key={el.id} style={styles.classWarpper}>
+                  <View style={{ flex: 1 }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        // justifyContent: "space-between",
+                      }}
+                    >
+                      <View style={{ flexDirection: "column" }}>
+                        <Text
+                          style={{
+                            color: "yellow",
+                            fontSize: 20,
+                          }}
+                        >
+                          + 50000
+                        </Text>
+                        <Text
+                          style={{
+                            color: colors.white,
+                            fontSize: 16,
+                            marginTop: 5,
+                          }}
+                        >
+                          TopUp balance
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <View>
+                          <Text style={{ color: colors.white }}>30 Nov 2022</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        marginTop: 10,
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <Text style={styles.infoTitle}>DEBIT</Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-              <View
-                style={{
-                  marginTop: 10,
-                  alignItems: "flex-end",
-                }}
-              >
-                <Text style={styles.infoTitle}>DEBIT</Text>
-              </View>
-            </View>
-          </View>
-          <View style={styles.classWarpper2}>
-            <View style={{ flex: 1 }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  // justifyContent: "space-between",
-                }}
-              >
-                <View style={{ flexDirection: "column" }}>
-                  <Text
-                    style={{
-                      color: "yellow",
-                      fontSize: 20,
-                    }}
-                  >
-                    - 50000
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.white,
-                      fontSize: 16,
-                      marginTop: 5,
-                    }}
-                  >
-                    Ikut kelas Ms. Sri
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-end",
-                  }}
-                >
-                  <View>
-                    <Text style={{ color: colors.white }}>30 Nov 2022</Text>
+              )
+            } else {
+              return (
+                <View style={styles.classWarpper2}>
+                  <View style={{ flex: 1 }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        // justifyContent: "space-between",
+                      }}
+                    >
+                      <View style={{ flexDirection: "column" }}>
+                        <Text
+                          style={{
+                            color: "yellow",
+                            fontSize: 20,
+                          }}
+                        >
+                          - 50000
+                        </Text>
+                        <Text
+                          style={{
+                            color: colors.white,
+                            fontSize: 16,
+                            marginTop: 5,
+                          }}
+                        >
+                          Ikut kelas Ms. Sri
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flex: 1,
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <View>
+                          <Text style={{ color: colors.white }}>30 Nov 2022</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        marginTop: 10,
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <Text style={styles.infoTitle}>kredit</Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-              <View
-                style={{
-                  marginTop: 10,
-                  alignItems: "flex-end",
-                }}
-              >
-                <Text style={styles.infoTitle}>kredit</Text>
-              </View>
-            </View>
-          </View>
+              )
+            } 
+        })}
+         
         </View>
       </Modalize>
     </SafeAreaView>

@@ -56,7 +56,7 @@ export default function ChatScreen({ route }) {
         avatar: contactImage,
       });
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   };
 

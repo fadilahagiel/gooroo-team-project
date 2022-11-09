@@ -547,3 +547,48 @@ describe("GET /classes/myClasses", () => {
       });
   });
 });
+
+describe("GET /classes/myClassesStudent", () => {
+  test("200 success GET my class for student", (done) => {
+    request(app)
+      .get(`/classes/myClassesStudent`)
+      .set("access_token", validTokenStudent)
+      .then((response) => {
+        const { body, status } = response;
+        expect(status).toBe(200);
+        expect(Array.isArray(body)).toBeTruthy();
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+
+  test("failed GET my class for student, forbidden", (done) => {
+    request(app)
+      .get(`/classes/myClassesStudent`)
+      .set("access_token", validTokenTeacher)
+      .then((response) => {
+        const { body, status } = response;
+        expect(status).toBe(403);
+        expect(body).toHaveProperty("message", "forbidden");
+        done();
+      })
+      .catch((err) => {
+        done(err);
+      });
+  });
+  test("failed GET my class for student, invalid token", (done) => {
+    request(app)
+      .get("/classes/myClassesStudent")
+      .set("access_token", "token salah")
+      .end((err, res) => {
+        if (err) return done(err);
+        const { body, status } = res;
+        expect(status).toBe(401);
+        expect(body).toHaveProperty("message", "invalid_token");
+        return done();
+      });
+  });
+});
+

@@ -65,7 +65,7 @@ export default function ChatScreen({ route }) {
 
       setIsLoading(false);
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
   };
 

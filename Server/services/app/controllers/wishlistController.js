@@ -1,11 +1,8 @@
-
-const { Wishlist, Class, Subject, Student } = require("../models");
-
+const { Wishlist, Class, Subject, Student, Teacher } = require("../models");
 
 class Controller {
   static async addWishlist(req, res, next) {
     try {
-      console.log('masuk');
       if (req.user.role != "student") {
         throw { name: "forbidden" };
       }
@@ -53,9 +50,7 @@ class Controller {
         },
         include: {
           model: Class,
-          include: {
-            model: Subject,
-          },
+          include: [Subject, Teacher],
         },
       });
       res.status(200).json(wishlist);

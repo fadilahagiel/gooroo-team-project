@@ -102,9 +102,6 @@ class Controller {
           id: ClassId,
         },
       });
-      if (!findClass) {
-        throw { name: "class not found" };
-      }
       await Class.destroy({
         where: {
           id: ClassId,
@@ -145,9 +142,6 @@ class Controller {
           id: ClassId,
         },
       });
-      if (!findClass) {
-        throw { name: "class not found" };
-      }
       await Class.update(
         { name, price, quota, SubjectId, description, url },
         {
