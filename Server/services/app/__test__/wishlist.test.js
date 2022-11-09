@@ -308,3 +308,21 @@ describe("DELETE wishlist test /wishlists/:WishlistId", () => {
             });
     });
 });
+
+describe(`GET check Wishlist /wishlists/cek/:ClassId`, () => {
+    test(`success GET check Wishlist`, (done) => {
+        request(app)
+            .get('/wishlists/cek/1')
+            .set("access_token", validTokenStudent)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(200);
+                return done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+
+
+})
