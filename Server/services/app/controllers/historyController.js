@@ -3,7 +3,10 @@ class Controller {
   static async getHistory(req, res, next) {
     try {
       const UserId = req.user.id;
-      const findHistory = await SaldoHistory.findAll({ where: { UserId } });
+      const findHistory = await SaldoHistory.findAll({
+        where: { UserId },
+        order: [["id", "DESC"]],
+      });
       res.status(200).json(findHistory);
     } catch (error) {
       next(error);

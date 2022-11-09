@@ -14,10 +14,11 @@ import {
 import colors from "../config/colors";
 import * as Animatable from "react-native-animatable";
 import Feather from "react-native-vector-icons/Feather";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { serverUrl } from "../config/url";
 
 import axios from "axios";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Profile({ navigation, route }) {
   const [student, setStudent] = useState({});
@@ -53,13 +54,13 @@ export default function Profile({ navigation, route }) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    fetchStudent();
-    fetchMyClass();
-  }, []);
-  useEffect(() => {
-    fetchStudent();
-  }, [route.params]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchStudent();
+      fetchMyClass();
+    }, [])
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsHorizontalScrollIndicator={false}>

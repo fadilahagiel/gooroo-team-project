@@ -10,42 +10,51 @@ import {
   Dimensions,
   TextInput,
   Image,
-  AsyncStorage
+  AsyncStorage,
 } from "react-native";
 import colors from "../config/colors";
-import axios from 'axios'
+import axios from "axios";
 import { Modalize } from "react-native-modalize";
 import { serverUrl } from "../config/url";
 import IonIcon from "react-native-vector-icons/Ionicons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function History({ navigation }) {
-  const [histories, setHistories] = useState([])
-  const [balance, setBalance] = useState(0)
+  const [histories, setHistories] = useState([]);
+  // const [balance, setBalance] = useState(0);
   const fetchHistories = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     const { data } = await axios({
       url: `${serverUrl}/histories`,
-      method: 'GET',
+      method: "GET",
       headers: {
-        access_token
-      }
-    })
-    setHistories(data)
-    setBalance(histories[histories.length - 1].balance)
-  }
-  useEffect(() => {
-    fetchHistories()
-  }, [])
+        access_token,
+      },
+    });
+    setHistories(data);
+    // setBalance(histories[histories.length - 1].balance);
+  };
+  // useEffect(() => {
+  //   fetchHistories();
+  // }, []);
 
-
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchHistories();
+    }, [])
+  );
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <View style={styles.header}>
         <View>
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <IonIcon name="ios-menu" color={colors.white} size={20} />
+            <IonIcon
+              name="ios-menu"
+              color={colors.white}
+              size={20}
+            />
           </TouchableOpacity>
         </View>
         <View
@@ -53,13 +62,15 @@ export default function History({ navigation }) {
             marginTop: 25,
             justifyContent: "flex-end",
             alignItems: "flex-end",
-          }}
-        >
+          }}>
           <Text style={styles.text_header}>TOTAL BALANCE</Text>
-          <Text style={styles.Text_header2}> Rp.{" "}
-            {balance
-              ?.toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Text>
+          <Text style={styles.Text_header2}>
+            {" "}
+            Rp.{" "}
+            {histories[0]?.balance
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+          </Text>
         </View>
       </View>
 
@@ -75,29 +86,27 @@ export default function History({ navigation }) {
           backgroundColor: colors.white,
         }}
         alwaysOpen={630}
-        scrollViewProps={{ showsVerticalScrollIndicator: false }}
-      >
+        scrollViewProps={{ showsVerticalScrollIndicator: false }}>
         <View style={styles.mainWarpper}>
-          {histories.map(el => {
-  
-            if (el.category == 'debit') {
+          {histories.map((el) => {
+            if (el.category == "debit") {
               return (
-                <View key={el.id} style={styles.classWarpper}>
+                <View
+                  key={el.id}
+                  style={styles.classWarpper}>
                   <View style={{ flex: 1 }}>
                     <View
                       style={{
                         flex: 1,
                         flexDirection: "row",
                         // justifyContent: "space-between",
-                      }}
-                    >
+                      }}>
                       <View style={{ flexDirection: "column" }}>
                         <Text
                           style={{
                             color: "yellow",
                             fontSize: 20,
-                          }}
-                        >
+                          }}>
                           Rp.{" "}
                           {el.amount
                             ?.toString()
@@ -108,8 +117,7 @@ export default function History({ navigation }) {
                             color: colors.white,
                             fontSize: 16,
                             marginTop: 5,
-                          }}
-                        >
+                          }}>
                           {el.description}
                         </Text>
                       </View>
@@ -117,10 +125,11 @@ export default function History({ navigation }) {
                         style={{
                           flex: 1,
                           alignItems: "flex-end",
-                        }}
-                      >
+                        }}>
                         <View>
-                          <Text style={{ color: colors.white }}>30 Nov 2022</Text>
+                          <Text style={{ color: colors.white }}>
+                            30 Nov 2022
+                          </Text>
                         </View>
                       </View>
                     </View>
@@ -128,13 +137,12 @@ export default function History({ navigation }) {
                       style={{
                         marginTop: 10,
                         alignItems: "flex-end",
-                      }}
-                    >
+                      }}>
                       <Text style={styles.infoTitle}>DEBIT</Text>
                     </View>
                   </View>
                 </View>
-              )
+              );
             } else {
               return (
                 <View style={styles.classWarpper2}>
@@ -144,15 +152,13 @@ export default function History({ navigation }) {
                         flex: 1,
                         flexDirection: "row",
                         // justifyContent: "space-between",
-                      }}
-                    >
+                      }}>
                       <View style={{ flexDirection: "column" }}>
                         <Text
                           style={{
                             color: "yellow",
                             fontSize: 20,
-                          }}
-                        >
+                          }}>
                           Rp.{" "}
                           {el.amount
                             ?.toString()
@@ -163,8 +169,7 @@ export default function History({ navigation }) {
                             color: colors.white,
                             fontSize: 16,
                             marginTop: 5,
-                          }}
-                        >
+                          }}>
                           {el.description}
                         </Text>
                       </View>
@@ -172,10 +177,11 @@ export default function History({ navigation }) {
                         style={{
                           flex: 1,
                           alignItems: "flex-end",
-                        }}
-                      >
+                        }}>
                         <View>
-                          <Text style={{ color: colors.white }}>30 Nov 2022</Text>
+                          <Text style={{ color: colors.white }}>
+                            30 Nov 2022
+                          </Text>
                         </View>
                       </View>
                     </View>
@@ -183,16 +189,14 @@ export default function History({ navigation }) {
                       style={{
                         marginTop: 10,
                         alignItems: "flex-end",
-                      }}
-                    >
+                      }}>
                       <Text style={styles.infoTitle}>kredit</Text>
                     </View>
                   </View>
                 </View>
-              )
-            } 
-        })}
-         
+              );
+            }
+          })}
         </View>
       </Modalize>
     </SafeAreaView>
