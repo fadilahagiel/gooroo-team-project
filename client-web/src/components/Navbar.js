@@ -16,6 +16,7 @@ export default function MyNavbar() {
 
   const submitLogout = (e) => {
     e.preventDefault();
+    socket.disconnect();
     localStorage.clear();
     navigate("/welcome");
     Swal.fire(
