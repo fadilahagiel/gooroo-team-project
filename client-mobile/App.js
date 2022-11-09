@@ -103,31 +103,14 @@ const App = () => {
           <Drawer.Navigator
             drawerContent={(props) => <DrawerContent {...props} />}
             screenOptions={{ headerShown: false }}
-            initialRouteName="Home">
-            <Drawer.Screen
-              name="Home"
-              component={MainTabScreen}
-            />
-            <Drawer.Screen
-              name="My Profile"
-              component={ProfileScreen}
-            />
-            <Drawer.Screen
-              name="Bookmark"
-              component={Bookmark}
-            />
-            <Drawer.Screen
-              name="Contacts"
-              component={ContactsScreen}
-            />
-            <Drawer.Screen
-              name="History"
-              component={History}
-            />
-            <Drawer.Screen
-              name="ChatScreen"
-              component={ChatScreen}
-            />
+            initialRouteName="Home"
+          >
+            <Drawer.Screen name="Home" component={MainTabScreen} />
+            <Drawer.Screen name="My Profile" component={ProfileScreen} />
+            <Drawer.Screen name="Bookmark" component={Bookmark} />
+            <Drawer.Screen name="Contacts" component={ContactsScreen} />
+            <Drawer.Screen name="History" component={History} />
+            <Drawer.Screen name="ChatScreen" component={ChatScreen} />
           </Drawer.Navigator>
         ) : (
           <RootStackScreen />

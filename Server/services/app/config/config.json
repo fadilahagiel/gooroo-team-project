@@ -1,7 +1,11 @@
 {
   "development": {
     "username": "postgres",
+<<<<<<< HEAD
     "password": "KotaBandung",
+=======
+    "password": "Ceban1234",
+>>>>>>> revisi-profile
     "database": "gooroo_db",
     "host": "localhost",
     "dialect": "postgres"
