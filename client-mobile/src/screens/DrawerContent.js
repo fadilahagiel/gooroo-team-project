@@ -67,7 +67,15 @@ export function DrawerContent(props) {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image source={{ uri: student?.image }} size={50} />
+              {student !== null ? (
+                <Avatar.Image source={{ uri: student?.image }} size={50} />
+              ) : (
+                <Avatar.Image
+                  source={require("../assets/face_demo.png")}
+                  size={50}
+                />
+              )}
+
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
                 <Title style={styles.title}>{user.username}</Title>
                 <Caption style={styles.caption}>
@@ -142,7 +150,7 @@ export function DrawerContent(props) {
               )}
               label="Bookmark"
               onPress={() => {
-                props.navigation.navigate("Bookmark");
+                props.navigation.navigate("History");
               }}
             />
             <DrawerItem

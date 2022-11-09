@@ -49,6 +49,7 @@ io.use((socket, next) => {
 let onlineUsers = [];
 let onlineStudents = 0;
 let onlineTeachers = 0;
+
 io.on("connection", (socket) => {
   const { username, role } = socket.user;
   const userId = socket.user.id;

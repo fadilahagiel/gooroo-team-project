@@ -7,11 +7,10 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
-  Platform
+  Platform,
 } from "react-native";
 import colors from "../config/colors";
-import * as ImagePicker from 'expo-image-picker';
-import {launchImageLibrary, launchCamera} from 'react-native-image-picker'
+import * as ImagePicker from "expo-image-picker";
 import React from "react";
 const options = {
   title: "click image",
@@ -20,37 +19,42 @@ const options = {
     maxHeight: 200,
     maxWidth: 200,
     selectionLimit: 1,
-    mediaType: 'photo',
-    includeBase64: false 
-  }
-}
+    mediaType: "photo",
+    includeBase64: false,
+  },
+};
 
 export default function AddProfile() {
-  // console.log(launc);
+  const [photo, setPhoto] = React.useState("");
+  const [fullName, setFullName] = React.useState("");
 
-  const [photo, setPhoto] = React.useState('');
   const pickImage = async () => {
     try {
-      console.log(launchImageLibrary, 'ini fun');
-      const images = await launchCamera(options)
-      console.log(images.assets[0].uri);
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      // console.log(result.uri);
+      if (!result.cancelled) {
+        setPhoto(result.uri);
+      }
     } catch (error) {
       console.log(error);
     }
-    // No permissions request is necessary for launching the image library
-    
-    // let result = await ImagePicker.launchImageLibraryAsync({
-    //   mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    //   quality: 1,
-    //   allowsEditing: true
-    // });
-    // console.log(result, 'ini result');
-    // if (!result.cancelled) {
-    //   console.log(result.uri);
-    //   setPhoto(result.uri);
-    // }
   };
- 
+
+  const handelAdd = async (uri, name) => {
+    try {
+      let uri =
+        "file:///var/mobile/Containers/Data/Application/AD83260D-6F21-4F2B-8CBA-C2E04FA5C3B3/Library/Caches/ExponentExperienceData/%2540zianurrahmani%252Fclient-mobile/ImagePicker/305A962D-0DB4-4251-9E7C-DB3EC2B73088.jpg";
+      console.log(uri, "dari handle");
+      console.log(name, "dari handle");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -68,16 +72,14 @@ export default function AddProfile() {
             ADD PHOTO
           </Text>
           <View style={{ alignSelf: "center" }}>
-            <TouchableOpacity
-              onPress={pickImage} style={styles.profileImage}>
+            <TouchableOpacity onPress={pickImage} style={styles.profileImage}>
               <Image
                 source={{
                   uri: "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg",
                 }}
                 style={styles.image}
                 resizeMode="center"
-                />
-               
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -92,6 +94,7 @@ export default function AddProfile() {
           <TextInput
             placeholder="My Full Name"
             placeholderTextColor={colors.secondaty2}
+            onChangeText={setFullName}
             editable={true}
             style={{
               height: 45,
@@ -112,6 +115,9 @@ export default function AddProfile() {
                 height: 45,
                 width: 70,
                 borderRadius: 20,
+              }}
+              onPress={() => {
+                handelAdd(photo, fullName);
               }}
             >
               <Text style={{ fontSize: 18, color: colors.white }}>ADD</Text>
