@@ -1,7 +1,5 @@
 const serverApp = `http://localhost:3000/`;
 
-const newone = "http://localhost:3000/";
-
 export const classesFetchSuccess = (data) => {
   return {
     type: "classes/fetchSuccess",
