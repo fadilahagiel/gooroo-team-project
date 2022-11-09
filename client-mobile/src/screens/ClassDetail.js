@@ -155,9 +155,7 @@ export default function ClassDetail({ navigation, route }) {
         />
         <Text style={styles.text_header}>{oneClass.name}</Text>
       </View>
-      <Animatable.View
-        style={styles.footer}
-        animation="fadeInUpBig">
+      <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <View style={styles.heartWrapper}>
           {isLoved ? (
             <Entypo
@@ -167,12 +165,7 @@ export default function ClassDetail({ navigation, route }) {
               onPress={removeWishlist}
             />
           ) : (
-            <Entypo
-              onPress={addWishlist}
-              name="heart"
-              size={32}
-              color="grey"
-            />
+            <Entypo onPress={addWishlist} name="heart" size={32} color="grey" />
           )}
         </View>
         <ScrollView>
@@ -212,13 +205,14 @@ export default function ClassDetail({ navigation, route }) {
           </View>
           <View style={styles.wrapper}>
             {isBuy ? (
-              <TouchableOpacity style={styles.buttonWrapperTrue}>
+              <View style={styles.buttonWrapperTrue}>
                 <Text style={styles.buttonTextTrue}>Already Enroll</Text>
-              </TouchableOpacity>
+              </View>
             ) : (
               <TouchableOpacity
                 style={styles.buttonWrapperFalse}
-                onPress={confirmation}>
+                onPress={confirmation}
+              >
                 {/* onPress={() => buyClass(oneClass.id)}> */}
                 <Text style={styles.buttonTextFalse}>Enroll This Class</Text>
               </TouchableOpacity>
@@ -321,7 +315,7 @@ const styles = StyleSheet.create({
   buttonWrapperTrue: {
     marginHorizontal: 20,
     marginTop: 40,
-    backgroundColor: colors.green2,
+    backgroundColor: "grey",
     alignItems: "center",
     paddingVertical: 15,
     borderRadius: 10,
@@ -329,7 +323,7 @@ const styles = StyleSheet.create({
   buttonWrapperFalse: {
     marginHorizontal: 20,
     marginTop: 40,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.green2,
     alignItems: "center",
     paddingVertical: 15,
     borderRadius: 10,

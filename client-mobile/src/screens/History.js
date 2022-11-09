@@ -10,34 +10,33 @@ import {
   Dimensions,
   TextInput,
   Image,
-  AsyncStorage
+  AsyncStorage,
 } from "react-native";
 import colors from "../config/colors";
-import axios from 'axios'
+import axios from "axios";
 import { Modalize } from "react-native-modalize";
 import { serverUrl } from "../config/url";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import { useEffect, useState } from "react";
 
 export default function History({ navigation }) {
-  const [histories, setHistories] = useState([])
-  const [balance, setBalance] = useState(0)
+  const [histories, setHistories] = useState([]);
+  const [balance, setBalance] = useState(0);
   const fetchHistories = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     const { data } = await axios({
       url: `${serverUrl}/histories`,
-      method: 'GET',
+      method: "GET",
       headers: {
-        access_token
-      }
-    })
-    setHistories(data)
-    setBalance(histories[histories.length - 1].balance)
-  }
+        access_token,
+      },
+    });
+    setHistories(data);
+    setBalance(histories[histories.length - 1].balance);
+  };
   useEffect(() => {
-    fetchHistories()
-  }, [balance])
-
+    fetchHistories();
+  }, [histories]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -56,10 +55,10 @@ export default function History({ navigation }) {
           }}
         >
           <Text style={styles.text_header}>TOTAL BALANCE</Text>
-          <Text style={styles.Text_header2}> Rp.{" "}
-            {balance
-              ?.toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Text>
+          <Text style={styles.Text_header2}>
+            {" "}
+            Rp. {balance?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+          </Text>
         </View>
       </View>
 
@@ -78,9 +77,8 @@ export default function History({ navigation }) {
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
       >
         <View style={styles.mainWarpper}>
-          {histories.map(el => {
-  
-            if (el.category == 'debit') {
+          {histories.map((el) => {
+            if (el.category == "debit") {
               return (
                 <View key={el.id} style={styles.classWarpper}>
                   <View style={{ flex: 1 }}>
@@ -117,7 +115,9 @@ export default function History({ navigation }) {
                         }}
                       >
                         <View>
-                          <Text style={{ color: colors.white }}>30 Nov 2022</Text>
+                          <Text style={{ color: colors.white }}>
+                            30 Nov 2022
+                          </Text>
                         </View>
                       </View>
                     </View>
@@ -131,7 +131,7 @@ export default function History({ navigation }) {
                     </View>
                   </View>
                 </View>
-              )
+              );
             } else {
               return (
                 <View style={styles.classWarpper2}>
@@ -169,7 +169,9 @@ export default function History({ navigation }) {
                         }}
                       >
                         <View>
-                          <Text style={{ color: colors.white }}>30 Nov 2022</Text>
+                          <Text style={{ color: colors.white }}>
+                            30 Nov 2022
+                          </Text>
                         </View>
                       </View>
                     </View>
@@ -183,10 +185,9 @@ export default function History({ navigation }) {
                     </View>
                   </View>
                 </View>
-              )
-            } 
-        })}
-         
+              );
+            }
+          })}
         </View>
       </Modalize>
     </SafeAreaView>
