@@ -27,7 +27,7 @@ export default function MyNavbar () {
   return ( 
     <Navbar variant="dark" expand="lg" style={{fontFamily: "monospace", backgroundColor: "#090B48", paddingRight: '40px'}}>
       {/* <Container> */}
-        <Navbar.Brand href="/"><img className="img-fluid" style={{width: "200px"}} src='/GooRoo_LOGO2.png'/></Navbar.Brand>
+        <Navbar.Brand href="/"><img className="img-fluid" style={{width: "200px"}} src='/GooRoo_LOGO3.png'/></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
