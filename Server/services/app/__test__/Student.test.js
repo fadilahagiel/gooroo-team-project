@@ -191,18 +191,6 @@ describe("show one student Test", () => {
       });
   });
 
-  test("failed show one student, student not found", (done) => {
-    request(app)
-      .get("/students")
-      .set("access_token", validTokenTeacher)
-      .end((err, res) => {
-        if (err) return done(err);
-        const { body, status } = res;
-        expect(status).toBe(404);
-        expect(body).toHaveProperty("message", "error not found");
-        return done();
-      });
-  });
 
   test("failed show one student, invalid token", (done) => {
     request(app)
