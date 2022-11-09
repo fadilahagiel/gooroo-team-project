@@ -132,6 +132,24 @@ class Controller {
       next(error);
     }
   }
+  static async getOneClassStudent(req, res, next) {
+    try {
+      const { ClassId } = req.params;
+      const findClass = await Class.findOne({
+        where: {
+          id: ClassId,
+        },
+        include: { model: Transaction, include: Student },
+      });
+      let newArr = [];
+      findClass.Transactions.forEach((el) => {
+        newArr.push(el.Student);
+      });
+      res.status(200).json(newArr);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   static async updateClass(req, res, next) {
     try {

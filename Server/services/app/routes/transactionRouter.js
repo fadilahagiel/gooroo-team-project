@@ -9,5 +9,6 @@ router.put("/:id", TransactionController.studentResponse);
 router.get("/cek/:ClassId", TransactionController.findTransaction);
 router.get("/response/:ClassId", TransactionController.findOneResponseTransation);
 router.patch("/:ClassId", AuthTeacher, TransactionController.collectTransaction);
+router.get("/teacher/:TeacherId", TransactionController.myTransaction);
 
 module.exports = router;

@@ -240,6 +240,34 @@ class Controller {
       next(error);
     }
   }
+  static async myTransaction(req, res, next) {
+    try {
+      const { TeacherId } = req.params;
+      const teacher = await Teacher.findOne({
+        where: {
+          id: TeacherId,
+        },
+        include: {
+          model: Class,
+          include: {
+            model: Transaction,
+            include: Student,
+          },
+        },
+      });
+      let newArr = [];
+      teacher.Classes.forEach((el) => {
+        el.Transactions.forEach((ele) => {
+          if (ele.testimoni) {
+            newArr.push(ele);
+          }
+        });
+      });
+      res.status(200).json(newArr);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;
