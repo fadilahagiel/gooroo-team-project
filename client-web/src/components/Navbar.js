@@ -37,19 +37,60 @@ export default function MyNavbar() {
       }}
     >
       {/* <Container> */}
-        <Navbar.Brand href="/"><img className="img-fluid" style={{width: "200px"}} src='/GooRoo_LOGO3.png'/></Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to="/">Home</Link>
-            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"add-class"}>Add Class</Link>
-            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"categories"}>Subjects</Link>
-            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"teacher-profile"}>My Profile</Link>
-            <Link className={"m-3"} style={{color: 'white', fontSize: '20px'}}to={"register"}>Teacher Registration</Link>
-           
-          </Nav>
-            <Button className={"btn-danger"} style={{backgroundColor: "#A41313"}} onClick={submitLogout}>Logout </Button>
-        </Navbar.Collapse>
+      <Navbar.Brand href="/">
+        <img
+          className="img-fluid"
+          style={{ width: "200px" }}
+          src="/GooRoo_LOGO3.png"
+        />
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="me-auto">
+          <Link
+            className={"m-3"}
+            style={{ color: "white", fontSize: "20px" }}
+            to="/"
+          >
+            Home
+          </Link>
+          <Link
+            className={"m-3"}
+            style={{ color: "white", fontSize: "20px" }}
+            to={"add-class"}
+          >
+            Add Class
+          </Link>
+          <Link
+            className={"m-3"}
+            style={{ color: "white", fontSize: "20px" }}
+            to={"categories"}
+          >
+            Subjects
+          </Link>
+          <Link
+            className={"m-3"}
+            style={{ color: "white", fontSize: "20px" }}
+            to={"teacher-profile"}
+          >
+            My Profile
+          </Link>
+          <Link
+            className={"m-3"}
+            style={{ color: "white", fontSize: "20px" }}
+            to={"register"}
+          >
+            Teacher Registration
+          </Link>
+        </Nav>
+        <Button
+          className={"btn-danger"}
+          style={{ backgroundColor: "#A41313" }}
+          onClick={submitLogout}
+        >
+          Logout{" "}
+        </Button>
+      </Navbar.Collapse>
       {/* </Container> */}
     </Navbar>
   );
