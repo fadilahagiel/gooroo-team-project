@@ -40,7 +40,7 @@ class StudentController {
       if (role !== "student") {
         throw { name: "forbidden" };
       }
-      const { fullName } = req.body;
+      const fullName  = req.headers.fullname
       const student = await Student.create({
         fullName,
         UserId: id,
