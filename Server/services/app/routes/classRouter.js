@@ -10,5 +10,6 @@ router.get("/:ClassId", ClassController.getOneClass);
 router.delete("/:ClassId", AuthTeacher, ClassController.deleteClass);
 router.put("/:ClassId", AuthTeacher, ClassController.updateClass);
 router.patch("/:id", ClassController.statusOnProgress);
+router.get("/myStudent/:ClassId", ClassController.getOneClassStudent);
 
 module.exports = router;

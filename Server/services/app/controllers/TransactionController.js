@@ -223,6 +223,51 @@ class Controller {
       next(error);
     }
   }
+
+  static async findOneResponseTransation(req, res, next) {
+    try {
+      const { ClassId } = req.params;
+      const UserId = req.user.id;
+      const studentFound = await Student.findOne({ where: { UserId } });
+      const findTrans = await Transaction.findOne({
+        where: {
+          ClassId,
+          StudentId: studentFound.id,
+        },
+      });
+      res.status(200).json(findTrans)
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async myTransaction(req, res, next) {
+    try {
+      const { TeacherId } = req.params;
+      const teacher = await Teacher.findOne({
+        where: {
+          id: TeacherId,
+        },
+        include: {
+          model: Class,
+          include: {
+            model: Transaction,
+            include: Student,
+          },
+        },
+      });
+      let newArr = [];
+      teacher.Classes.forEach((el) => {
+        el.Transactions.forEach((ele) => {
+          if (ele.testimoni) {
+            newArr.push(ele);
+          }
+        });
+      });
+      res.status(200).json(newArr);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = Controller;

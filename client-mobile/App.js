@@ -111,7 +111,6 @@ const App = () => {
             <Drawer.Screen name="Contacts" component={ContactsScreen} />
             <Drawer.Screen name="History" component={History} />
             <Drawer.Screen name="ChatScreen" component={ChatScreen} />
-            <Drawer.Screen name="History" component={History} />
           </Drawer.Navigator>
         ) : (
           <RootStackScreen />

@@ -80,10 +80,6 @@ export default function ClassDetail({ navigation, route }) {
     setIsLoved(false);
   };
 
-  // useEffect(() => {
-  //   addWishlist();
-  // }, [isLoved]);
-
   const cekWishlist = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -118,13 +114,17 @@ export default function ClassDetail({ navigation, route }) {
   const buyClass = async (id) => {
     try {
       const access_token = await AsyncStorage.getItem("access_token");
-      await axios({
-        method: "post",
-        url: `${serverUrl}/transactions/${id}`,
+      const response = await fetch(`${serverUrl}/transactions/${id}`, {
+        method: "POST",
         headers: {
+          "Content-Type": "application/json",
           access_token,
         },
       });
+      const dataTes = await response.json();
+      if (dataTes.message === "not enough balance") {
+        return navigation.navigate("TopUp");
+      }
       setIsBuy(true);
     } catch (error) {
       console.log(error);
@@ -155,9 +155,7 @@ export default function ClassDetail({ navigation, route }) {
         />
         <Text style={styles.text_header}>{oneClass.name}</Text>
       </View>
-      <Animatable.View
-        style={styles.footer}
-        animation="fadeInUpBig">
+      <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <View style={styles.heartWrapper}>
           {isLoved ? (
             <Entypo
@@ -167,12 +165,7 @@ export default function ClassDetail({ navigation, route }) {
               onPress={removeWishlist}
             />
           ) : (
-            <Entypo
-              onPress={addWishlist}
-              name="heart"
-              size={32}
-              color="grey"
-            />
+            <Entypo onPress={addWishlist} name="heart" size={32} color="grey" />
           )}
         </View>
         <ScrollView>
@@ -201,24 +194,39 @@ export default function ClassDetail({ navigation, route }) {
               </View>
             </View>
             <View>
-              <Text style={styles.infoTitle}>DURATION</Text>
+              <Text style={styles.infoTitle}>QUOTA</Text>
               <View style={styles.infoTextWrapper}>
                 <Text style={styles.infoText}>
-                  {oneClass?.Schedules?.length}
+                  {oneClass?.Transactions?.length
+                    ? oneClass?.Transactions?.length
+                    : "0"}
                 </Text>
-                <Text style={styles.infoSubText}>Session</Text>
+                <Text style={styles.infoSubText}>/{oneClass?.quota}</Text>
               </View>
             </View>
           </View>
-          <View style={styles.wrapper}>
+          <View style={styles.infoSchedule}>
+            <Text style={styles.infoTitle}>SCHEDULE</Text>
+            <View>
+              {oneClass?.Schedule?.map((el) => {
+                return (
+                  <Text style={{ color: colors.primary, fontSize: 12 }}>
+                    {el}
+                  </Text>
+                );
+              })}
+            </View>
+          </View>
+          <View style={[styles.wrapper, { justifyContent: "flex-end" }]}>
             {isBuy ? (
-              <TouchableOpacity style={styles.buttonWrapperTrue}>
+              <View style={styles.buttonWrapperTrue}>
                 <Text style={styles.buttonTextTrue}>Already Enroll</Text>
-              </TouchableOpacity>
+              </View>
             ) : (
               <TouchableOpacity
                 style={styles.buttonWrapperFalse}
-                onPress={confirmation}>
+                onPress={confirmation}
+              >
                 {/* onPress={() => buyClass(oneClass.id)}> */}
                 <Text style={styles.buttonTextFalse}>Enroll This Class</Text>
               </TouchableOpacity>
@@ -236,7 +244,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   header: {
-    flex: 1,
+    flex: 0.9,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 30,
@@ -262,7 +270,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   footer: {
-    flex: 1,
+    flex: 1.1,
     backgroundColor: colors.white,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -292,10 +300,16 @@ const styles = StyleSheet.create({
     color: colors.secondaty2,
     height: 85,
   },
+  infoSchedule: {
+    flex: 1,
+    marginHorizontal: 10,
+    marginTop: 10,
+  },
   infoWrapper: {
-    flex: 2,
+    flex: 1,
     flexDirection: "row",
-    marginHorizontal: 20,
+    marginHorizontal: 10,
+    marginTop: -25,
     justifyContent: "space-between",
   },
   infoTitle: {
@@ -317,11 +331,12 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     flex: 1,
+    marginTop: -30,
   },
   buttonWrapperTrue: {
     marginHorizontal: 20,
     marginTop: 40,
-    backgroundColor: colors.green2,
+    backgroundColor: "grey",
     alignItems: "center",
     paddingVertical: 15,
     borderRadius: 10,
@@ -329,7 +344,7 @@ const styles = StyleSheet.create({
   buttonWrapperFalse: {
     marginHorizontal: 20,
     marginTop: 40,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.green2,
     alignItems: "center",
     paddingVertical: 15,
     borderRadius: 10,

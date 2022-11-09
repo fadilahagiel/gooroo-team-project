@@ -17,9 +17,10 @@ import colors from "../config/colors";
 import { Modalize } from "react-native-modalize";
 
 import IonIcon from "react-native-vector-icons/Ionicons";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { serverUrl } from "../config/url";
 import axios from "axios";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function BookMark({ route, navigation }) {
   const [wishlists, setWishlists] = useState([]);
@@ -38,9 +39,12 @@ export default function BookMark({ route, navigation }) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    fetchMyWishlist();
-  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchMyWishlist();
+    }, [])
+  );
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />

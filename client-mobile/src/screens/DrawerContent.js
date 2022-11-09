@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, AsyncStorage } from "react-native";
+import { View, StyleSheet, AsyncStorage, Alert } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Avatar, Title, Caption, Paragraph, Drawer } from "react-native-paper";
 
@@ -8,20 +8,23 @@ import { AuthContext } from "../components/context";
 import Icon from "react-native-vector-icons/Ionicons";
 import MatrialIcon from "react-native-vector-icons/Octicons";
 import FeatherIcon from "react-native-vector-icons/Feather";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import axios from "axios";
 
 import { serverUrl } from "../config/url";
 import socket from "../config/socket";
+import { useFocusEffect } from "@react-navigation/native";
 
 export function DrawerContent(props) {
+  console.log();
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
   const [classes, setClasses] = useState(0);
 
   const fetchUser = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
+      const access_token = await AsyncStorage.getItem("access_token");
       const { data } = await axios({
         url: `${serverUrl}/users`,
         method: "GET",
@@ -36,24 +39,22 @@ export function DrawerContent(props) {
           access_token,
         },
       });
-      const classes = await axios({
-        method: "get",
-        url: `${serverUrl}/classes/myClassesStudent`,
-        headers: {
-          access_token,
-        },
-      });
-      setClasses(classes.data.length);
+      if (!res.data) {
+        Alert.alert("Please update profile first to continue");
+        return props.navigation.navigate("Profile");
+      }
       setStudent(res.data);
       setUser(data);
     } catch (error) {
-      console.log(error);
+      console.log(error, "ini dari drawer");
     }
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUser();
+    }, [])
+  );
 
   const submitLogout = async () => {
     await AsyncStorage.clear();
@@ -66,25 +67,27 @@ export function DrawerContent(props) {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image source={{ uri: student.image }} size={50} />
+              <Avatar.Image source={{ uri: student?.image }} size={50} />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
                 <Title style={styles.title}>{user.username}</Title>
-                <Caption style={styles.caption}>{student.fullName}</Caption>
+                <Caption style={styles.caption}>
+                  {student?.fullName ? student?.fullName : user.username}
+                </Caption>
               </View>
             </View>
             <View style={styles.row}>
-              <View style={styles.section}>
+              {/* <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
                   {student?.Wishlists?.length}
                 </Paragraph>
                 <Caption style={styles.caption}>Bookmark</Caption>
-              </View>
-              <View style={styles.section}>
+              </View> */}
+              {/* <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
                   {classes}
                 </Paragraph>
                 <Caption style={styles.caption}>Class Enrolled</Caption>
-              </View>
+              </View> */}
             </View>
           </View>
           <Drawer.Section style={styles.drawerSection}>
@@ -111,7 +114,7 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon name="book" color={color} size={size} />
+                <AntDesign name="contacts" color={color} size={size} />
               )}
               label="Contacts"
               onPress={() => {
@@ -121,9 +124,13 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon name="bookmark" color={color} size={size} />
+                <Icon
+                  name="ios-chatbox-ellipses-outline"
+                  color={color}
+                  size={size}
+                />
               )}
-              label="ChatScreen"
+              label="Chat"
               onPress={() => {
                 props.navigation.navigate("ChatScreen");
               }}
@@ -131,7 +138,7 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <MatrialIcon name="history" color={color} size={size} />
+                <FeatherIcon name="bookmark" color={color} size={size} />
               )}
               label="Bookmark"
               onPress={() => {

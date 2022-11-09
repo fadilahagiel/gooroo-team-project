@@ -41,7 +41,7 @@ export default function MyNavbar() {
         <img
           className="img-fluid"
           style={{ width: "200px" }}
-          src="/GooRoo_LOGO2.png"
+          src="/GooRoo_LOGO3.png"
         />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -57,7 +57,7 @@ export default function MyNavbar() {
           <Link
             className={"m-3"}
             style={{ color: "white", fontSize: "20px" }}
-            to={"product"}
+            to={"add-class"}
           >
             Add Class
           </Link>

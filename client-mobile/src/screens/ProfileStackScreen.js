@@ -3,6 +3,8 @@ import colors from "../config/colors";
 import Icon from "react-native-vector-icons/Ionicons";
 
 import Profile from "./Profile";
+import AddProfile from "./AddProfile";
+import Response from "./Response";
 import TopUp from "./TopUp";
 import Midtrans from "./Midtrans";
 
@@ -40,7 +42,7 @@ const ProfileStackScreen = ({ navigation }) => {
 
       <ProfileStack.Screen
         options={{
-          title: "My Profile",
+          title: "Top Up",
           headerLeft: () => (
             <Icon.Button
               name="ios-arrow-back"
@@ -56,7 +58,7 @@ const ProfileStackScreen = ({ navigation }) => {
       />
       <ProfileStack.Screen
         options={{
-          title: "My Profile",
+          title: "PayMent",
           headerLeft: () => (
             <Icon.Button
               name="ios-arrow-back"
@@ -69,6 +71,38 @@ const ProfileStackScreen = ({ navigation }) => {
         }}
         name="Midtrans"
         component={Midtrans}
+      />
+      <ProfileStack.Screen
+        options={{
+          title: "My Profile",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-arrow-back"
+              backgroundColor={colors.secondaty2}
+              onPress={() => {
+                navigation.navigate("Profile");
+              }}
+            />
+          ),
+        }}
+        name="AddProfile"
+        component={AddProfile}
+      />
+      <ProfileStack.Screen
+        options={{
+          title: "My Profile",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-arrow-back"
+              backgroundColor={colors.secondaty2}
+              onPress={() => {
+                navigation.navigate("Profile");
+              }}
+            />
+          ),
+        }}
+        name="Response"
+        component={Response}
       />
     </ProfileStack.Navigator>
   );

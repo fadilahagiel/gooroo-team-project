@@ -21,15 +21,14 @@ import axios from "axios";
 import { serverUrl } from "../config/url";
 import { addContact, fetchContacts } from "../actions";
 
-
 export default function ClassDetail({ navigation, route }) {
   const { id } = route.params;
   const [teacher, setTeacher] = useState({});
+  const [testimoni, setTestimoni] = useState([]);
 
   const fetchTeacher = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
-      console.log("masuk");
       const { data } = await axios({
         method: "get",
         url: `${serverUrl}/teachers/${id}`,
@@ -47,8 +46,23 @@ export default function ClassDetail({ navigation, route }) {
     }
   };
 
+  const fetchTransaction = async () => {
+    const access_token = await AsyncStorage.getItem("access_token");
+    try {
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/transactions/teacher/${id}`,
+        headers: { access_token },
+      });
+      setTestimoni(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchTeacher();
+    fetchTransaction();
   }, []);
 
   const handleChat = async (id) => {
@@ -63,7 +77,10 @@ export default function ClassDetail({ navigation, route }) {
       <Animatable.View style={styles.header}>
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: "row" }}>
-            <Avatar.Image source={{ uri: teacher.image }} size={70} />
+            <Avatar.Image
+              source={{ uri: teacher.image }}
+              size={70}
+            />
             <View style={{ marginLeft: 25, flexDirection: "column", flex: 2 }}>
               <Title style={styles.title}>{teacher.fullName}</Title>
               <Caption style={styles.caption}>{teacher.username}</Caption>
@@ -79,8 +96,7 @@ export default function ClassDetail({ navigation, route }) {
                 justifyContent: "center",
                 alignItems: "flex-end",
                 flex: 1,
-              }}
-            >
+              }}>
               <Text style={styles.infoTitle}>RATING</Text>
               <View style={styles.infoTextWrapper}>
                 <Text style={styles.infoText}>{teacher.averageRating}</Text>
@@ -94,8 +110,7 @@ export default function ClassDetail({ navigation, route }) {
                 justifyContent: "flex-start",
                 alignItems: "flex-end",
                 // marginTop: 10,
-              }}
-            >
+              }}>
               <TouchableOpacity>
                 <Icon
                   name="ios-chatbox-ellipses-outline"
@@ -115,44 +130,68 @@ export default function ClassDetail({ navigation, route }) {
           <View style={styles.row}></View>
         </View>
       </Animatable.View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig">
         <Text style={styles.text_footer}>Class List</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{ height: 400 }}
-        >
+          style={{ height: 400 }}>
           {teacher?.Classes?.map((el) => {
             return (
-              <View key={el.id} style={styles.classWarpper}>
+              <View
+                key={el.id}
+                style={styles.classWarpper}>
                 <View style={{ flex: 1 }}>
                   <View
                     style={{
-                      flex: 2,
+                      flex: 1,
                       justifyContent: "space-between",
-                    }}
-                  >
+                    }}>
                     <View>
                       <Text
                         style={{
                           color: colors.primary,
                           fontSize: 20,
-                        }}
-                      >
+                        }}>
                         {el.name}
                       </Text>
                     </View>
                   </View>
-                  <View
-                    style={{
-                      justifyContent: "flex-end",
-                      alignItems: "flex-end",
-                    }}
-                  >
-                    <Text style={styles.infoTitle}>DURATION</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text>{el?.Schedules?.length}</Text>
-                      <Text style={styles.infoSubText}> Sessions</Text>
+                  <View style={styles.infoWrapper}>
+                    <View
+                      style={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}>
+                      <Text style={styles.infoTitle}>PRICE</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text>{el?.price}</Text>
+                        <Text style={styles.infoSubText}></Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}>
+                      <Text style={styles.infoTitle}>QUOTA</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text>{el?.Transactions?.length}</Text>
+                        <Text style={styles.infoSubText}> /{el?.quota}</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}>
+                      <Text style={styles.infoTitle}>DURATION</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text>{el?.Schedules?.length}</Text>
+                        <Text style={styles.infoSubText}> Sessions</Text>
+                      </View>
                     </View>
                   </View>
                   <TouchableOpacity
@@ -165,8 +204,7 @@ export default function ClassDetail({ navigation, route }) {
                       navigation.navigate("ClassDetail", {
                         id: el.id,
                       })
-                    }
-                  >
+                    }>
                     <View>
                       <Text style={{ color: colors.green1 }}>See More</Text>
                     </View>
@@ -189,70 +227,34 @@ export default function ClassDetail({ navigation, route }) {
           backgroundColor: colors.white,
         }}
         alwaysOpen={250}
-        scrollViewProps={{ showsVerticalScrollIndicator: false }}
-      >
+        scrollViewProps={{ showsVerticalScrollIndicator: false }}>
         <View style={{ margin: 30, marginTop: 50, marginBottom: 80 }}>
           <Text>Comments:</Text>
-          <View style={styles.cardContainer}>
-            <Image
-              source={require("../assets/face_demo2.png")}
-              style={styles.cardImageContainer}
-            />
-            <View style={styles.infoWrapper}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: colors.primary,
-                }}
-              >
-                Giovanni
-              </Text>
-              <Text style={{ fontSize: 16, color: colors.secondary1 }}>
-                amazing class
-              </Text>
-            </View>
-          </View>
-          <View style={styles.cardContainer}>
-            <Image
-              source={require("../assets/face_demo2.png")}
-              style={styles.cardImageContainer}
-            />
-            <View style={styles.infoWrapper}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: colors.primary,
-                }}
-              >
-                Giovanni
-              </Text>
-              <Text style={{ fontSize: 16, color: colors.secondary1 }}>
-                so FUN wkwkwk
-              </Text>
-            </View>
-          </View>
-          <View style={styles.cardContainer}>
-            <Image
-              source={require("../assets/face_demo2.png")}
-              style={styles.cardImageContainer}
-            />
-            <View style={styles.infoWrapper}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  color: colors.primary,
-                }}
-              >
-                Giovanni
-              </Text>
-              <Text style={{ fontSize: 16, color: colors.secondary1 }}>
-                Nice Teacher!
-              </Text>
-            </View>
-          </View>
+          {testimoni.map((el) => {
+            return (
+              <View
+                key={el.id}
+                style={styles.cardContainer}>
+                <Image
+                  source={{ uri: el?.Student?.image }}
+                  style={styles.cardImageContainer}
+                />
+                <View style={styles.CommentWarpper}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      color: colors.primary,
+                    }}>
+                    {el?.Student?.fullName}
+                  </Text>
+                  <Text style={{ fontSize: 16, color: colors.secondary1 }}>
+                    {el?.testimoni}
+                  </Text>
+                </View>
+              </View>
+            );
+          })}
         </View>
       </Modalize>
     </SafeAreaView>
@@ -309,7 +311,7 @@ const styles = StyleSheet.create({
   classWarpper: {
     backgroundColor: colors.white,
     height: 150,
-    width: 150,
+    width: 250,
     marginTop: 20,
     marginRight: 10,
     borderRadius: 10,
@@ -357,9 +359,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     borderRadius: 50,
   },
-  infoWrapper: {
+  CommentWarpper: {
     marginHorizontal: 10,
     justifyContent: "space-between",
+  },
+  infoWrapper: {
+    flex: 1,
+    // marginHorizontal: 10,
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
   infoTitle: {
     fontSize: 12,
