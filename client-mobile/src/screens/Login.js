@@ -18,10 +18,8 @@ import axios from "axios";
 import { AsyncStorage } from "react-native";
 import { AuthContext } from "../components/context";
 import { serverUrl } from "../config/url";
-
 import { fetchContacts } from "../actions";
 import socket from "../config/socket";
-
 
 const { height } = Dimensions.get("window");
 
@@ -35,11 +33,7 @@ export default function Login({ navigation }) {
   const { signIn } = React.useContext(AuthContext);
 
   const submitLogin = async () => {
-    // console.log(data);
     try {
-      // console.log("cek");
-      // console.log(data, "cek email");
-      // console.log(data.password);
       const response = await fetch(`${serverUrl}/users/login`, {
         method: "POST",
         headers: {
@@ -52,14 +46,12 @@ export default function Login({ navigation }) {
         throw dataTes.message;
       }
       await AsyncStorage.setItem("access_token", dataTes.access_token);
-      // console.log({ userId: dataTes.id });
-      const contacts = await fetchContacts(dataTes.id);
-      console.log({ dataTes });
+      await AsyncStorage.setItem("user", JSON.stringify(dataTes));
+      await fetchContacts();
       socket.auth = dataTes;
       socket.connect();
       signIn();
     } catch (error) {
-      console.log(error);
       return alert(error);
     }
   };

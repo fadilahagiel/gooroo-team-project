@@ -58,10 +58,7 @@ export function DrawerContent(props) {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image
-                source={{uri:student.image}}
-                size={50}
-              />
+              <Avatar.Image source={{ uri: student.image }} size={50} />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
                 <Title style={styles.title}>{user.username}</Title>
                 <Caption style={styles.caption}>{student.fullName}</Caption>
@@ -136,13 +133,23 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
+                <MatrialIcon name="history" color={color} size={size} />
+              )}
+              label="ChatScreen"
+              onPress={() => {
+                props.navigation.navigate("ChatScreen");
+              }}
+            />
+            {/* <DrawerItem
+              style={{ marginTop: 10 }}
+              icon={({ color, size }) => (
                 <FeatherIcon name="settings" color={color} size={size} />
               )}
               label="Settings"
               onPress={() => {
                 props.navigation.navigate("Settings");
               }}
-            />
+            /> */}
           </Drawer.Section>
         </View>
       </DrawerContentScrollView>

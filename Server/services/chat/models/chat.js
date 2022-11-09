@@ -35,12 +35,13 @@ class Chat {
     }
   }
 
-  static async updateChat(roomId, user, msg) {
+  static async updateChat(roomId, user, text, createdAt, _id) {
     try {
       const collection = this.userCollection();
-      await collection.updateOne(
+      console.log(user);
+      const test = await collection.updateOne(
         { roomId },
-        { $push: { chatLogs: { user, msg } } }
+        { $push: { chatLogs: { _id, user, text, createdAt } } }
       );
     } catch (error) {
       return error;
