@@ -40,7 +40,7 @@ const ProfileStackScreen = ({ navigation }) => {
 
       <ProfileStack.Screen
         options={{
-          title: "My Profile",
+          title: "Top Up",
           headerLeft: () => (
             <Icon.Button
               name="ios-arrow-back"
@@ -56,7 +56,7 @@ const ProfileStackScreen = ({ navigation }) => {
       />
       <ProfileStack.Screen
         options={{
-          title: "My Profile",
+          title: "PayMent",
           headerLeft: () => (
             <Icon.Button
               name="ios-arrow-back"
