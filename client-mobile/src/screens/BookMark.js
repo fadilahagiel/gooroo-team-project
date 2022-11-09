@@ -51,11 +51,7 @@ export default function BookMark({ route, navigation }) {
       <View style={styles.header}>
         <View>
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <IonIcon
-              name="ios-menu"
-              color={colors.white}
-              size={20}
-            />
+            <IonIcon name="ios-menu" color={colors.white} size={20} />
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 25 }}>
@@ -78,33 +74,35 @@ export default function BookMark({ route, navigation }) {
           backgroundColor: colors.white,
         }}
         alwaysOpen={630}
-        scrollViewProps={{ showsVerticalScrollIndicator: false }}>
-        {wishlists.map((el) => {
-          return (
-            <View
-              key={el.id}
-              style={styles.mainWarpper}>
-              <View style={styles.classWarpper}>
+        scrollViewProps={{ showsVerticalScrollIndicator: false }}
+      >
+        <View style={styles.mainWarpper}>
+          {wishlists.map((el) => {
+            return (
+              <View key={el.id} style={styles.classWarpper}>
                 <View style={{ flex: 1 }}>
                   <View
                     style={{
                       flex: 1,
                       flexDirection: "row",
                       // justifyContent: "space-between",
-                    }}>
+                    }}
+                  >
                     <View style={{ flexDirection: "column" }}>
                       <Text
                         style={{
                           color: colors.primary,
                           fontSize: 20,
-                        }}>
+                        }}
+                      >
                         {el?.Class?.name}
                       </Text>
                       <Text
                         style={{
                           color: colors.secondaty2,
                           fontSize: 16,
-                        }}>
+                        }}
+                      >
                         By, {el?.Class?.Teacher?.fullName}
                       </Text>
                     </View>
@@ -117,7 +115,8 @@ export default function BookMark({ route, navigation }) {
                       style={{
                         flex: 1,
                         alignItems: "flex-end",
-                      }}>
+                      }}
+                    >
                       <View>
                         <Text style={{ color: colors.green1 }}>See More</Text>
                       </View>
@@ -130,8 +129,9 @@ export default function BookMark({ route, navigation }) {
                       justifyContent: "space-between",
                       alignItems: "flex-end",
                       flexDirection: "row",
-                    }}>
-                    <View>
+                    }}
+                  >
+                    <View style={{ alignItems: "flex-end" }}>
                       <Text style={styles.infoTitle}>PRICE</Text>
                       <View style={styles.infoTextWrapper}>
                         <Text>
@@ -143,14 +143,13 @@ export default function BookMark({ route, navigation }) {
                         {/* <Text style={styles.infoSubText}> /Session</Text> */}
                       </View>
                     </View>
-                    {/* <View>
-                      <Text style={styles.infoTitle}>QUOTA</Text>
+                    <View style={{ alignItems: "flex-end" }}>
+                      <Text style={styles.infoTitle}>STATUS</Text>
                       <View style={styles.infoTextWrapper}>
-                        <Text>{el?.Class?.price}</Text>
-                        <Text style={styles.infoSubText}> /10</Text>
+                        <Text>{el?.Class?.status}</Text>
                       </View>
-                    </View> */}
-                    <View>
+                    </View>
+                    <View style={{ alignItems: "flex-end" }}>
                       <Text style={styles.infoTitle}>Subject</Text>
                       <View style={styles.infoTextWrapper}>
                         <Text> {el?.Class?.Subject?.name}</Text>
@@ -160,9 +159,9 @@ export default function BookMark({ route, navigation }) {
                   </View>
                 </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
+        </View>
       </Modalize>
     </SafeAreaView>
   );

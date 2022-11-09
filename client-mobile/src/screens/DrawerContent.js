@@ -71,7 +71,7 @@ export function DrawerContent(props) {
                 <Avatar.Image source={{ uri: student?.image }} size={50} />
               ) : (
                 <Avatar.Image
-                  source={require("../assets/face_demo.png")}
+                  source={require("../assets/defaultpict.jpg")}
                   size={50}
                 />
               )}
@@ -150,7 +150,7 @@ export function DrawerContent(props) {
               )}
               label="Bookmark"
               onPress={() => {
-                props.navigation.navigate("History");
+                props.navigation.navigate("Bookmark");
               }}
             />
             <DrawerItem
