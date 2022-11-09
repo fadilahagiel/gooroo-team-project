@@ -1,51 +1,50 @@
 import Image from 'react-bootstrap/Image'
-import {deleteProduct} from "../store/actionCreator"
-import {updateProduct} from "../store/actionCreator"
+import {deleteClass, fetchClasses} from "../store/actionCreator"
+import {updateClass} from "../store/actionCreator"
 import Button from 'react-bootstrap/Button';
 import { useDispatch} from 'react-redux'
 import { useNavigate } from 'react-router-dom';
-import {fetchProducts} from '../store/actionCreator'
 
-export default function ProductRow 
-({product, index}) {
+export default function ClassRow 
+({oneClass, index}) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const deleteProductButton = (e) => {
+  const deleteClassButton = (e) => {
     e.preventDefault();
-    console.log(product.id);
-    dispatch(deleteProduct(product.id))
+    console.log(oneClass.id);
+    dispatch(deleteClass(oneClass.id))
     .then(() => {
       navigate('/'); 
-        dispatch(fetchProducts())})
+        dispatch(fetchClasses())})
     
   }
-  const updateProductButton = (e) => {
+  const updateClassButton = (e) => {
     e.preventDefault();
 
-    navigate('/edit/' + product.id)
+    navigate('/edit/' + oneClass.id)
   }
 
   const formatPrice = () => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
       currency: "IDR",
-    }).format(product.price);
+    }).format(oneClass.price);
   }
     
     return(
         <tr className="align-middle text-center">
         <td>{index}</td>
-        <td>{product.name}</td>
-        <td><Image className='img-thumbnail' style={{width: "200px"}} src={product.mainImg}/></td>
-        <td>{product.Category.name}</td>
-        <td>{formatPrice(product.price)}</td>
-        <td>{product.stock}</td>
-        <td>{product.User.username}</td>
-        <td>
-          <Button onClick={deleteProductButton} className={"btn btn-danger"}>Delete</Button>
-          <Button onClick={updateProductButton} className={"btn btn-success"}>Update</Button>
+        <td>{oneClass.name}</td>
+        <td>{oneClass.SubjectId}</td>
+        <td>{formatPrice(oneClass.price)}</td>
+        <td>{oneClass.quota}</td>
+        <td>{oneClass.averageRating}</td>
+        <td style={{maxWidth: '100px'}}>
+          <Button onClick={() => navigate(`/class/${oneClass.id}`)} className={"btn-sm m-2"}>Details</Button>
+          <Button onClick={() => navigate(`/edit-class/${oneClass.id}`)} className={"btn-sm btn-success m-2"}>Update</Button>
+          <Button onClick={deleteClassButton} className={"btn-sm btn-danger m-2"}>Delete</Button>
         </td>
       </tr>
     )

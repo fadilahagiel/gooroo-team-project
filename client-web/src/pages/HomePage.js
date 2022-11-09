@@ -1,19 +1,20 @@
 import Table from "react-bootstrap/Table";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import ProductRow from "../components/ClassRow";
+import ClassRow from "../components/ClassRow";
 import Header from "../components/Header";
-import { fetchContacts, fetchProducts } from "../store/actionCreator";
+import { fetchContacts, fetchClasses } from "../store/actionCreator";
 import socket from "../configs/socket";
+import { Container } from 'react-bootstrap';
 
 export default function MyTable() {
-  const products = useSelector((state) => state.products);
-  const dispatch = useDispatch();
-
-  console.log(products, "<<<< ini products");
+  const classes = useSelector((state) => state.classes)
+  const dispatch = useDispatch()
+  
+  console.log(classes, "<<<< ini classes");
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchClasses());
     dispatch(fetchContacts()).then((data) => {
       console.log({ data });
 
@@ -30,31 +31,33 @@ export default function MyTable() {
       socket.connect();
     });
   }, []);
-  console.log(products);
+
+  console.log(classes, "<<CLASSES");
   return (
     <>
-      <Header />
-      <Table striped bordered hover className={"table-dark"}>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Created By</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product, i) => {
-            return (
-              <ProductRow key={product.id} product={product} index={i + 1} />
-            );
+    <Container>
+    <Header/>
+    <br></br>
+    <br></br>
+    <Table striped bordered hover className={"table-dark"}>
+      <thead style={{textAlign: "center"}}>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Subject Id</th>
+          <th>Price</th>
+          <th>Quota</th>
+          <th>Average Rating</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      {classes.map((oneClass, i) => {
+          return <ClassRow key={oneClass.id}oneClass={oneClass} index={i + 1}/>
           })}
-        </tbody>
-      </Table>
+      </tbody>
+    </Table>
+    </Container>
     </>
   );
 }

@@ -11,7 +11,7 @@ export default function ClassDetail () {
                 <img src="https://img.freepik.com/free-photo/happy-young-female-student-holding-notebooks-from-courses-smiling-camera-standing-spring-clothes-against-blue-background_1258-70161.jpg?w=2000" style={{maxWidth: "50%", borderRadius: '200px', marginBottom: '40px'}}/>
                 <h1>Student's Name</h1>
                 <h1 style={{marginTop: '50px', marginBottom: '50px'}}>Email</h1>
-                <Button style={{height: '80px', width: '120px', backgroundColor: "#98E661", color:'navy', fontSize: '20px'}}>Chat</Button>
+                <Button style={{height: '80px', width: '120px', backgroundColor: "#98E661", color:'navy', fontSize: '20px'}} onClick={() => navigate('/chat')}>Chat</Button>
             </Container>
         </Container>
         

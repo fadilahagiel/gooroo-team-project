@@ -2,12 +2,57 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react'
 import {createClass} from "../store/actionCreator"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {useEffect} from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 
+
 function CreateClass() {
     const navigate = useNavigate();
+    const params = useParams();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log("MASUK EFFECT GA SIH?");
+        const [editClass, setEditClass] = useState({
+            name: '',
+            description: '',
+            mainImg: '',
+            stock: 0,
+            price: 0,
+            categoryId: '',
+    
+        })
+            const access_token = localStorage.getItem("access_token")
+            fetch("https://localhost:3000/classes/" + params.id, {
+                method: "GET",
+                headers: {
+                    'Content-Type': "application/json",
+                    access_token
+                },
+            })
+            .then((res)=>{
+                console.log(res, "<< MASUK ACTION UPDATE ");
+                if(!res.ok) {
+                    throw new Error('hadrcoded Error')
+                }
+                return res.json();
+            })
+            .then((res) => {
+                console.log(res, "PARAMS DI ACTION");
+                    setEditClass({
+                        name: res.product.name,
+                        description: res.product.description,
+                        price: res.product.price,
+                        stock: res.product.stock,
+                        mainImg: res.product.mainImg,
+                        catgoryId: res.product.categoryId,
+                    });
+                })
+            .catch((err)=>{
+                console.log(err);
+              })
+        }, [])
 
     const [classForm, setClassForm] = useState({
         name: '',
@@ -42,7 +87,6 @@ function CreateClass() {
         setSchedulesInput(values);
       };
 
-    const dispatch = useDispatch();
 
     const submitClass = (e) => {
         e.preventDefault();
@@ -55,8 +99,11 @@ function CreateClass() {
 
     return (
         <>
-        <h2 style={{paddingTop:"40px", paddingLeft: "50px"}}>Input your new class here</h2><br></br><br></br>
+        <h2 style={{paddingTop:"40px", paddingLeft: "50px"}}>Edit your class</h2><br></br><br></br>
         <div className="row">
+        <div className='col'>
+                <img className="img-fluid" src="https://images.pexels.com/photos/2675061/pexels-photo-2675061.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" style={{borderRadius: "20px", paddingLeft: '100px'}}/>
+        </div>
             <div className='col'>
         <Form style={{"width": "80%", "margin": "auto"}} onSubmit={submitClass}>
         <Form.Group className="mb-3" controlId="formBasicName">
@@ -159,9 +206,7 @@ function CreateClass() {
         </Button>
         </Form>
             </div>
-        <div className='col'>
-                <img className="img-fluid" src="https://images.pexels.com/photos/2675061/pexels-photo-2675061.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" style={{borderRadius: "20px"}}/>
-            </div>
+        
         </div>
         </>
     );

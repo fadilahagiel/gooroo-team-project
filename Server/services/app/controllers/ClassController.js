@@ -84,7 +84,10 @@ class Controller {
         throw { name: "forbidden" };
       }
       const teacher = await Teacher.findOne({ where: { UserId: id } });
-      const classes = await Class.findAll({ where: { TeacherId: teacher.id }, include: Subject });
+      const classes = await Class.findAll({
+        where: { TeacherId: teacher.id },
+        include: [Subject],
+      });
       res.status(200).json(classes);
     } catch (error) {
       next(error);
