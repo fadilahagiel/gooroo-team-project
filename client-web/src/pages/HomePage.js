@@ -11,8 +11,6 @@ export default function MyTable() {
   const classes = useSelector((state) => state.classes);
   const dispatch = useDispatch();
 
-  console.log(classes, "<<<< ini classes");
-
   useEffect(() => {
     dispatch(fetchClasses());
   }, []);
@@ -20,11 +18,15 @@ export default function MyTable() {
   console.log(classes, "<<CLASSES");
   return (
     <>
-      <Container style={{paddingTop: '50px'}}>
-        <Header /> 
+      <Container style={{ paddingTop: "50px" }}>
+        <Header />
         <br></br>
         <br></br>
-        <Table striped bordered hover className={"table-dark"}>
+        <Table
+          striped
+          bordered
+          hover
+          className={"table-dark"}>
           <thead style={{ textAlign: "center" }}>
             <tr>
               <th>#</th>
@@ -39,7 +41,11 @@ export default function MyTable() {
           <tbody>
             {classes.map((oneClass, i) => {
               return (
-                <ClassRow key={oneClass.id} oneClass={oneClass} index={i + 1} />
+                <ClassRow
+                  key={oneClass.id}
+                  oneClass={oneClass}
+                  index={i + 1}
+                />
               );
             })}
           </tbody>

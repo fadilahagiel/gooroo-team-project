@@ -1,10 +1,9 @@
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/esm/Button";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+
 import CategoryRow from "../components/CategoryRow";
 import { useNavigate } from "react-router-dom";
-import { createCategory } from "../store/actionCreator";
+
 import { subjects } from "../assets/subject";
 
 export default function MyTable2() {
