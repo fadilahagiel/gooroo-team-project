@@ -12,5 +12,6 @@ router.patch(
   AuthTeacher,
   TransactionController.collectTransaction
 );
+router.get("/teacher/:TeacherId", TransactionController.myTransaction);
 
 module.exports = router;
