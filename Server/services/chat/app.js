@@ -78,9 +78,9 @@ io.on("connection", (socket) => {
 
   // on send text message
   socket.on("sendChat", async (payload) => {
-    const { roomId, user, msg } = payload;
-    await Chat.updateChat(roomId, user, msg);
-    const data = { user, msg };
+    const { roomId, user, text, createdAt, _id } = payload;
+    await Chat.updateChat(roomId, user, text, createdAt, _id);
+    const data = { user, text, createdAt, _id };
     socket.to(roomId).emit("receiveChat", data);
   });
 
@@ -106,9 +106,9 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post("/chatlogs", async (req, res, next) => {
+app.get("/chatlogs", async (req, res, next) => {
   try {
-    const { roomId } = req.body;
+    const roomId = req.headers.roomid;
     const chatLogs = await Chat.findChatRoom(roomId);
     res.status(200).send(chatLogs);
   } catch (error) {
@@ -134,7 +134,8 @@ app.post("/add", async (req, res, next) => {
 app.get("/:userId", async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const contact = await User.findContact(userId);
+    const { username, role, userimage } = req.headers;
+    const contact = await User.findContact(userId, username, role, userimage);
     res.status(200).send(contact);
   } catch (error) {
     res.status(500).send(error);

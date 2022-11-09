@@ -1,16 +1,25 @@
 const { Class, Transaction, Student, Teacher, User } = require("../models");
 const axios = require("axios");
 
-const CHAT_API =
-  "https://c70f-2001-448a-2042-93b9-550a-2fa5-c341-8c0f.ap.ngrok.io";
+const CHAT_API = "https://130c-2001-448a-2042-93b9-550a-2fa5-c341-8c0f.ap.ngrok.io";
 
 class ChatController {
   static async findAllContacts(req, res, next) {
     try {
       const userId = req.user.id;
+      const userImage = await ChatController.getImage(
+        req.user.role,
+        req.user.id
+      );
+      const payload = {
+        username: req.user.username,
+        role: req.user.role,
+        userImage,
+      };
       const response = await axios({
         url: `${CHAT_API}/${userId}`,
         method: "get",
+        headers: payload,
       });
       const contacts = response.data;
       res.status(200).send(contacts);
@@ -21,11 +30,11 @@ class ChatController {
 
   static async chatLogs(req, res, next) {
     try {
-      const { roomId } = req.body;
+      const roomId = req.headers.roomid;
       const response = await axios({
         url: `${CHAT_API}/chatlogs`,
         method: "get",
-        body: roomId,
+        headers: { roomId },
       });
       const chatlogs = response.data;
       res.status(200).send(chatlogs);
@@ -83,7 +92,6 @@ class ChatController {
       const { roomId } = response.data;
       res.status(200).send({ roomId });
     } catch (error) {
-      // console.log(error);
       next(error);
     }
   }

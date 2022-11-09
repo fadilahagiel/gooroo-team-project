@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Transaction,
         foreignKey: "StudentId",
       });
+      Student.hasMany(models.Wishlist, { foreignKey: "StudentId" });
     }
   }
   Student.init(

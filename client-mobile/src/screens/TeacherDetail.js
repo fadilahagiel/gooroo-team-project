@@ -18,20 +18,22 @@ import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import serverUrl from "../config/url";
+import { serverUrl } from "../config/url";
+import { addContact, fetchContacts } from "../actions";
+
 
 export default function ClassDetail({ navigation, route }) {
   const { id } = route.params;
   const [teacher, setTeacher] = useState({});
+
   const fetchTeacher = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
+      console.log("masuk");
       const { data } = await axios({
         method: "get",
         url: `${serverUrl}/teachers/${id}`,
-        headers: {
-          access_token,
-        },
+        headers: { access_token },
       });
       const idUser = data.UserId;
       const user = await axios({
@@ -44,19 +46,24 @@ export default function ClassDetail({ navigation, route }) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     fetchTeacher();
   }, []);
+
+  const handleChat = async (id) => {
+    const roomId = await addContact(id);
+    await fetchContacts();
+    navigation.navigate("ChatScreen", roomId);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <Animatable.View style={styles.header}>
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: "row" }}>
-            <Avatar.Image
-              source={require("../assets/face_demo.png")}
-              size={70}
-            />
+            <Avatar.Image source={{ uri: teacher.image }} size={70} />
             <View style={{ marginLeft: 25, flexDirection: "column", flex: 2 }}>
               <Title style={styles.title}>{teacher.fullName}</Title>
               <Caption style={styles.caption}>{teacher.username}</Caption>
@@ -72,7 +79,8 @@ export default function ClassDetail({ navigation, route }) {
                 justifyContent: "center",
                 alignItems: "flex-end",
                 flex: 1,
-              }}>
+              }}
+            >
               <Text style={styles.infoTitle}>RATING</Text>
               <View style={styles.infoTextWrapper}>
                 <Text style={styles.infoText}>{teacher.averageRating}</Text>
@@ -86,12 +94,14 @@ export default function ClassDetail({ navigation, route }) {
                 justifyContent: "flex-start",
                 alignItems: "flex-end",
                 // marginTop: 10,
-              }}>
+              }}
+            >
               <TouchableOpacity>
                 <Icon
                   name="ios-chatbox-ellipses-outline"
                   color={colors.green2}
                   size={30}
+                  onPress={() => handleChat(teacher.UserId)}
                 />
               </TouchableOpacity>
             </View>
@@ -105,31 +115,30 @@ export default function ClassDetail({ navigation, route }) {
           <View style={styles.row}></View>
         </View>
       </Animatable.View>
-      <Animatable.View
-        style={styles.footer}
-        animation="fadeInUpBig">
+      <Animatable.View style={styles.footer} animation="fadeInUpBig">
         <Text style={styles.text_footer}>Class List</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{ height: 400 }}>
+          style={{ height: 400 }}
+        >
           {teacher?.Classes?.map((el) => {
             return (
-              <View
-                key={el.id}
-                style={styles.classWarpper}>
+              <View key={el.id} style={styles.classWarpper}>
                 <View style={{ flex: 1 }}>
                   <View
                     style={{
                       flex: 2,
                       justifyContent: "space-between",
-                    }}>
+                    }}
+                  >
                     <View>
                       <Text
                         style={{
                           color: colors.primary,
                           fontSize: 20,
-                        }}>
+                        }}
+                      >
                         {el.name}
                       </Text>
                     </View>
@@ -138,7 +147,8 @@ export default function ClassDetail({ navigation, route }) {
                     style={{
                       justifyContent: "flex-end",
                       alignItems: "flex-end",
-                    }}>
+                    }}
+                  >
                     <Text style={styles.infoTitle}>DURATION</Text>
                     <View style={styles.infoTextWrapper}>
                       <Text>{el?.Schedules?.length}</Text>
@@ -155,7 +165,8 @@ export default function ClassDetail({ navigation, route }) {
                       navigation.navigate("ClassDetail", {
                         id: el.id,
                       })
-                    }>
+                    }
+                  >
                     <View>
                       <Text style={{ color: colors.green1 }}>See More</Text>
                     </View>
@@ -178,7 +189,8 @@ export default function ClassDetail({ navigation, route }) {
           backgroundColor: colors.white,
         }}
         alwaysOpen={250}
-        scrollViewProps={{ showsVerticalScrollIndicator: false }}>
+        scrollViewProps={{ showsVerticalScrollIndicator: false }}
+      >
         <View style={{ margin: 30, marginTop: 50, marginBottom: 80 }}>
           <Text>Comments:</Text>
           <View style={styles.cardContainer}>
@@ -192,7 +204,8 @@ export default function ClassDetail({ navigation, route }) {
                   fontSize: 18,
                   fontWeight: "bold",
                   color: colors.primary,
-                }}>
+                }}
+              >
                 Giovanni
               </Text>
               <Text style={{ fontSize: 16, color: colors.secondary1 }}>
@@ -211,7 +224,8 @@ export default function ClassDetail({ navigation, route }) {
                   fontSize: 18,
                   fontWeight: "bold",
                   color: colors.primary,
-                }}>
+                }}
+              >
                 Giovanni
               </Text>
               <Text style={{ fontSize: 16, color: colors.secondary1 }}>
@@ -230,7 +244,8 @@ export default function ClassDetail({ navigation, route }) {
                   fontSize: 18,
                   fontWeight: "bold",
                   color: colors.primary,
-                }}>
+                }}
+              >
                 Giovanni
               </Text>
               <Text style={{ fontSize: 16, color: colors.secondary1 }}>

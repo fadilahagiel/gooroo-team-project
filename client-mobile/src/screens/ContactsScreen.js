@@ -9,6 +9,7 @@ import {
   FlatList,
 } from "react-native";
 import { fetchContacts } from "../actions";
+import colors from "../config/colors";
 import CardContact from "../components/CardContact";
 
 export default function ContactsScreen({ navigation }) {
@@ -17,31 +18,23 @@ export default function ContactsScreen({ navigation }) {
   const [search, setSearch] = useState("");
 
   const getContacts = async () => {
-    let foundContacts = await AsyncStorage.getItem("contacts");
-    foundContacts = await JSON.parse(foundContacts);
-    setContacs(foundContacts);
-    setFilteredContacts(foundContacts);
+    let user = await AsyncStorage.getItem("user");
+    user = JSON.parse(user);
+    let userContacts = await fetchContacts(user.id);
+    userContacts = JSON.stringify(userContacts);
+    userContacts = JSON.parse(userContacts);
+    setContacs(userContacts.contacts);
+    setFilteredContacts(userContacts.contacts);
   };
 
   useEffect(() => {
     getContacts();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(search);
-  //   setFilteredContacts(contacts.filter(el ===))
-  // }, [search]);
-
-  const handleChat = (roomId) => {
-    console.log("ke room id ", roomId);
-  };
-
   const handleSearch = (text) => {
     if (text) {
       const newContacts = contacts.filter((el) => {
         const { contactName } = el;
-        // const itemData = contactName ? contactName : "";
-        // const textData = text;
         return contactName.indexOf(text) > -1;
       });
       setFilteredContacts(newContacts);
@@ -91,5 +84,6 @@ const styles = StyleSheet.create({
     width: 350,
     marginVertical: 10,
     padding: 5,
+    borderRadius: 10,
   },
 });

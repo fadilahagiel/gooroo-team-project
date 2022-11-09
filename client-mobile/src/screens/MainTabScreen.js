@@ -69,7 +69,7 @@ const HomeStackScreen = ({ navigation }) => {
               name="ios-arrow-back"
               backgroundColor={colors.primary}
               onPress={() => {
-                navigation.navigate("ClassList");
+                navigation.goBack();
               }}
             />
           ),
@@ -134,7 +134,7 @@ const TeacherStackScreen = ({ navigation }) => {
               name="ios-arrow-back"
               backgroundColor={colors.primary}
               onPress={() => {
-                navigation.navigate("TeacherDetail");
+                navigation.goBack();
               }}
             />
           ),
