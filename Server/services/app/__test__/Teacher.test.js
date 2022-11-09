@@ -116,8 +116,8 @@ describe("show all teacher Test", () => {
 
 });
 
-describe("show one teacher Test", () => {
-    test("Success show one teacher", (done) => {
+describe("show detail teacher Test", () => {
+    test("Success show detail teacher", (done) => {
         request(app)
             .get("/teachers/detail")
             .set("access_token", validTokenTeacher)
@@ -136,9 +136,56 @@ describe("show one teacher Test", () => {
             });
     });
 
-    test("failed show one teacher, teacher not found", (done) => {
+    test("failed show detail teacher, teacher not found", (done) => {
         request(app)
             .get("/teachers/detail")
+            .set("access_token", validTokenStudent)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(404);
+                expect(body).toHaveProperty("message", "error not found");
+                return done();
+            });
+    });
+
+    test("failed show detail teacher, invalid token", (done) => {
+        request(app)
+            .get("/teachers/detail")
+            .set("access_token", "token salah")
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+                expect(status).toBe(401);
+                expect(body).toHaveProperty("message", "invalid_token");
+                return done();
+            });
+    });
+});
+
+describe("show one teacher Test", () => {
+    test("Success show one teacher", (done) => {
+        request(app)
+            .get("/teachers/1")
+            .set("access_token", validTokenStudent)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body, status } = res;
+
+                expect(status).toBe(200);
+                expect(body).toHaveProperty("id", expect.any(Number));
+                expect(body).toHaveProperty("fullName", expect.any(String));
+                expect(body).toHaveProperty("UserId", expect.any(Number));
+                expect(body).toHaveProperty("bio", expect.any(String));
+                expect(body).toHaveProperty("image", expect.any(String));
+                expect(body).toHaveProperty("averageRating", expect.any(String));
+                return done();
+            });
+    });
+
+    test("failed show one teacher, teacher not found", (done) => {
+        request(app)
+            .get("/teachers/99")
             .set("access_token", validTokenStudent)
             .end((err, res) => {
                 if (err) return done(err);
