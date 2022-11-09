@@ -6,6 +6,7 @@ const {
   Schedule,
   Subject,
   sequelize,
+  Wishlist,
   User,
 } = require("../models");
 
@@ -54,7 +55,7 @@ class Controller {
   static async getClass(req, res, next) {
     try {
       const allClass = await Class.findAll({
-        include: [Teacher, Subject, Schedule],
+        include: [Teacher, Subject, Schedule, Transaction],
       });
       res.status(200).json(allClass);
     } catch (error) {
@@ -164,7 +165,6 @@ class Controller {
       if (req.user.role != "student") {
         throw { name: "forbidden" };
       }
-      console.log(id, "ini id");
       const findStudent = await Student.findOne({
         where: {
           UserId: id,
@@ -174,9 +174,8 @@ class Controller {
         where: {
           StudentId: findStudent.id,
         },
-        include: Class,
+        include: { model: Class, include: [Schedule] },
       });
-      console.log(findTransaction);
       const findClasses = findTransaction.map((el) => {
         return el.Class;
       });

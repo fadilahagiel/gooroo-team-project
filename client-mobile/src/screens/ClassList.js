@@ -10,6 +10,7 @@ import {
   Dimensions,
   TextInput,
   Image,
+  AsyncStorage
 } from "react-native";
 import { Avatar, Title, Caption, Paragraph, Drawer } from "react-native-paper";
 import colors from "../config/colors";
@@ -30,11 +31,11 @@ export default function ClassList({ route, navigation }) {
 
   useEffect(() => {
     const fetch = async () => {
+      const access_token = await AsyncStorage.getItem("access_token");
       const { data } = await axios({
         url: `${serverUrl}/classes`,
         headers: {
-          access_token:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE2Njc4MzU3MDF9.6QflhZsaykaSPW58RVoiEuxaBEBuEVPQjMokKfZApu0",
+          access_token
         },
       });
       const dataClass = data.filter(
@@ -86,79 +87,91 @@ export default function ClassList({ route, navigation }) {
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
       >
         <View style={styles.mainWarpper}>
-          <View style={styles.classWarpper}>
-            <View style={{ flex: 1 }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  // justifyContent: "space-between",
-                }}
-              >
-                <View style={{ flexDirection: "column" }}>
-                  <Text
-
+          {classes.map((el) => {
+            return (
+              <View key={el.id} style={styles.classWarpper}>
+                <View style={{ flex: 1 }}>
+                  <View
                     style={{
-                      color: colors.primary,
-                      fontSize: 20,
+                      flex: 1,
+                      flexDirection: "row",
+                      // justifyContent: "space-between",
                     }}
                   >
-                    Nama Kelas
-                  </Text>
-                  <Text
+                    <View style={{ flexDirection: "column" }}>
+                      <Text
+                        style={{
+                          color: colors.primary,
+                          fontSize: 20,
+                        }}
+                      >
+                        {el.name}
+                      </Text>
+                      <Text
+                        style={{
+                          color: colors.secondaty2,
+                          fontSize: 16,
+                        }}
+                      >
+                        By, {el.Teacher.fullName}
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      style={{
+                        flex: 1,
+                        alignItems: "flex-end",
+                      }}
+                      onPress={() =>
+                        navigation.navigate("ClassDetail", {
+                          id: el.id,
+                        })
+                      }
+                    >
+                      <View>
+                        <Text style={{ color: colors.green1 }}>See More</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <View
                     style={{
-                      color: colors.secondaty2,
-                      fontSize: 16,
+                      flex: 1,
+                      marginTop: 10,
+                      justifyContent: "space-between",
+                      alignItems: "flex-end",
+                      flexDirection: "row",
                     }}
                   >
-                    By, whoo
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    flex: 1,
-                    alignItems: "flex-end",
-                  }}
-                >
-                  <View>
-                    <Text style={{ color: colors.green1 }}>See More</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <View
-                style={{
-                  flex: 1,
-                  marginTop: 10,
-                  justifyContent: "space-between",
-                  alignItems: "flex-end",
-                  flexDirection: "row",
-                }}
-              >
-                <View>
-                  <Text style={styles.infoTitle}>PRICE</Text>
-                  <View style={styles.infoTextWrapper}>
-                    <Text>30000</Text>
-                    <Text style={styles.infoSubText}> /Session</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text style={styles.infoTitle}>QUOTA</Text>
-                  <View style={styles.infoTextWrapper}>
-                    <Text>3</Text>
-                    <Text style={styles.infoSubText}> /10</Text>
-                  </View>
-                </View>
-                <View>
-                  <Text style={styles.infoTitle}>DURATION</Text>
-                  <View style={styles.infoTextWrapper}>
-                    <Text>3</Text>
-                    <Text style={styles.infoSubText}> Days</Text>
-                  </View>
+                    <View>
+                      <Text style={styles.infoTitle}>PRICE</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text> Rp.{" "}
+                          {el.price
+                            ?.toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</Text>
+                      </View>
+                    </View>
+                    <View>
+                      <Text style={styles.infoTitle}>QUOTA</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text>{el.quota - el?.Transactions?.length} </Text>
+                        <Text style={styles.infoSubText}>/{el.quota}</Text>
+                      </View>
+                    </View>
+                    <View>
+                      <Text style={styles.infoTitle}>DURATION</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text>{el?.Schedules?.length}</Text>
+                        <Text style={styles.infoSubText}> Days</Text>
+                      </View>
 
+                    </View>
+                  </View>
                 </View>
+
               </View>
-            </View>
-          </View>
+              )
+          })}
+         
         </View>
       </Modalize>
     </SafeAreaView>

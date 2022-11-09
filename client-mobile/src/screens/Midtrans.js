@@ -19,7 +19,7 @@ export default function Midtrans({ navigation, route }) {
           access_token,
         },
       });
-      navigation.navigate("Profile");
+      navigation.navigate("Profile", { price: prc });
     } catch (error) {
       console.log(error);
     }

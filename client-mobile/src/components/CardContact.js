@@ -1,15 +1,22 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
+import colors from "../config/colors";
 
 export default function cardContact(item) {
-  const { contactId, contactName, roomId, contactImage } = item.contact;
+  const { contactId, contactName, roomId, contactImage, contactRole } =
+    item.contact;
   const [imgSrc, setImgSrc] = useState(contactImage);
   const navigation = useNavigation();
 
   useEffect(() => {
-    console.log({ imgSrc });
+    // console.log({ item });
   }, []);
+
+  const handleChat = (chatRoom) => {
+    // console.log({ chatRoom });
+    navigation.navigate("ChatScreen", { roomId: chatRoom });
+  };
 
   const handleImgError = () => {
     setImgSrc(
@@ -18,35 +25,51 @@ export default function cardContact(item) {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={{ uri: imgSrc }}
-        style={styles.contactImg}
-        onError={handleImgError}
-      />
-      <Text style={styles.contactName}>{contactName}</Text>
-      {/* <Text style={styles.contactName}>{conntactR}</Text> */}
+    <View>
+      <TouchableOpacity style={styles.card} onPress={() => handleChat(roomId)}>
+        <Image
+          source={{ uri: imgSrc }}
+          style={styles.contactImg}
+          onError={handleImgError}
+        />
+        <View style={styles.contactDetail}>
+          <Text style={styles.contactName}>{contactName}</Text>
+          <Text style={styles.contactRole}>{contactRole}</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "red",
+  card: {
+    backgroundColor: colors.secondary1,
     flex: 1,
     flexDirection: "row",
     width: 350,
-    height: 50,
+    height: 60,
     margin: 5,
     alignItems: "center",
+    borderWidth: 2,
+    borderRadius: 10,
   },
   contactImg: {
     width: 50,
     height: 50,
     borderRadius: 15,
+    marginHorizontal: 5,
     resizeMode: "cover",
   },
+  contactDetail: {
+    margin: 10,
+  },
   contactName: {
-    margin: 15,
+    fontSize: 15,
+    fontWeight: "bold",
+    color: colors.white,
+  },
+  contactRole: {
+    fontSize: 10,
+    color: colors.green2,
   },
 });

@@ -9,24 +9,26 @@ class User {
     return collection;
   }
 
-  static async findContact(userId) {
+  static async findContact(userId, username, role, userimage) {
     try {
       const collection = this.userCollection();
       const data = await collection.findOne({ userId });
       if (data) {
-        return data.contacts;
+        return data;
       } else {
-        await collection.insertOne({ userId, contacts: [] });
-        return [];
+        await collection.insertOne({
+          userId,
+          username,
+          role,
+          avatar: userimage,
+          contacts: [],
+        });
+        const userContact = await collection.findOne({ userId });
+        return userContact;
       }
     } catch (error) {
       return error;
     }
-  }
-
-  static async createChatRoom(user, contact, roomId) {
-    try {
-    } catch (error) {}
   }
 
   static async addContact(userData, contactData) {

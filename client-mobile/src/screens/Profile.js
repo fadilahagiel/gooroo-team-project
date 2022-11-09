@@ -9,36 +9,85 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
+  AsyncStorage,
 } from "react-native";
 import colors from "../config/colors";
 import * as Animatable from "react-native-animatable";
 import Feather from "react-native-vector-icons/Feather";
+import { useEffect, useState } from "react";
+import { serverUrl } from "../config/url";
 
-export default function Profile({ navigation }) {
+import axios from "axios";
+
+export default function Profile({ navigation, route }) {
+  const [student, setStudent] = useState({});
+  const [myClasses, setMyClasses] = useState([]);
+  const fetchStudent = async () => {
+    try {
+      const access_token = await AsyncStorage.getItem("access_token");
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/students`,
+        headers: {
+          access_token,
+        },
+      });
+      setStudent(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchMyClass = async () => {
+    try {
+      const access_token = await AsyncStorage.getItem("access_token");
+      const { data } = await axios({
+        method: "get",
+        url: `${serverUrl}/classes/myClassesStudent`,
+        headers: {
+          access_token,
+        },
+      });
+      setMyClasses(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    fetchStudent();
+    fetchMyClass();
+  }, []);
+  useEffect(() => {
+    fetchStudent();
+  }, [route.params]);
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsHorizontalScrollIndicator={false}>
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
             <Image
-              source={require("../assets/face_demo2.png")}
+              source={{ uri: student.image }}
               style={styles.image}
               resizeMode="center"
             />
           </View>
           <TouchableOpacity style={styles.edit}>
-            <Feather name="edit-2" size={20} color={colors.white} />
+            <Feather
+              name="edit-2"
+              size={20}
+              color={colors.white}
+            />
           </TouchableOpacity>
         </View>
 
         <View style={styles.infoContainer}>
-          <Text style={styles.textTitle}>Septriadi Gabriel</Text>
-          <Text style={styles.text}>Aldo's Owner</Text>
+          <Text style={styles.textTitle}>{student.fullName}</Text>
+          <Text style={styles.text}>{student?.User?.username}</Text>
         </View>
 
         <View style={styles.statContainer}>
           <View style={styles.StatBox}>
-            <Text style={styles.textTitle}>12</Text>
+            <Text style={styles.textTitle}>{student?.Wishlists?.length}</Text>
             <Text style={[styles.text]}>Bookmarks</Text>
           </View>
           <View
@@ -49,42 +98,92 @@ export default function Profile({ navigation }) {
                 borderLeftWidth: 1,
                 borderRightWidth: 1,
               },
-            ]}
-          >
-            <Text style={styles.textTitle}>2</Text>
+            ]}>
+            <Text style={styles.textTitle}>{myClasses.length}</Text>
             <Text style={[styles.text]}>Class Enrolled</Text>
           </View>
           <View style={styles.StatBox}>
-            <Text style={styles.textTitle}>130000</Text>
+            <Text style={styles.textTitle}>{student?.User?.saldo}</Text>
             <Text style={[styles.text]}>Balance</Text>
           </View>
         </View>
 
         <TouchableOpacity
           style={styles.topUpButton}
-          onPress={() => navigation.navigate("TopUp")}
-        >
+          onPress={() => navigation.navigate("TopUp")}>
           <Text style={{ color: colors.white, fontWeight: "bold" }}>TopUp</Text>
         </TouchableOpacity>
 
         <View style={{ margin: 20, marginTop: 30, height: "100%" }}>
           <Text style={{ color: colors.secondary1 }}>ENROLLED CLASS</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={styles.classWarpper}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}>
+            {myClasses.map((el) => {
+              return (
+                <View
+                  key={el.id}
+                  style={styles.classWarpper}>
+                  <View style={{ flex: 1 }}>
+                    <View
+                      style={{
+                        flex: 2,
+                        justifyContent: "space-between",
+                      }}>
+                      <View>
+                        <Text
+                          style={{
+                            color: colors.primary,
+                            fontSize: 20,
+                          }}>
+                          {el.name}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}>
+                      <Text style={styles.infoTitle}>DURATION</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text>{el?.Schedules?.length}</Text>
+                        <Text style={styles.infoSubText}> Sessions</Text>
+                      </View>
+                    </View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("ClassDetail", {
+                          id: el.id,
+                        })
+                      }
+                      style={{
+                        flex: 1,
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}>
+                      <View>
+                        <Text style={{ color: colors.green1 }}>See More</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              );
+            })}
+
+            {/* <View style={styles.classWarpper}>
               <View style={{ flex: 1 }}>
                 <View
                   style={{
                     flex: 2,
                     justifyContent: "space-between",
-                  }}
-                >
+                  }}>
                   <View>
                     <Text
                       style={{
                         color: colors.primary,
                         fontSize: 20,
-                      }}
-                    >
+                      }}>
                       Nama Kelas
                     </Text>
                   </View>
@@ -93,8 +192,7 @@ export default function Profile({ navigation }) {
                   style={{
                     justifyContent: "flex-end",
                     alignItems: "flex-end",
-                  }}
-                >
+                  }}>
                   <Text style={styles.infoTitle}>DURATION</Text>
                   <View style={styles.infoTextWrapper}>
                     <Text>3</Text>
@@ -106,8 +204,7 @@ export default function Profile({ navigation }) {
                     flex: 1,
                     justifyContent: "flex-end",
                     alignItems: "flex-end",
-                  }}
-                >
+                  }}>
                   <View>
                     <Text style={{ color: colors.green1 }}>See More</Text>
                   </View>
@@ -120,15 +217,13 @@ export default function Profile({ navigation }) {
                   style={{
                     flex: 2,
                     justifyContent: "space-between",
-                  }}
-                >
+                  }}>
                   <View>
                     <Text
                       style={{
                         color: colors.primary,
                         fontSize: 20,
-                      }}
-                    >
+                      }}>
                       Nama Kelas
                     </Text>
                   </View>
@@ -137,8 +232,7 @@ export default function Profile({ navigation }) {
                   style={{
                     justifyContent: "flex-end",
                     alignItems: "flex-end",
-                  }}
-                >
+                  }}>
                   <Text style={styles.infoTitle}>DURATION</Text>
                   <View style={styles.infoTextWrapper}>
                     <Text>3</Text>
@@ -150,58 +244,13 @@ export default function Profile({ navigation }) {
                     flex: 1,
                     justifyContent: "flex-end",
                     alignItems: "flex-end",
-                  }}
-                >
+                  }}>
                   <View>
                     <Text style={{ color: colors.green1 }}>See More</Text>
                   </View>
                 </TouchableOpacity>
               </View>
-            </View>
-            <View style={styles.classWarpper}>
-              <View style={{ flex: 1 }}>
-                <View
-                  style={{
-                    flex: 2,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View>
-                    <Text
-                      style={{
-                        color: colors.primary,
-                        fontSize: 20,
-                      }}
-                    >
-                      Nama Kelas
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
-                  }}
-                >
-                  <Text style={styles.infoTitle}>DURATION</Text>
-                  <View style={styles.infoTextWrapper}>
-                    <Text>3</Text>
-                    <Text style={styles.infoSubText}> Sessions</Text>
-                  </View>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    flex: 1,
-                    justifyContent: "flex-end",
-                    alignItems: "flex-end",
-                  }}
-                >
-                  <View>
-                    <Text style={{ color: colors.green1 }}>See More</Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            </View>
+            </View> */}
           </ScrollView>
         </View>
       </ScrollView>

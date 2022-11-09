@@ -5,6 +5,8 @@ const colors = {
   green1: "#6b8a4e",
   green2: "#b5c5a7",
   white: "#f9f9fb",
+  blue: "#2a9df4",
+  red: "#ed3825",
 };
 
 export default colors;
