@@ -271,9 +271,9 @@ export default function Profile({ navigation, route }) {
                       </View>
                       <View style={{ flex: 1, marginTop: 10 }}>
                         <Text style={{ color: colors.secondaty2 }}>RATING</Text>
-
                         <TextInput
                           placeholder="rate between 1-10"
+                          placeholderTextColor={colors.secondaty2}
                           editable={true}
                           style={{
                             height: 40,
@@ -288,9 +288,10 @@ export default function Profile({ navigation, route }) {
                       </View>
 
                       <View style={{ flex: 2, marginTop: 20 }}>
-                        <Text>REVIEW</Text>
+                        <Text style={{ color: colors.secondaty2 }}>REVIEW</Text>
                         <TextInput
                           placeholder="state your review"
+                          placeholderTextColor={colors.secondaty2}
                           multiline
                           numberOfLines={4}
                           editable={true}
@@ -328,22 +329,6 @@ export default function Profile({ navigation, route }) {
                         </TouchableOpacity>
                       </View>
                     </View>
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate("ClassDetail", {
-                          id: el.id,
-                        })
-                      }
-                      style={{
-                        flex: 1,
-                        justifyContent: "flex-end",
-                        alignItems: "flex-end",
-                      }}
-                    >
-                      <View>
-                        <Text style={{ color: colors.green1 }}>See More</Text>
-                      </View>
-                    </TouchableOpacity>
                   </View>
                 </View>
               </ScrollView>
