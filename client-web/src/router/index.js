@@ -3,7 +3,6 @@ import PageLayout from "../components/PageLayout";
 import HomePage from "../pages/HomePage";
 import CreateProduct from "../pages/CreateProduct";
 import LoginPage from "../pages/LoginPage";
-import EditProduct from "../pages/EditProduct";
 import CategoriesPage from "../pages/CategoriesPage";
 import CreateCategory from "../pages/CreateCategory";
 import RegisterPage from "../pages/RegisterPage";
@@ -66,14 +65,6 @@ const router = createBrowserRouter([
       {
         path: "categories",
         element: <CategoriesPage />,
-      },
-      {
-        path: "category",
-        element: <CreateCategory />,
-      },
-      {
-        path: "edit/:id",
-        element: <EditProduct />,
       },
     ],
   },

@@ -61,10 +61,10 @@ export default function ClassDetail() {
           <h4 style={{ marginTop: "100px", textJustify: "" }}>
             {oneClass.description}
           </h4>
-          <h1 style={{ marginTop: "50px" }}>Current Student: x/x</h1>
           <h1 style={{ marginTop: "50px" }}>
             Rating: {oneClass.averageRating}
           </h1>
+          <h1 style={{ marginTop: "50px" }}>Current Student: x/x</h1>
           <h1 style={{ marginTop: "50px", marginBottom: "25px" }}>
             Students List
           </h1>

@@ -144,7 +144,7 @@ export const fetchTeacherProfile = () => {
 export const fetchClasses = () => {
   return (dispatch, getState) => {
     const access_token = localStorage.getItem("access_token");
-    fetch("http://localhost:3000/classes", {
+    fetch(`${serverApp}classes/myClasses`, {
       method: "GET",
       headers: {
         access_token,
@@ -170,7 +170,7 @@ export const fetchOneClass = (id) => {
   return (dispatch, getState) => {
     console.log("<<<MASUK ID");
     const access_token = localStorage.getItem("access_token");
-    fetch(`http://localhost:3000/classes/${id}`, {
+    fetch(`${serverApp}classes/${id}`, {
       method: "GET",
       headers: {
         access_token,
@@ -248,7 +248,7 @@ export const registerAdmin = (registerForm) => {
   return (dispatch) => {
     console.log("<< MASUK ACTION REGISTER");
     const access_token = localStorage.getItem("access_token");
-    return fetch("http://localhost:3000/users/register", {
+    return fetch(`${serverApp}users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
