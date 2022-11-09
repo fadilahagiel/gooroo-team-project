@@ -106,35 +106,46 @@ export default function Profile({ navigation, route }) {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ alignSelf: "center" }}>
             <View style={styles.profileImage}>
-              <Image
-                source={{ uri: student.image }}
-                style={styles.image}
-                resizeMode="center"
-              />
+              {student !== null ? (
+                <Image
+                  source={{ uri: student.image }}
+                  style={styles.image}
+                  resizeMode="center"
+                />
+              ) : (
+                <Image
+                  source={require("../assets/face_demo.png")}
+                  style={styles.image}
+                  resizeMode="center"
+                />
+              )}
             </View>
             {student !== null ? (
               <View></View>
             ) : (
               <TouchableOpacity
                 style={styles.edit}
-                onPress={() => navigation.navigate("AddProfile")}>
-                <Feather
-                  name="edit-2"
-                  size={20}
-                  color={colors.white}
-                />
+                onPress={() => navigation.navigate("AddProfile")}
+              >
+                <Feather name="edit-2" size={20} color={colors.white} />
               </TouchableOpacity>
             )}
           </View>
 
           <View style={[styles.infoContainer]}>
-            <Text style={styles.textTitle}>{student.fullName}</Text>
-            <Text style={styles.text}>{student?.User?.username}</Text>
+            <Text style={styles.textTitle}>
+              {student?.fullName ? student?.fullName : ""}
+            </Text>
+            <Text style={styles.text}>
+              {student?.User?.username ? student.User?.username : ""}
+            </Text>
           </View>
 
           <View style={[styles.statContainer]}>
             <View style={styles.StatBox}>
-              <Text style={styles.textTitle}>{student?.Wishlists?.length}</Text>
+              <Text style={styles.textTitle}>
+                {student?.Wishlists?.length ? student?.Wishlists?.length : 0}
+              </Text>
               <Text style={[styles.text]}>Bookmarks</Text>
             </View>
             <View
@@ -145,24 +156,33 @@ export default function Profile({ navigation, route }) {
                   borderLeftWidth: 1,
                   borderRightWidth: 1,
                 },
-              ]}>
-              <Text style={styles.textTitle}>{myClasses.length}</Text>
+              ]}
+            >
+              <Text style={styles.textTitle}>
+                {myClasses?.length ? myClasses?.length : 0}
+              </Text>
               <Text style={[styles.text]}>Class Enrolled</Text>
             </View>
             <View style={styles.StatBox}>
-              <Text style={styles.textTitle}>
-                Rp{" "}
-                {student?.User?.saldo
-                  ?.toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-              </Text>
+              {student !== null ? (
+                <Text style={styles.textTitle}>
+                  Rp{" "}
+                  {student?.User?.saldo
+                    ?.toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </Text>
+              ) : (
+                <Text style={styles.textTitle}>Rp. 0</Text>
+              )}
+
               <Text style={[styles.text]}>Balance</Text>
             </View>
           </View>
 
           <TouchableOpacity
             style={[styles.topUpButton]}
-            onPress={() => navigation.navigate("TopUp")}>
+            onPress={() => navigation.navigate("TopUp")}
+          >
             <Text style={{ color: colors.white, fontWeight: "bold" }}>
               TopUp
             </Text>
@@ -171,31 +191,33 @@ export default function Profile({ navigation, route }) {
           <View
             style={{
               marginTop: 10,
-            }}>
+            }}
+          >
             <Text style={{ color: colors.secondary1, marginLeft: 20 }}>
               ENROLLED CLASS
             </Text>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              style={{ height: 170 }}>
+              style={{ height: 170 }}
+            >
               {enrolledClasses.map((el) => {
                 return (
-                  <View
-                    key={el.id}
-                    style={styles.classWarpper}>
+                  <View key={el.id} style={styles.classWarpper}>
                     <View style={{ flex: 1 }}>
                       <View
                         style={{
                           flex: 2,
                           // justifyContent: "space-between",
-                        }}>
+                        }}
+                      >
                         <View>
                           <Text
                             style={{
                               color: colors.primary,
                               fontSize: 20,
-                            }}>
+                            }}
+                          >
                             {el.name}
                           </Text>
                         </View>
@@ -204,7 +226,8 @@ export default function Profile({ navigation, route }) {
                             style={{
                               color: colors.secondaty2,
                               fontSize: 16,
-                            }}>
+                            }}
+                          >
                             By, {el?.Teacher?.fullName}
                           </Text>
                         </View>
@@ -214,7 +237,8 @@ export default function Profile({ navigation, route }) {
                           style={{
                             justifyContent: "flex-end",
                             alignItems: "flex-end",
-                          }}>
+                          }}
+                        >
                           <Text style={styles.infoTitle}>PRICE</Text>
                           <View style={styles.infoTextWrapper}>
                             <Text>{el?.price}</Text>
@@ -225,7 +249,8 @@ export default function Profile({ navigation, route }) {
                           style={{
                             justifyContent: "flex-end",
                             alignItems: "flex-end",
-                          }}>
+                          }}
+                        >
                           <Text style={styles.infoTitle}>QUOTA</Text>
                           <View style={styles.infoTextWrapper}>
                             <Text>{el?.Transactions?.length}</Text>
@@ -239,7 +264,8 @@ export default function Profile({ navigation, route }) {
                           style={{
                             justifyContent: "flex-end",
                             alignItems: "flex-end",
-                          }}>
+                          }}
+                        >
                           <Text style={styles.infoTitle}>DURATION</Text>
                           <View style={styles.infoTextWrapper}>
                             <Text>{el?.Schedules?.length}</Text>
@@ -257,7 +283,8 @@ export default function Profile({ navigation, route }) {
                           flex: 1,
                           justifyContent: "flex-end",
                           alignItems: "flex-end",
-                        }}>
+                        }}
+                      >
                         <View>
                           <Text style={{ color: colors.green1 }}>See More</Text>
                         </View>
@@ -274,12 +301,11 @@ export default function Profile({ navigation, route }) {
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
-              style={{ height: 140 }}>
+              style={{ height: 140 }}
+            >
               {finishedClasses.map((el) => {
                 return (
-                  <View
-                    key={el.id}
-                    style={styles.classWarpper2}>
+                  <View key={el.id} style={styles.classWarpper2}>
                     <View style={{ flex: 1 }}>
                       <View>
                         <View>
@@ -287,7 +313,8 @@ export default function Profile({ navigation, route }) {
                             style={{
                               color: colors.primary,
                               fontSize: 20,
-                            }}>
+                            }}
+                          >
                             {el.name}
                           </Text>
                         </View>
@@ -296,7 +323,8 @@ export default function Profile({ navigation, route }) {
                             style={{
                               color: colors.secondaty2,
                               fontSize: 16,
-                            }}>
+                            }}
+                          >
                             By, {el?.Teacher?.fullName}
                           </Text>
                         </View>
@@ -305,7 +333,8 @@ export default function Profile({ navigation, route }) {
                           style={{
                             alignItems: "flex-end",
                             justifyContent: "center",
-                          }}>
+                          }}
+                        >
                           <TouchableOpacity
                             style={{
                               marginTop: 10,
@@ -318,7 +347,8 @@ export default function Profile({ navigation, route }) {
                             }}
                             onPress={() =>
                               navigation.navigate("Response", { id: el?.id })
-                            }>
+                            }
+                          >
                             <Text style={{ color: colors.white }}>
                               Give Response
                             </Text>
