@@ -247,7 +247,6 @@ export default function Profile({ navigation, route }) {
                     <View
                       style={{
                         flex: 2,
-                        // justifyContent: "space-between",
                       }}
                     >
                       <View>
@@ -329,6 +328,22 @@ export default function Profile({ navigation, route }) {
                         </TouchableOpacity>
                       </View>
                     </View>
+                    <TouchableOpacity
+                      onPress={() =>
+                        navigation.navigate("ClassDetail", {
+                          id: el.id,
+                        })
+                      }
+                      style={{
+                        flex: 1,
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <View>
+                        <Text style={{ color: colors.green1 }}>See More</Text>
+                      </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </ScrollView>

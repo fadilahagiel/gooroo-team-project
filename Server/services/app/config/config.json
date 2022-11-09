@@ -12,7 +12,7 @@
   },
   "test": {
     "username": "postgres",
-    "password": "fadilahagiel",
+    "password": "KotaBandung",
     "database": "gooroo_test",
     "host": "localhost",
     "dialect": "postgres"

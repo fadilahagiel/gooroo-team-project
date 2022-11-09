@@ -21,7 +21,7 @@ class ChatController {
         headers: payload,
       });
       const contacts = response.data;
-      console.log(contacts);
+
       res.status(200).send(contacts);
     } catch (error) {
       next(error);
