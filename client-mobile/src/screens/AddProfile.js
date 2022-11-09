@@ -8,10 +8,13 @@ import {
   TouchableOpacity,
   TextInput,
   Platform,
+  AsyncStorage
 } from "react-native";
 import colors from "../config/colors";
 import * as ImagePicker from "expo-image-picker";
 import React from "react";
+import axios from 'axios'
+import { serverUrl } from "../config/url";
 const options = {
   title: "click image",
   type: "library",
@@ -24,7 +27,7 @@ const options = {
   },
 };
 
-export default function AddProfile() {
+export default function AddProfile({navigation}) {
   const [photo, setPhoto] = React.useState("");
   const [fullName, setFullName] = React.useState("");
 
@@ -36,7 +39,6 @@ export default function AddProfile() {
         aspect: [4, 3],
         quality: 1,
       });
-      // console.log(result.uri);
       if (!result.cancelled) {
         setPhoto(result.uri);
       }
@@ -47,10 +49,22 @@ export default function AddProfile() {
 
   const handelAdd = async (uri, name) => {
     try {
-      let uri =
-        "file:///var/mobile/Containers/Data/Application/AD83260D-6F21-4F2B-8CBA-C2E04FA5C3B3/Library/Caches/ExponentExperienceData/%2540zianurrahmani%252Fclient-mobile/ImagePicker/305A962D-0DB4-4251-9E7C-DB3EC2B73088.jpg";
-      console.log(uri, "dari handle");
-      console.log(name, "dari handle");
+      const formData = new FormData()
+      formData.append('image', {
+        name: `${uri}`,
+        uri: photo,
+        type: 'image/png'
+      })
+      const access_token = await AsyncStorage.getItem("access_token")
+      
+      const { data } = await axios.post(`${serverUrl}/students`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          access_token,
+          fullName
+        }
+      })
+      navigation.push('Profile')
     } catch (error) {
       console.log(error);
     }
@@ -73,13 +87,15 @@ export default function AddProfile() {
           </Text>
           <View style={{ alignSelf: "center" }}>
             <TouchableOpacity onPress={pickImage} style={styles.profileImage}>
-              <Image
-                source={{
-                  uri: "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg",
-                }}
-                style={styles.image}
-                resizeMode="center"
-              />
+              {photo ? <Image source={{ uri: photo }} style={styles.image}
+                resizeMode="center" /> :
+                <Image
+                  source={{
+                    uri: "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg",
+                  }}
+                  style={styles.image}
+                  resizeMode="center"
+                />}
             </TouchableOpacity>
           </View>
         </View>

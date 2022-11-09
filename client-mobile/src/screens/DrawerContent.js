@@ -16,7 +16,6 @@ import socket from "../config/socket";
 import { useFocusEffect } from "@react-navigation/native";
 
 export function DrawerContent(props) {
-  console.log();
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
