@@ -76,7 +76,10 @@ export default function Profile({ navigation, route }) {
                   resizeMode="center"
                 />
               </View>
-              <TouchableOpacity style={styles.edit}>
+              <TouchableOpacity
+                style={styles.edit}
+                onPress={() => navigation.navigate("AddProfile")}
+              >
                 <Feather name="edit-2" size={20} color={colors.white} />
               </TouchableOpacity>
             </View>
