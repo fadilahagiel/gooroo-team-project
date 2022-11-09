@@ -54,7 +54,8 @@ export default function Login({ navigation }) {
       socket.connect();
       signIn();
     } catch (error) {
-      return alert(error);
+      // console.log(error, "error");
+      return alert(error, "ini dari error");
     }
   };
 

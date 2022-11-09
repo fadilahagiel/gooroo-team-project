@@ -18,6 +18,7 @@ export default function ContactsScreen({ navigation }) {
   const [search, setSearch] = useState("");
 
   const getContacts = async () => {
+    await fetchContacts();
     let user = await AsyncStorage.getItem("user");
     user = JSON.parse(user);
     let userContacts = await fetchContacts(user.id);

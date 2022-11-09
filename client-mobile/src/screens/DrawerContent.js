@@ -142,9 +142,25 @@ export function DrawerContent(props) {
                   size={size}
                 />
               )}
+              label="ChatScreen"
+              onPress={() => {
+                props.navigation.navigate("ChatScreen");
+              }}
+            />
+            <DrawerItem
+              style={{ marginTop: 10 }}
+              icon={({ color, size }) => (
+
+                <MatrialIcon
+                  name="history"
+                  color={color}
+                  size={size}
+                />
+              )}
               label="Bookmark"
               onPress={() => {
                 props.navigation.navigate("Bookmark");
+
               }}
             />
             <DrawerItem
@@ -159,20 +175,6 @@ export function DrawerContent(props) {
               label="History"
               onPress={() => {
                 props.navigation.navigate("History");
-              }}
-            />
-            <DrawerItem
-              style={{ marginTop: 10 }}
-              icon={({ color, size }) => (
-                <MatrialIcon
-                  name="history"
-                  color={color}
-                  size={size}
-                />
-              )}
-              label="ChatScreen"
-              onPress={() => {
-                props.navigation.navigate("ChatScreen");
               }}
             />
             {/* <DrawerItem
