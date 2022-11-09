@@ -1,7 +1,7 @@
 const { Class, Transaction, Student, Teacher, User } = require("../models");
 const axios = require("axios");
 
-const CHAT_API = "https://130c-2001-448a-2042-93b9-550a-2fa5-c341-8c0f.ap.ngrok.io";
+const CHAT_API = "https://localhost:3030";
 
 class ChatController {
   static async findAllContacts(req, res, next) {
@@ -16,6 +16,7 @@ class ChatController {
         role: req.user.role,
         userImage,
       };
+      console.log({ payload });
       const response = await axios({
         url: `${CHAT_API}/${userId}`,
         method: "get",

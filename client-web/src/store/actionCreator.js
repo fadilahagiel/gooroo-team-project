@@ -166,7 +166,8 @@ export const login = (loginForm) => {
       })
       .then((data) => {
         console.log(data);
-        localStorage.access_token = data.access_token;
+        console.log({ token: data.access_token });
+        localStorage.setItem("access_token", data.access_token);
       })
       .catch((err) => {
         console.log(err);
@@ -277,6 +278,7 @@ export const fetchContacts = () => {
   return async (dispatch, getState) => {
     try {
       const access_token = localStorage.getItem("access_token");
+      console.log({ access_token });
       const { data } = await axios({
         url: `${serverApp}/contacts`,
         method: "get",
