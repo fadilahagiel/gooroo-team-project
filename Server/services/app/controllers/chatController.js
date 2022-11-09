@@ -8,7 +8,7 @@ class ChatController {
   static async findAllContacts(req, res, next) {
     try {
       const userId = req.user.id;
-      const userImage = await ChatController.getImage(
+      const userImage = await getImage(
         req.user.role,
         req.user.id
       );

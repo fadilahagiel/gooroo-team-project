@@ -1,4 +1,31 @@
 //khusus Heroku function delete dan add product belum bisa, tetapi di localhost sudah bisa semua
+const baseUrl = 'http://localhost:3000'
+
+export const postClass = (payload) => {
+    return (dispatch, getState) => {
+        return fetch(`${baseUrl}/classes`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "access_token": localStorage.access_token
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(respon => {
+                if (!respon.ok) {
+                    throw new Error('There is an error')
+                }
+                respon.json()
+            })
+            .then(data => {
+                console.log(data);
+                return data
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+}
 
 export const productFetchSuccess = (data) => {
     return {
@@ -96,7 +123,7 @@ export const registerAdmin = (registerForm) => {
     return (dispatch) => {
         console.log("<< MASUK ACTION REGISTER");
         const access_token = localStorage.getItem("access_token")
-        return fetch('http://localhost:3001/users/register', {
+        return fetch(`${baseUrl}/users/register`, {
             method: "POST",
             headers: {
                 'Content-Type': "application/json",
@@ -150,7 +177,7 @@ export const createCategory = (categoryForm) => {
 export const login = (loginForm) => {
     return (dispatch) => {
         console.log(loginForm, "<<<LOGIN FORM");
-       return fetch("http://localhost:3001/users/login", {
+       return fetch(`${baseUrl}/users/login`, {
             method: "POST",
             headers: {
                 'Content-Type': "application/json",

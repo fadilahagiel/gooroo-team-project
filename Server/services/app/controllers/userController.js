@@ -16,6 +16,7 @@ class UserController {
   }
   static async login(req, res, next) {
     try {
+      console.log('masuk');
       const { email, password } = req.body;
       if (!email || !password) {
         throw { name: "invalid_login" };

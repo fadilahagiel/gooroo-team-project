@@ -17,6 +17,7 @@ class Controller {
       if (req.user.role != "teacher") {
         throw { name: "forbidden" };
       }
+      console.log(req.body, 'ini req body');
       const { name, price, quota, SubjectId, description, schedules, url } =
         req.body;
       const UserId = req.user.id;
@@ -43,6 +44,7 @@ class Controller {
           ClassId: newClass.id,
         };
       });
+      console.log(arraySch, 'ini schedule');
       await Schedule.bulkCreate(arraySch, { transaction: t });
       await t.commit();
       res.status(201).json({ message: `Berhasil membuat kelas ${name}` });
