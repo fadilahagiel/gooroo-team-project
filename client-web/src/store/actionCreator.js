@@ -142,7 +142,7 @@ export const fetchTeacherProfile = () => {
 export const fetchClasses = () => {
   return (dispatch, getState) => {
     const access_token = localStorage.getItem("access_token");
-    fetch("http://localhost:3000/classes", {
+    fetch("http://localhost:3000/classes/myClasses", {
       method: "GET",
       headers: {
         access_token,

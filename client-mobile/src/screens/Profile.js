@@ -67,7 +67,7 @@ export default function Profile({ navigation, route }) {
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
             <Image
-              source={{ uri: student.image }}
+              source={{ uri: student?.image }}
               style={styles.image}
               resizeMode="center"
             />
@@ -82,7 +82,9 @@ export default function Profile({ navigation, route }) {
         </View>
 
         <View style={styles.infoContainer}>
-          <Text style={styles.textTitle}>{student.fullName}</Text>
+          <Text style={styles.textTitle}>
+            {student?.fullName ? student?.fullName : "username"}
+          </Text>
           <Text style={styles.text}>{student?.User?.username}</Text>
         </View>
 
