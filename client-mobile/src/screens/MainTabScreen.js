@@ -11,6 +11,7 @@ import TeacherList from "./TeacherList";
 import TeacherDetail from "./TeacherDetail";
 
 import Icon from "react-native-vector-icons/Ionicons";
+import TopUp from "./TopUp";
 
 const HomeStack = createNativeStackNavigator();
 const TeacherStack = createNativeStackNavigator();
@@ -27,8 +28,7 @@ const HomeStackScreen = ({ navigation }) => {
         headerTintColor: colors.white,
         headerShadowVisible: false, // applied here
         headerBackTitleVisible: false,
-      }}
-    >
+      }}>
       <HomeStack.Screen
         options={{
           title: "Goo Roo",
@@ -63,6 +63,22 @@ const HomeStackScreen = ({ navigation }) => {
       />
       <HomeStack.Screen
         options={{
+          title: "Top Up",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-arrow-back"
+              backgroundColor={colors.primary}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          ),
+        }}
+        name="TopUp"
+        component={TopUp}
+      />
+      <HomeStack.Screen
+        options={{
           title: "Goo Roo",
           headerLeft: () => (
             <Icon.Button
@@ -92,8 +108,7 @@ const TeacherStackScreen = ({ navigation }) => {
         headerTintColor: colors.white,
         headerShadowVisible: false, // applied here
         headerBackTitleVisible: false,
-      }}
-    >
+      }}>
       <TeacherStack.Screen
         options={{
           title: "Goo Roo",
@@ -158,13 +173,16 @@ const MainTabScreen = () => {
         elevation: 0,
         backgroundColor: colors.white,
         height: 90,
-      }}
-    >
+      }}>
       <Tab.Screen
         options={{
           tabBarLabel: "Home",
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-home" color={color} size={26} />
+            <Icon
+              name="ios-home"
+              color={color}
+              size={26}
+            />
           ),
         }}
         name="Tab Home"
@@ -174,7 +192,11 @@ const MainTabScreen = () => {
         options={{
           tabBarLabel: "List",
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-list" color={color} size={26} />
+            <Icon
+              name="ios-list"
+              color={color}
+              size={26}
+            />
           ),
         }}
         name="List"

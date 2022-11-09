@@ -80,10 +80,6 @@ export default function ClassDetail({ navigation, route }) {
     setIsLoved(false);
   };
 
-  // useEffect(() => {
-  //   addWishlist();
-  // }, [isLoved]);
-
   const cekWishlist = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
     try {
@@ -118,13 +114,17 @@ export default function ClassDetail({ navigation, route }) {
   const buyClass = async (id) => {
     try {
       const access_token = await AsyncStorage.getItem("access_token");
-      await axios({
-        method: "post",
-        url: `${serverUrl}/transactions/${id}`,
+      const response = await fetch(`${serverUrl}/transactions/${id}`, {
+        method: "POST",
         headers: {
+          "Content-Type": "application/json",
           access_token,
         },
       });
+      const dataTes = await response.json();
+      if (dataTes.message === "not enough balance") {
+        return navigation.navigate("TopUp");
+      }
       setIsBuy(true);
     } catch (error) {
       console.log(error);
@@ -155,7 +155,9 @@ export default function ClassDetail({ navigation, route }) {
         />
         <Text style={styles.text_header}>{oneClass.name}</Text>
       </View>
-      <Animatable.View style={styles.footer} animation="fadeInUpBig">
+      <Animatable.View
+        style={styles.footer}
+        animation="fadeInUpBig">
         <View style={styles.heartWrapper}>
           {isLoved ? (
             <Entypo
@@ -165,7 +167,12 @@ export default function ClassDetail({ navigation, route }) {
               onPress={removeWishlist}
             />
           ) : (
-            <Entypo onPress={addWishlist} name="heart" size={32} color="grey" />
+            <Entypo
+              onPress={addWishlist}
+              name="heart"
+              size={32}
+              color="grey"
+            />
           )}
         </View>
         <ScrollView>
@@ -211,8 +218,7 @@ export default function ClassDetail({ navigation, route }) {
             ) : (
               <TouchableOpacity
                 style={styles.buttonWrapperFalse}
-                onPress={confirmation}
-              >
+                onPress={confirmation}>
                 {/* onPress={() => buyClass(oneClass.id)}> */}
                 <Text style={styles.buttonTextFalse}>Enroll This Class</Text>
               </TouchableOpacity>
