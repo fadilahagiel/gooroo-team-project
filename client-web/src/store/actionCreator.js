@@ -1,7 +1,5 @@
 const serverApp = `http://localhost:3000/`;
 
-const newone = "http://localhost:3000/";
-
 export const classesFetchSuccess = (data) => {
   return {
     type: "classes/fetchSuccess",
@@ -87,31 +85,31 @@ export const fetchProducts = () => {
   };
 };
 
-export const createProduct = (productForm) => {
-  return (dispatch) => {
-    console.log("<< MASUK ACTION");
-    const access_token = localStorage.getItem("access_token");
-    return fetch(`${serverApp}/products`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        access_token,
-      },
-      body: JSON.stringify(productForm),
-    })
-      .then((res) => {
-        console.log("<< MASUK ACTION 2");
-        if (!res.ok) {
-          throw new Error("hadrcoded Error");
-        }
-        return res.json();
-      })
-      .then((body) => console.log(body))
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-};
+// export const createProduct = (productForm) => {
+//   return (dispatch) => {
+//     console.log("<< MASUK ACTION");
+//     const access_token = localStorage.getItem("access_token");
+//     return fetch(`${serverApp}/products`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         access_token,
+//       },
+//       body: JSON.stringify(productForm),
+//     })
+//       .then((res) => {
+//         console.log("<< MASUK ACTION 2");
+//         if (!res.ok) {
+//           throw new Error("hadrcoded Error");
+//         }
+//         return res.json();
+//       })
+//       .then((body) => console.log(body))
+//       .catch((err) => {
+//         console.log(err);
+//       });
+//   };
+// };
 
 /////////////////////
 
@@ -144,7 +142,7 @@ export const fetchTeacherProfile = () => {
 export const fetchClasses = () => {
   return (dispatch, getState) => {
     const access_token = localStorage.getItem("access_token");
-    fetch("http://localhost:3000/classes", {
+    fetch("http://localhost:3000/classes/myClasses", {
       method: "GET",
       headers: {
         access_token,
@@ -218,6 +216,33 @@ export const fetchOneClass = (id) => {
 
 //     };
 // }
+
+export const postClass = (payload) => {
+  return (dispatch, getState) => {
+    return fetch(`${serverApp}classes`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "access_token": localStorage.access_token
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(respon => {
+        if (!respon.ok) {
+          throw new Error('There is an error')
+        }
+        respon.json()
+      })
+      .then(data => {
+        console.log(data);
+        return data
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+}
+
 export const createClass = (classForm) => {
   return (dispatch) => {
     console.log("<< MASUK ACTION");
@@ -299,7 +324,6 @@ export const createCategory = (categoryForm) => {
 
 export const login = (loginForm) => {
   return (dispatch) => {
-    console.log(loginForm, "<<<LOGIN FORM");
     return fetch("http://localhost:3000/users/login", {
       method: "POST",
       headers: {

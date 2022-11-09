@@ -12,6 +12,7 @@ import TeacherDetail from "./TeacherDetail";
 
 import Icon from "react-native-vector-icons/Ionicons";
 import TopUp from "./TopUp";
+import Profile from "./Profile";
 
 const HomeStack = createNativeStackNavigator();
 const TeacherStack = createNativeStackNavigator();
@@ -44,6 +45,22 @@ const HomeStackScreen = ({ navigation }) => {
         }}
         name="HomeScreen"
         component={HomeScreen}
+      />
+      <HomeStack.Screen
+        options={{
+          title: "Profile",
+          headerLeft: () => (
+            <Icon.Button
+              name="ios-menu"
+              backgroundColor={colors.primary}
+              onPress={() => {
+                navigation.openDrawer();
+              }}
+            />
+          ),
+        }}
+        name="Profile"
+        component={Profile}
       />
       <HomeStack.Screen
         options={{

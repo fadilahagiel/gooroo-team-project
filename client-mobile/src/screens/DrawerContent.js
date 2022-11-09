@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, AsyncStorage } from "react-native";
+import { View, StyleSheet, AsyncStorage, Alert } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import { Avatar, Title, Caption, Paragraph, Drawer } from "react-native-paper";
 
@@ -16,6 +16,7 @@ import socket from "../config/socket";
 import { useFocusEffect } from "@react-navigation/native";
 
 export function DrawerContent(props) {
+  console.log();
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
@@ -38,18 +39,14 @@ export function DrawerContent(props) {
           access_token,
         },
       });
-      const classes = await axios({
-        method: "get",
-        url: `${serverUrl}/classes/myClassesStudent`,
-        headers: {
-          access_token,
-        },
-      });
-      setClasses(classes.data.length);
+      if (!res.data) {
+        Alert.alert("Please update profile first to continue");
+        return props.navigation.navigate("Profile");
+      }
       setStudent(res.data);
       setUser(data);
     } catch (error) {
-      console.log(error);
+      console.log(error, "ini dari drawer");
     }
   };
 
@@ -58,9 +55,6 @@ export function DrawerContent(props) {
       fetchUser();
     }, [])
   );
-  // useEffect(() => {
-
-  // }, []);
 
   const submitLogout = async () => {
     await AsyncStorage.clear();
@@ -73,10 +67,12 @@ export function DrawerContent(props) {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image source={{ uri: student.image }} size={50} />
+              <Avatar.Image source={{ uri: student?.image }} size={50} />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
                 <Title style={styles.title}>{user.username}</Title>
-                <Caption style={styles.caption}>{student.fullName}</Caption>
+                <Caption style={styles.caption}>
+                  {student?.fullName ? student?.fullName : user.username}
+                </Caption>
               </View>
             </View>
             <View style={styles.row}>
