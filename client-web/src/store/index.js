@@ -1,13 +1,14 @@
-import {legacy_createStore as createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import { legacy_createStore as createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
 
 let initialState = {
     classes: [],
-    oneClass: [],
+  oneClass: [],
     subjects: [],
-    teachers: [],
-    schedules: []
-}
+  teachers: [],
+    schedules: [],
+  contacts: {},
+};
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -31,6 +32,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 oneClass: action.payload
             };
+            case "contacts/fetch":
+      return {
+        ...state,
+        contacts: action.payload,
+      };
     }
     return state;
 }

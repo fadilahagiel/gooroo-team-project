@@ -1,9 +1,10 @@
-import Table from 'react-bootstrap/Table';
-import { useSelector, useDispatch} from 'react-redux'
-import {useEffect} from 'react'
-import ClassRow from '../components/ClassRow';
-import Header from '../components/Header'
-import {fetchClasses} from '../store/actionCreator'
+import Table from "react-bootstrap/Table";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import ClassRow from "../components/ClassRow";
+import Header from "../components/Header";
+import { fetchContacts, fetchClasses } from "../store/actionCreator";
+import socket from "../configs/socket";
 import { Container } from 'react-bootstrap';
 
 export default function MyTable() {
@@ -12,9 +13,24 @@ export default function MyTable() {
   
   console.log(classes, "<<<< ini classes");
 
-  useEffect(()=> {
-    dispatch(fetchClasses())
-  },[])
+  useEffect(() => {
+    dispatch(fetchClasses());
+    dispatch(fetchContacts()).then((data) => {
+      console.log({ data });
+
+      const user = {
+        id: +data.userId,
+        username: data.username,
+        role: data.role,
+        avatar: data.avatar,
+      };
+
+      console.log(user);
+      localStorage.setItem("user", user);
+      socket.auth = user;
+      socket.connect();
+    });
+  }, []);
 
   console.log(classes, "<<CLASSES");
   return (

@@ -6,10 +6,10 @@ export const classesFetchSuccess = (data) => {
 };
 
 export const categoryFetchSuccess = (data) => {
-    return {
-        type: "categories/fetchSuccess",
-        payload: data
-    }
+  return {
+    type: "categories/fetchSuccess",
+    payload: data,
+  };
 };
 export const teacherFetchSuccess = (data) => {
     return {
@@ -27,160 +27,81 @@ export const oneClassFetchSuccess = (data) => {
 };
 
 export const fetchCategory = () => {
-    return (dispatch, getState) => {
-        const access_token = localStorage.getItem("access_token")
-        fetch("http://localhost:3001/categories",{
-            method: "GET",
-            headers: {
-                access_token
-            }
-        })
-        .then(res => {
-            console.log(res, "INI CATEGORY DI ACTION");
-          if(!res.ok){
-            throw new Error("hardcoded error")
-          }
-          return res.json()
-        })
-        .then((data) => {
-          console.log(data);
-          dispatch(categoryFetchSuccess(data))
-        })
-        .catch((err)=>{
-          console.log(err);
-        })
-    }
-}
-export const fetchTeacherProfile = () => {
-    return (dispatch, getState) => {
-        const access_token = localStorage.getItem("access_token")
-        fetch("http://localhost:3000/teachers/detail",{
-            method: "GET",
-            headers: {
-                access_token
-            }
-        })
-        .then(res => {
-            console.log(res, "<< Teacher Profile!");
-          if(!res.ok){
-            throw new Error("hardcoded error")
-          }
-          return res.json()
-        })
-        .then((data) => {
-          console.log(data);
-          dispatch(teacherFetchSuccess(data))
-        })
-        .catch((err)=>{
-          console.log(err);
-        })
-    }
-}
+  return (dispatch, getState) => {
+    const access_token = localStorage.getItem("access_token");
+    fetch(`${serverApp}/categories`, {
+      method: "GET",
+      headers: {
+        access_token,
+      },
+    })
+      .then((res) => {
+        console.log(res, "INI CATEGORY DI ACTION");
+        if (!res.ok) {
+          throw new Error("hardcoded error");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        dispatch(categoryFetchSuccess(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
+export const fetchProducts = () => {
+  return (dispatch, getState) => {
+    const access_token = localStorage.getItem("access_token");
+    fetch(`${serverApp}/products`, {
+      method: "GET",
+      headers: {
+        access_token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("hardcoded error");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        dispatch(productFetchSuccess(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
-export const fetchClasses = () => {
-    return (dispatch, getState) => {
-        const access_token = localStorage.getItem("access_token")
-        fetch("http://localhost:3000/classes",{
-            method: "GET",
-            headers: {
-                access_token
-            },
-        })
-        .then(res => {
-          if(!res.ok){
-            throw new Error("hardcoded error")
-          }
-          return res.json()
-        })
-        .then((data) => {
-          console.log(data, "<<<DATA");
-          dispatch(classesFetchSuccess(data))
-        })
-        .catch((err)=>{
-          console.log(err);
-        })
-    }
-}
-
-export const fetchOneClass = (id) => {
-    return (dispatch, getState) => {
-        console.log("<<<MASUK ID");
-        const access_token = localStorage.getItem("access_token")
-        fetch(`http://localhost:3000/classes/${id}`,{
-            method: "GET",
-            headers: {
-                access_token
-            }
-        })
-        .then(res => {
-          if(!res.ok){
-            throw new Error("hardcoded error")
-          }
-          return res.json()
-        })
-        .then((data) => {
-          console.log(data, "<<<ONE DATA");
-          dispatch(oneClassFetchSuccess(data))
-        })
-        .catch((err)=>{
-          console.log(err);
-        })
-    }
-}
-
-// export const createProduct = (productForm) => {
-//     return (dispatch) => {
-//         console.log("<< MASUK ACTION");
-//         const access_token = localStorage.getItem("access_token")
-//         return fetch('http://localhost:3001/products', {
-//             method: "POST",
-//             headers: {
-//                 'Content-Type': "application/json",
-//                 access_token
-//             },
-//             body: JSON.stringify(productForm)
-//         })
-//         .then((res)=>{
-//             console.log("<< MASUK ACTION 2");
-//             if(!res.ok) {
-//                 throw new Error('hadrcoded Error')
-//             }
-//             return res.json();
-//         })
-//         .then((body) => console.log(body))
-//         .catch((err)=>{
-//             console.log(err);
-//           })
-        
-//     }; 
-// }
-export const createClass = (classForm) => {
-    return (dispatch) => {
-        console.log("<< MASUK ACTION");
-        const access_token = localStorage.getItem("access_token")
-        return fetch('http://localhost:3001/products', {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json",
-                access_token
-            },
-            body: JSON.stringify(classForm)
-        })
-        .then((res)=>{
-            console.log("<< MASUK ACTION 2");
-            if(!res.ok) {
-                throw new Error('hadrcoded Error')
-            }
-            return res.json();
-        })
-        .then((body) => console.log(body))
-        .catch((err)=>{
-            console.log(err);
-          })
-        
-    }; 
-}
+export const createProduct = (productForm) => {
+  return (dispatch) => {
+    console.log("<< MASUK ACTION");
+    const access_token = localStorage.getItem("access_token");
+    return fetch(`${serverApp}/products`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+      body: JSON.stringify(productForm),
+    })
+      .then((res) => {
+        console.log("<< MASUK ACTION 2");
+        if (!res.ok) {
+          throw new Error("hadrcoded Error");
+        }
+        return res.json();
+      })
+      .then((body) => console.log(body))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
 export const registerAdmin = (registerForm) => {
     return (dispatch) => {
@@ -211,31 +132,30 @@ export const registerAdmin = (registerForm) => {
 }
 
 export const createCategory = (categoryForm) => {
-    return (dispatch) => {
-        console.log("<< MASUK ACTION");
-        const access_token = localStorage.getItem("access_token")
-        return fetch('http://localhost:3001/categories', {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json",
-                access_token
-            },
-            body: JSON.stringify(categoryForm)
-        })
-        .then((res)=>{
-            console.log("<< MASUK ACTION 2");
-            if(!res.ok) {
-                throw new Error('hadrcoded Error')
-            }
-            return res.json();
-        })
-        .then((body) => console.log(body))
-        .catch((err)=>{
-            console.log(err);
-          })
-        
-    }; 
-}
+  return (dispatch) => {
+    console.log("<< MASUK ACTION");
+    const access_token = localStorage.getItem("access_token");
+    return fetch(`${serverApp}/categories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+      body: JSON.stringify(categoryForm),
+    })
+      .then((res) => {
+        console.log("<< MASUK ACTION 2");
+        if (!res.ok) {
+          throw new Error("hadrcoded Error");
+        }
+        return res.json();
+      })
+      .then((body) => console.log(body))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
 export const login = (loginForm) => {
     return (dispatch) => {
@@ -291,29 +211,29 @@ export const deleteClass = (id) => {
 }
 
 export const deleteCategory = (id) => {
-    return (dispatch) => {
-        const access_token = localStorage.getItem("access_token")
-        return fetch("http://localhost:3001/categories/" + id, {
-            method: "DELETE",
-            headers: {
-                'Content-Type': "application/json",
-                access_token
-            },
-            data: id
-        })
-        .then((res)=>{
-            console.log(id, "<< MASUK ACTION 2");
-            if(!res.ok) {
-                throw new Error('hadrcoded Error')
-            }
-            return res.json();
-        })
-        .then((params) => console.log(params))
-        .catch((err)=>{
-            console.log(err);
-          })
-    }
-}
+  return (dispatch) => {
+    const access_token = localStorage.getItem("access_token");
+    return fetch(`${serverApp}/categories/` + id, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+      data: id,
+    })
+      .then((res) => {
+        console.log(id, "<< MASUK ACTION 2");
+        if (!res.ok) {
+          throw new Error("hadrcoded Error");
+        }
+        return res.json();
+      })
+      .then((params) => console.log(params))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
 
 export const updateClass = ({
     id,
@@ -363,5 +283,4 @@ export const updateClass = ({
         });
     };
   };
-
 

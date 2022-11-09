@@ -36,7 +36,7 @@ export default function History({ navigation }) {
   }
   useEffect(() => {
     fetchHistories()
-  }, [balance])
+  }, [])
 
 
   return (
@@ -98,7 +98,10 @@ export default function History({ navigation }) {
                             fontSize: 20,
                           }}
                         >
-                          + 50000
+                          Rp.{" "}
+                          {el.amount
+                            ?.toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                         </Text>
                         <Text
                           style={{
@@ -107,7 +110,7 @@ export default function History({ navigation }) {
                             marginTop: 5,
                           }}
                         >
-                          TopUp balance
+                          {el.description}
                         </Text>
                       </View>
                       <View
@@ -150,7 +153,10 @@ export default function History({ navigation }) {
                             fontSize: 20,
                           }}
                         >
-                          - 50000
+                          Rp.{" "}
+                          {el.amount
+                            ?.toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                         </Text>
                         <Text
                           style={{
@@ -159,7 +165,7 @@ export default function History({ navigation }) {
                             marginTop: 5,
                           }}
                         >
-                          Ikut kelas Ms. Sri
+                          {el.description}
                         </Text>
                       </View>
                       <View
