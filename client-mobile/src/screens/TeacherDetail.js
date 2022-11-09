@@ -21,7 +21,6 @@ import axios from "axios";
 import { serverUrl } from "../config/url";
 import { addContact, fetchContacts } from "../actions";
 
-
 export default function ClassDetail({ navigation, route }) {
   const { id } = route.params;
   const [teacher, setTeacher] = useState({});
@@ -120,7 +119,7 @@ export default function ClassDetail({ navigation, route }) {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{ height: 400 }}
+          style={{ height: 300 }}
         >
           {teacher?.Classes?.map((el) => {
             return (
@@ -128,7 +127,7 @@ export default function ClassDetail({ navigation, route }) {
                 <View style={{ flex: 1 }}>
                   <View
                     style={{
-                      flex: 2,
+                      flex: 1,
                       justifyContent: "space-between",
                     }}
                   >
@@ -143,16 +142,42 @@ export default function ClassDetail({ navigation, route }) {
                       </Text>
                     </View>
                   </View>
-                  <View
-                    style={{
-                      justifyContent: "flex-end",
-                      alignItems: "flex-end",
-                    }}
-                  >
-                    <Text style={styles.infoTitle}>DURATION</Text>
-                    <View style={styles.infoTextWrapper}>
-                      <Text>{el?.Schedules?.length}</Text>
-                      <Text style={styles.infoSubText}> Sessions</Text>
+                  <View style={styles.infoWrapper}>
+                    <View
+                      style={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <Text style={styles.infoTitle}>PRICE</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text>{el?.price}</Text>
+                        <Text style={styles.infoSubText}></Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <Text style={styles.infoTitle}>QUOTA</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text>{el?.Transactions?.length}</Text>
+                        <Text style={styles.infoSubText}> /{el?.quota}</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        justifyContent: "flex-end",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <Text style={styles.infoTitle}>DURATION</Text>
+                      <View style={styles.infoTextWrapper}>
+                        <Text>{el?.Schedules?.length}</Text>
+                        <Text style={styles.infoSubText}> Sessions</Text>
+                      </View>
                     </View>
                   </View>
                   <TouchableOpacity
@@ -198,7 +223,7 @@ export default function ClassDetail({ navigation, route }) {
               source={require("../assets/face_demo2.png")}
               style={styles.cardImageContainer}
             />
-            <View style={styles.infoWrapper}>
+            <View style={styles.CommentWarpper}>
               <Text
                 style={{
                   fontSize: 18,
@@ -218,7 +243,7 @@ export default function ClassDetail({ navigation, route }) {
               source={require("../assets/face_demo2.png")}
               style={styles.cardImageContainer}
             />
-            <View style={styles.infoWrapper}>
+            <View style={styles.CommentWarpper}>
               <Text
                 style={{
                   fontSize: 18,
@@ -238,7 +263,7 @@ export default function ClassDetail({ navigation, route }) {
               source={require("../assets/face_demo2.png")}
               style={styles.cardImageContainer}
             />
-            <View style={styles.infoWrapper}>
+            <View style={styles.CommentWarpper}>
               <Text
                 style={{
                   fontSize: 18,
@@ -309,7 +334,7 @@ const styles = StyleSheet.create({
   classWarpper: {
     backgroundColor: colors.white,
     height: 150,
-    width: 150,
+    width: 250,
     marginTop: 20,
     marginRight: 10,
     borderRadius: 10,
@@ -357,9 +382,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     borderRadius: 50,
   },
-  infoWrapper: {
+  CommentWarpper: {
     marginHorizontal: 10,
     justifyContent: "space-between",
+  },
+  infoWrapper: {
+    flex: 1,
+    // marginHorizontal: 10,
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
   infoTitle: {
     fontSize: 12,

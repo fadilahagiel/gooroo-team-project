@@ -171,7 +171,7 @@ class Controller {
         where: {
           StudentId: findStudent.id,
         },
-        include: { model: Class, include: [Schedule] },
+        include: { model: Class, include: [Schedule, Teacher] },
       });
       const findClasses = findTransaction.map((el) => {
         return el.Class;

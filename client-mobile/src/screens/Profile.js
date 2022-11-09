@@ -14,10 +14,11 @@ import {
 import colors from "../config/colors";
 import * as Animatable from "react-native-animatable";
 import Feather from "react-native-vector-icons/Feather";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { serverUrl } from "../config/url";
 
 import axios from "axios";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Profile({ navigation, route }) {
   const [student, setStudent] = useState({});
@@ -53,13 +54,13 @@ export default function Profile({ navigation, route }) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    fetchStudent();
-    fetchMyClass();
-  }, []);
-  useEffect(() => {
-    fetchStudent();
-  }, [route.params]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchStudent();
+      fetchMyClass();
+    }, [])
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsHorizontalScrollIndicator={false}>
@@ -72,11 +73,7 @@ export default function Profile({ navigation, route }) {
             />
           </View>
           <TouchableOpacity style={styles.edit}>
-            <Feather
-              name="edit-2"
-              size={20}
-              color={colors.white}
-            />
+            <Feather name="edit-2" size={20} color={colors.white} />
           </TouchableOpacity>
         </View>
 
@@ -98,7 +95,8 @@ export default function Profile({ navigation, route }) {
                 borderLeftWidth: 1,
                 borderRightWidth: 1,
               },
-            ]}>
+            ]}
+          >
             <Text style={styles.textTitle}>{myClasses.length}</Text>
             <Text style={[styles.text]}>Class Enrolled</Text>
           </View>
@@ -115,45 +113,81 @@ export default function Profile({ navigation, route }) {
 
         <TouchableOpacity
           style={styles.topUpButton}
-          onPress={() => navigation.navigate("TopUp")}>
+          onPress={() => navigation.navigate("TopUp")}
+        >
           <Text style={{ color: colors.white, fontWeight: "bold" }}>TopUp</Text>
         </TouchableOpacity>
 
         <View style={{ margin: 20, marginTop: 30, height: "100%" }}>
           <Text style={{ color: colors.secondary1 }}>ENROLLED CLASS</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {myClasses.map((el) => {
               return (
-                <View
-                  key={el.id}
-                  style={styles.classWarpper}>
+                <View key={el.id} style={styles.classWarpper}>
                   <View style={{ flex: 1 }}>
                     <View
                       style={{
                         flex: 2,
-                        justifyContent: "space-between",
-                      }}>
+                        // justifyContent: "space-between",
+                      }}
+                    >
                       <View>
                         <Text
                           style={{
                             color: colors.primary,
                             fontSize: 20,
-                          }}>
+                          }}
+                        >
                           {el.name}
                         </Text>
                       </View>
+                      <View>
+                        <Text
+                          style={{
+                            color: colors.secondaty2,
+                            fontSize: 16,
+                          }}
+                        >
+                          {el?.Teacher?.fullName}
+                        </Text>
+                      </View>
                     </View>
-                    <View
-                      style={{
-                        justifyContent: "flex-end",
-                        alignItems: "flex-end",
-                      }}>
-                      <Text style={styles.infoTitle}>DURATION</Text>
-                      <View style={styles.infoTextWrapper}>
-                        <Text>{el?.Schedules?.length}</Text>
-                        <Text style={styles.infoSubText}>Sessions</Text>
+                    <View style={styles.infoWrapper}>
+                      <View
+                        style={{
+                          justifyContent: "flex-end",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <Text style={styles.infoTitle}>PRICE</Text>
+                        <View style={styles.infoTextWrapper}>
+                          <Text>{el?.price}</Text>
+                          <Text style={styles.infoSubText}></Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: "flex-end",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <Text style={styles.infoTitle}>QUOTA</Text>
+                        <View style={styles.infoTextWrapper}>
+                          <Text>{el?.Transactions?.length}</Text>
+                          <Text style={styles.infoSubText}> /{el?.quota}</Text>
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          justifyContent: "flex-end",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <Text style={styles.infoTitle}>DURATION</Text>
+                        <View style={styles.infoTextWrapper}>
+                          <Text>{el?.Schedules?.length}</Text>
+                          <Text style={styles.infoSubText}> Sessions</Text>
+                        </View>
                       </View>
                     </View>
                     <TouchableOpacity
@@ -166,7 +200,8 @@ export default function Profile({ navigation, route }) {
                         flex: 1,
                         justifyContent: "flex-end",
                         alignItems: "flex-end",
-                      }}>
+                      }}
+                    >
                       <View>
                         <Text style={{ color: colors.green1 }}>See More</Text>
                       </View>
@@ -247,19 +282,25 @@ const styles = StyleSheet.create({
   },
   classWarpper: {
     backgroundColor: colors.white,
-    height: 200,
-    width: 150,
+    height: 170,
+    width: 250,
     marginTop: 20,
     marginRight: 10,
     borderRadius: 10,
     padding: 15,
     shadowColor: "#000",
     shadowOffset: {
-      height: 10,
-      width: 0,
+      height: 5,
+      width: 5,
     },
     shadowRadius: 10,
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.3,
+  },
+  infoWrapper: {
+    flex: 1,
+    // marginHorizontal: 10,
+    justifyContent: "space-between",
+    flexDirection: "row",
   },
   infoTitle: {
     fontSize: 12,

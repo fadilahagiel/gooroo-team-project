@@ -2,16 +2,14 @@ const { Class, Transaction, Student, Teacher, User } = require("../models");
 const axios = require("axios");
 const getImage = require("../helpers/getImage");
 
-const CHAT_API = "https://130c-2001-448a-2042-93b9-550a-2fa5-c341-8c0f.ap.ngrok.io";
+const CHAT_API =
+  "https://130c-2001-448a-2042-93b9-550a-2fa5-c341-8c0f.ap.ngrok.io";
 
 class ChatController {
   static async findAllContacts(req, res, next) {
     try {
       const userId = req.user.id;
-      const userImage = await ChatController.getImage(
-        req.user.role,
-        req.user.id
-      );
+      const userImage = await getImage(req.user.role, req.user.id);
       const payload = {
         username: req.user.username,
         role: req.user.role,
@@ -23,7 +21,7 @@ class ChatController {
         headers: payload,
       });
       const contacts = response.data;
-      console.log(contacts);
+
       res.status(200).send(contacts);
     } catch (error) {
       next(error);
@@ -49,14 +47,8 @@ class ChatController {
     try {
       const { contactId } = req.params;
       const contactDetail = await User.findByPk(contactId);
-      const contactImage = await getImage(
-        contactDetail.role,
-        contactId
-      );
-      const userImage = await getImage(
-        req.user.role,
-        req.user.id
-      );
+      const contactImage = await getImage(contactDetail.role, contactId);
+      const userImage = await getImage(req.user.role, req.user.id);
       const user = {
         userId: req.user.id,
         username: req.user.username,

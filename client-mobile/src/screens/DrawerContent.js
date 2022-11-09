@@ -12,6 +12,7 @@ import axios from "axios";
 
 import { serverUrl } from "../config/url";
 import socket from "../config/socket";
+import { useFocusEffect } from "@react-navigation/native";
 
 export function DrawerContent(props) {
   const { signOut } = React.useContext(AuthContext);
@@ -20,8 +21,8 @@ export function DrawerContent(props) {
   const [classes, setClasses] = useState(0);
 
   const fetchUser = async () => {
-    const access_token = await AsyncStorage.getItem("access_token");
     try {
+      const access_token = await AsyncStorage.getItem("access_token");
       const { data } = await axios({
         url: `${serverUrl}/users`,
         method: "GET",
@@ -51,9 +52,14 @@ export function DrawerContent(props) {
     }
   };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUser();
+    }, [])
+  );
+  // useEffect(() => {
+
+  // }, []);
 
   const submitLogout = async () => {
     await AsyncStorage.clear();
@@ -76,18 +82,18 @@ export function DrawerContent(props) {
               </View>
             </View>
             <View style={styles.row}>
-              <View style={styles.section}>
+              {/* <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
                   {student?.Wishlists?.length}
                 </Paragraph>
                 <Caption style={styles.caption}>Bookmark</Caption>
-              </View>
-              <View style={styles.section}>
+              </View> */}
+              {/* <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
                   {classes}
                 </Paragraph>
                 <Caption style={styles.caption}>Class Enrolled</Caption>
-              </View>
+              </View> */}
             </View>
           </View>
           <Drawer.Section style={styles.drawerSection}>
@@ -150,7 +156,6 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-
                 <MatrialIcon
                   name="history"
                   color={color}
@@ -160,7 +165,6 @@ export function DrawerContent(props) {
               label="Bookmark"
               onPress={() => {
                 props.navigation.navigate("Bookmark");
-
               }}
             />
             <DrawerItem
