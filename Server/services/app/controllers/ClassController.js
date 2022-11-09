@@ -14,7 +14,6 @@ class Controller {
   static async postClass(req, res, next) {
     const t = await sequelize.transaction();
     try {
-      console.log('masuk', req.body);
       if (req.user.role != "teacher") {
         throw { name: "forbidden" };
       }
