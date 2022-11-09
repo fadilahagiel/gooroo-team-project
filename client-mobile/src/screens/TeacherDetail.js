@@ -119,7 +119,7 @@ export default function ClassDetail({ navigation, route }) {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={{ height: 300 }}
+          style={{ height: 400 }}
         >
           {teacher?.Classes?.map((el) => {
             return (
