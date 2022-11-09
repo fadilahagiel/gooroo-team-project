@@ -17,6 +17,7 @@ export function DrawerContent(props) {
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
+  const [classes, setClasses] = useState(0);
 
   const fetchUser = async () => {
     const access_token = await AsyncStorage.getItem("access_token");
@@ -35,6 +36,14 @@ export function DrawerContent(props) {
           access_token,
         },
       });
+      const classes = await axios({
+        method: "get",
+        url: `${serverUrl}/classes/myClassesStudent`,
+        headers: {
+          access_token,
+        },
+      });
+      setClasses(classes.data.length);
       setStudent(res.data);
       setUser(data);
     } catch (error) {
@@ -57,7 +66,10 @@ export function DrawerContent(props) {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image source={{ uri: student.image }} size={50} />
+              <Avatar.Image
+                source={{ uri: student.image }}
+                size={50}
+              />
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
                 <Title style={styles.title}>{user.username}</Title>
                 <Caption style={styles.caption}>{student.fullName}</Caption>
@@ -66,13 +78,13 @@ export function DrawerContent(props) {
             <View style={styles.row}>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  13
+                  {student?.Wishlists?.length}
                 </Paragraph>
                 <Caption style={styles.caption}>Bookmark</Caption>
               </View>
               <View style={styles.section}>
                 <Paragraph style={[styles.paragraph, styles.caption]}>
-                  2
+                  {classes}
                 </Paragraph>
                 <Caption style={styles.caption}>Class Enrolled</Caption>
               </View>
@@ -82,7 +94,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <MatrialIcon name="home" color={color} size={size} />
+                <MatrialIcon
+                  name="home"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Home"
               onPress={() => {
@@ -92,7 +108,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon name="user" color={color} size={size} />
+                <FeatherIcon
+                  name="user"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Profile"
               onPress={() => {
@@ -102,7 +122,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon name="book" color={color} size={size} />
+                <FeatherIcon
+                  name="book"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Contacts"
               onPress={() => {
@@ -112,7 +136,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <FeatherIcon name="bookmark" color={color} size={size} />
+                <FeatherIcon
+                  name="bookmark"
+                  color={color}
+                  size={size}
+                />
               )}
               label="Bookmark"
               onPress={() => {
@@ -122,7 +150,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <MatrialIcon name="history" color={color} size={size} />
+                <MatrialIcon
+                  name="history"
+                  color={color}
+                  size={size}
+                />
               )}
               label="History"
               onPress={() => {
@@ -132,7 +164,11 @@ export function DrawerContent(props) {
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
-                <MatrialIcon name="history" color={color} size={size} />
+                <MatrialIcon
+                  name="history"
+                  color={color}
+                  size={size}
+                />
               )}
               label="ChatScreen"
               onPress={() => {
@@ -156,7 +192,11 @@ export function DrawerContent(props) {
       <Drawer.Section style={styles.bottomDrawerSection}>
         <DrawerItem
           icon={({ color, size }) => (
-            <Icon name="ios-exit-outline" color={color} size={size} />
+            <Icon
+              name="ios-exit-outline"
+              color={color}
+              size={size}
+            />
           )}
           label="Sign Out"
           onPress={submitLogout}
