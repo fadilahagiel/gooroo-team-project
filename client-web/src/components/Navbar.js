@@ -78,6 +78,13 @@ export default function MyNavbar() {
           <Link
             className={"m-3"}
             style={{ color: "white", fontSize: "20px" }}
+            to={"chat"}
+          >
+            Messages
+          </Link>
+          <Link
+            className={"m-3"}
+            style={{ color: "white", fontSize: "20px" }}
             to={"register"}
           >
             Teacher Registration

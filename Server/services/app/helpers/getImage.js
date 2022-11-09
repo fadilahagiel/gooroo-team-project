@@ -1,4 +1,4 @@
-const { Class, Transaction, Student, Teacher, User } = require("../models");
+const { Student, Teacher } = require("../models");
 
 async function getImage(role, id) {
   let result;

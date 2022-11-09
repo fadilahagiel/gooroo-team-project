@@ -2,8 +2,7 @@ const { Class, Transaction, Student, Teacher, User } = require("../models");
 const axios = require("axios");
 const getImage = require("../helpers/getImage");
 
-const CHAT_API =
-  "https://130c-2001-448a-2042-93b9-550a-2fa5-c341-8c0f.ap.ngrok.io";
+const CHAT_API = "http://localhost:3030";
 
 class ChatController {
   static async findAllContacts(req, res, next) {

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const serverApp = `http://localhost:3000/`;
 
 export const classesFetchSuccess = (data) => {
@@ -220,28 +222,28 @@ export const fetchOneClass = (id) => {
 export const postClass = (payload) => {
   return (dispatch, getState) => {
     return fetch(`${serverApp}classes`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "access_token": localStorage.access_token
+        access_token: localStorage.access_token,
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     })
-      .then(respon => {
+      .then((respon) => {
         if (!respon.ok) {
-          throw new Error('There is an error')
+          throw new Error("There is an error");
         }
-        respon.json()
+        respon.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
-        return data
+        return data;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
-  }
-}
+      });
+  };
+};
 
 export const createClass = (classForm) => {
   return (dispatch) => {
@@ -445,5 +447,29 @@ export const updateClass = ({
         console.log(error);
         throw error;
       });
+  };
+};
+
+export const fetchContacts = () => {
+  return async (dispatch, getState) => {
+    try {
+      const access_token = localStorage.getItem("access_token");
+      console.log({ access_token });
+      const { data } = await axios({
+        url: `${serverApp}/contacts`,
+        method: "get",
+        headers: { access_token },
+      });
+      dispatch({
+        type: "contacts/fetch",
+        payload: data,
+      });
+      console.log({ data });
+      // localStorage.setItem("contacts")
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 };

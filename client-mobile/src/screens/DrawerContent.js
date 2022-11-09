@@ -150,7 +150,7 @@ export function DrawerContent(props) {
               )}
               label="Bookmark"
               onPress={() => {
-                props.navigation.navigate("Bookmark");
+                props.navigation.navigate("History");
               }}
             />
             <DrawerItem
