@@ -81,11 +81,11 @@ export const fetchTeacherProfile = () => {
 export const fetchClasses = () => {
     return (dispatch, getState) => {
         const access_token = localStorage.getItem("access_token")
-        fetch("http://localhost:3000/classes/myClasses",{
+        fetch("http://localhost:3000/classes",{
             method: "GET",
             headers: {
                 access_token
-            }
+            },
         })
         .then(res => {
           if(!res.ok){

@@ -41,10 +41,10 @@ export default function ClassRow
         <td>{formatPrice(oneClass.price)}</td>
         <td>{oneClass.quota}</td>
         <td>{oneClass.averageRating}</td>
-        <td>
-          <Button onClick={deleteClassButton} className={"btn-sm btn-danger"}>Delete</Button>
-          <Button onClick={() => navigate(`/edit-class/${oneClass.id}`)} className={"btn-sm btn-success"}>Update</Button>
-          <Button onClick={() => navigate(`/class/${oneClass.id}`)} className={"btn-sm"}>Details</Button>
+        <td style={{maxWidth: '100px'}}>
+          <Button onClick={() => navigate(`/class/${oneClass.id}`)} className={"btn-sm m-2"}>Details</Button>
+          <Button onClick={() => navigate(`/edit-class/${oneClass.id}`)} className={"btn-sm btn-success m-2"}>Update</Button>
+          <Button onClick={deleteClassButton} className={"btn-sm btn-danger m-2"}>Delete</Button>
         </td>
       </tr>
     )
