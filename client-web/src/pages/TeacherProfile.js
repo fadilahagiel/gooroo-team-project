@@ -20,7 +20,6 @@ export default function ClassDetail() {
     <>
       <Container
         style={{
-          display: "flex",
           flex: "1",
           width: "100%",
           height: "100%",
@@ -40,8 +39,7 @@ export default function ClassDetail() {
               textAlign: "center",
               padding: "10%",
               borderRadius: "5%",
-            }}
-          >
+            }}>
             <img
               src={teachers.image}
               style={{

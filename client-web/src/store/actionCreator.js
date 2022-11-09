@@ -220,28 +220,28 @@ export const fetchOneClass = (id) => {
 export const postClass = (payload) => {
   return (dispatch, getState) => {
     return fetch(`${serverApp}classes`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "access_token": localStorage.access_token
+        access_token: localStorage.access_token,
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     })
-      .then(respon => {
+      .then((respon) => {
         if (!respon.ok) {
-          throw new Error('There is an error')
+          throw new Error("There is an error");
         }
-        respon.json()
+        respon.json();
       })
-      .then(data => {
+      .then((data) => {
         console.log(data);
-        return data
+        return data;
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
-  }
-}
+      });
+  };
+};
 
 export const createClass = (classForm) => {
   return (dispatch) => {
