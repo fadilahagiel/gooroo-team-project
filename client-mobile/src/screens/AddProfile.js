@@ -51,7 +51,7 @@ export default function AddProfile({navigation}) {
     try {
       const formData = new FormData()
       formData.append('image', {
-        name: `${uri}`,
+        name: fullName,
         uri: photo,
         type: 'image/png'
       })

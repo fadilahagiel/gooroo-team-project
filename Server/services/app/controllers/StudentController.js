@@ -7,7 +7,8 @@ const {
   Wishlist,
   Schedule,
 } = require("../models");
-
+const fs = require("fs");
+const imagekit = require("../config/imageKit");
 class StudentController {
   static async getMyStudent(req, res, next) {
     try {
@@ -33,6 +34,7 @@ class StudentController {
   static async postStudent(req, res, next) {
     try {
       const { id, role } = req.user;
+      const { path, filename, originalname } = req.file
       const studentFound = await Student.findOne({ where: { UserId: id } });
       if (studentFound) {
         throw { name: "already_have" };
@@ -40,11 +42,16 @@ class StudentController {
       if (role !== "student") {
         throw { name: "forbidden" };
       }
+      const fileUploaded = fs.readFileSync(`./assets/${filename}`);
       const fullName  = req.headers.fullname
+      const result = await imagekit.upload({
+        file: fileUploaded, //required
+        fileName: filename, //required
+      });
       const student = await Student.create({
         fullName,
         UserId: id,
-        image: req.file.path,
+        image: result.url,
       });
       res.status(201).json(student);
     } catch (error) {
