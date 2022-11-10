@@ -128,7 +128,7 @@ export function DrawerContent(props) {
                 props.navigation.navigate("Contacts");
               }}
             />
-            <DrawerItem
+            {/* <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
                 <Icon
@@ -141,7 +141,7 @@ export function DrawerContent(props) {
               onPress={() => {
                 props.navigation.navigate("ChatScreen");
               }}
-            />
+            /> */}
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (

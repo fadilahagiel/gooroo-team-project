@@ -7,15 +7,17 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import { fetchChatLogs } from "../actions";
+import FeatherIcon from "react-native-vector-icons/Feather";
 import uuid from "react-native-uuid";
 import socket from "../config/socket";
 import colors from "../config/colors";
 
-export default function ChatScreen({ route }) {
+export default function ChatScreen({ navigation, route }) {
   const { roomId } = route.params;
   const [msgInput, setMsgInput] = useState("");
   const [chatLogs, setChatLogs] = useState([]);
@@ -94,6 +96,9 @@ export default function ChatScreen({ route }) {
   return (
     <View style={styles.container}>
       <View style={styles.roomInfo}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <FeatherIcon name="arrow-left" color={colors.white} size={30} />
+        </TouchableOpacity>
         <Image
           source={{ uri: otherUser.avatar }}
           style={styles.contactAvatar}
@@ -153,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary1,
     margin: 5,
     padding: 10,
-    alignContent: "center",
+    alignItems: "center",
     flexDirection: "row",
   },
   contactAvatar: {

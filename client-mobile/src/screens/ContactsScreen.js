@@ -11,6 +11,7 @@ import {
 import { fetchContacts } from "../actions";
 import colors from "../config/colors";
 import CardContact from "../components/CardContact";
+import FeatherIcon from "react-native-vector-icons/Feather";
 
 export default function ContactsScreen({ navigation }) {
   const [contacts, setContacs] = useState([]);
@@ -48,7 +49,10 @@ export default function ContactsScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <FeatherIcon name="arrow-left" color={colors.primary} size={30} />
+        </TouchableOpacity>
         <TextInput
           style={styles.search}
           onChangeText={(input) => handleSearch(input)}
@@ -73,18 +77,25 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     alignItems: "center",
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+    marginBottom: 20,
+  },
+  search: {
+    borderWidth: 2,
+    width: 300,
+    // marginVertical: 20,
+    marginLeft: 15,
+    padding: 5,
+    borderRadius: 10,
+  },
   contacts: {
     backgroundColor: "red",
     justifyContent: "center",
     height: 50,
     width: 350,
     maxWidth: "90%",
-  },
-  search: {
-    borderWidth: 2,
-    width: 350,
-    marginVertical: 10,
-    padding: 5,
-    borderRadius: 10,
   },
 });
