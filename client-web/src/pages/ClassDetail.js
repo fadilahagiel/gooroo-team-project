@@ -71,45 +71,7 @@ export default function ClassDetail() {
             Rating: {oneClass.averageRating}
           </h1>
           <h1 style={{ marginTop: "50px" }}>Quota: {oneClass.quota}</h1>
-          <h1 style={{ marginTop: "50px", marginBottom: "25px" }}>
-            Students List
-          </h1>
-          <Table striped bordered hover className={"table-dark"}>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            {/* <tbody> */}
-            {/* {products.map((product, i) => {
-                        return <ProductRow key={product.id}product={product} index={i + 1}/>
-                        })} */}
-            {/* </tbody> */}
-            <tbody>
-            {oneClassStudents.map((oneClassStudent, i) => {
-                        return <StudentRow key={oneClassStudent.id}oneClassStudent={oneClassStudent} index={i + 1}/>
-                        })}
-            </tbody>
-            <tbody>
-              <tr>
-                <td>{oneClassStudents.id}</td>
-                <td>cek</td>
-                <td>cek</td>
-                <td>
-                  {/* <Button onClick={() => navigate("/student-profile")}>
-                    Detail
-                  </Button> */}
-                  <Button onClick={() => setOpenModal(true)}>
-                    Detail
-                  </Button>
-                  <StudentProfile open={openModal} onClose={() => setOpenModal(false)}/>
-                </td>
-              </tr>
-            </tbody>
-          </Table>
+          
         </Container>
       </Container>
     </>

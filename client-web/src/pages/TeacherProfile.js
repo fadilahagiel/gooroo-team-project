@@ -33,7 +33,7 @@ export default function ClassDetail() {
       >
     
           <div
-            className={"col-6"}
+            
             style={{
               flex: "5",
               textAlign: "center",

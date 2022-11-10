@@ -33,7 +33,7 @@ export default function MyNavbar() {
     );
     socket.disconnect();
   };
-  
+
   if(isLogin){return (
     <Navbar
       variant="dark"
@@ -90,13 +90,13 @@ export default function MyNavbar() {
           >
             Messages
           </Link>
-          <Link
+          {/* <Link
             className={"m-3"}
             style={{ color: "white", fontSize: "20px" }}
             to={"add-profile"}
           >
             Add Profile
-          </Link>
+          </Link> */}
         </Nav>
         <Button
           className={"btn-danger"}
