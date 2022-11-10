@@ -383,11 +383,13 @@ const styles = StyleSheet.create({
   textTitle: {
     color: colors.white,
     fontSize: 20,
+    fontStyle: 'capitalize'
   },
   text: {
     color: colors.secondaty2,
     fontSize: 16,
     marginTop: 5,
+    textTransform: 'capitalize'
   },
   profileImage: {
     width: 200,

@@ -78,47 +78,50 @@ export default function ChatPage() {
               margin: "25, 25, 25, 25",
             }}
           >
-            <Button
-              style={{
-                display: "flex",
-                marginBottom: "30px",
-                backgroundColor: "rgba(250,250,250,0.5",
-              }}
-              className={"mb-4, flex-row"}
-            >
-              <img
-                style={{ flex: "1", maxWidth: "100px", borderRadius: "100%" }}
-                src="https://static.remove.bg/remove-bg-web/221525818b4ba04e9088d39cdcbd0c7bcdfb052e/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg"
-              />
-              <h4 style={{ flex: "4", padding: "15px" }}>Students Name</h4>
-            </Button>
-            {contacts.map((el) => {
-              return (
-                <Button
-                  style={{
-                    display: "flex",
-                    width: "300px",
-                    height: "75px",
-                    marginBottom: "30px",
-                    backgroundColor: "rgba(250,250,250,0.5",
-                  }}
-                  className={"mb-4, flex-row"}
-                  onClick={() => handleRoomChat(el.roomId)}
-                >
-                  <img
+            {contacts.length ? (
+              contacts.map((el) => {
+                return (
+                  <Button
                     style={{
-                      flex: "1",
-                      maxWidth: "100px",
-                      maxHeight: "60px",
+                      display: "flex",
+                      width: "300px",
+                      height: "75px",
+                      marginBottom: "30px",
+                      backgroundColor: "rgba(250,250,250,0.5",
                     }}
-                    src={el.contactImage}
-                  />
-                  <h4 style={{ flex: "4", padding: "15px" }}>
-                    {el.contactName}
-                  </h4>
-                </Button>
-              );
-            })}
+                    className={"mb-4, flex-row"}
+                    onClick={() => handleRoomChat(el.roomId)}
+                  >
+                    <img
+                      style={{
+                        flex: "1",
+                        maxWidth: "100px",
+                        maxHeight: "60px",
+                      }}
+                      src={el.contactImage}
+                    />
+                    <h4 style={{ flex: "4", padding: "15px" }}>
+                      {el.contactName}
+                    </h4>
+                  </Button>
+                );
+              })
+            ) : (
+              <Button
+                style={{
+                  display: "flex",
+                  marginBottom: "30px",
+                  backgroundColor: "rgba(250,250,250,0.5",
+                }}
+                className={"mb-4, flex-row"}
+              >
+                <img
+                  style={{ flex: "1", maxWidth: "100px", borderRadius: "100%" }}
+                  src="https://static.remove.bg/remove-bg-web/221525818b4ba04e9088d39cdcbd0c7bcdfb052e/assets/start-1abfb4fe2980eabfbbaaa4365a0692539f7cd2725f324f904565a9a744f8e214.jpg"
+                />
+                <h4 style={{ flex: "4", padding: "15px" }}>Students Name</h4>
+              </Button>
+            )}
           </Container>
         </Container>
         <Container

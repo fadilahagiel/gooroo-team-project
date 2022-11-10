@@ -21,18 +21,19 @@ export default function ClassDetail() {
       <Container
         style={{
           flex: "1",
-          width: "100%",
-          height: "100vh",
-
+          width: "60%",
+          height: "100%",
+          marginTop: "",
           paddingBottom: "10vh",
           textAlign: "center",
           backgroundColor: "rgba(9, 11, 72, 0.5)",
           borderRadius: "5%",
           color: "rgba(190,190,190,1)",
-        }}>
-        <div className={"row"}>
+        }}
+      >
+    
           <div
-            className={"col-6"}
+            
             style={{
               flex: "5",
               textAlign: "center",
@@ -55,9 +56,8 @@ export default function ClassDetail() {
             <h1 style={{ marginTop: "50px" }}>
               Average Rating: {teachers.averageRating}
             </h1>
-            <h1 style={{ marginBottom: "75px" }}>Class List</h1>
           </div>
-        </div>
+  
       </Container>
     </>
   );

@@ -3,7 +3,6 @@ import PageLayout from "../components/PageLayout";
 import HomePage from "../pages/HomePage";
 import CreateProduct from "../pages/CreateProduct";
 import LoginPage from "../pages/LoginPage";
-import EditProduct from "../pages/EditProduct";
 import CategoriesPage from "../pages/CategoriesPage";
 import CreateCategory from "../pages/CreateCategory";
 import RegisterPage from "../pages/RegisterPage";
@@ -14,6 +13,7 @@ import StudentProfile from "../pages/StudentProfile";
 import ChatPage from "../pages/ChatPage";
 import ChatPage2 from "../pages/ChatPage2";
 import EditClass from "../pages/EditClass";
+import CreateTeacherProfile from '../pages/CreateTeacherProfile'
 
 const router = createBrowserRouter([
   {
@@ -48,6 +48,10 @@ const router = createBrowserRouter([
         element: <TeacherProfile />,
       },
       {
+        path: "add-profile",
+        element: <CreateTeacherProfile />,
+      },
+      {
         path: "student-profile",
         element: <StudentProfile />,
       },
@@ -64,16 +68,8 @@ const router = createBrowserRouter([
         element: <RegisterPage />,
       },
       {
-        path: "categories",
+        path: "subjects",
         element: <CategoriesPage />,
-      },
-      {
-        path: "category",
-        element: <CreateCategory />,
-      },
-      {
-        path: "edit/:id",
-        element: <EditProduct />,
       },
     ],
   },

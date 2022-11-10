@@ -15,20 +15,20 @@ export default function MyTable2() {
 
   return (
     <>
-      <Button
-        className="btn-success mb-3"
-        onClick={addCategoryButton}>
-        Add Category
-      </Button>
+      <div style={{height: '100%'}}>
+        <br></br>
+        <br></br>
+        <br></br>
+        <h2 style={{textAlign:'center'}}>Subjects List</h2>
       <Table
         striped
         bordered
         hover
-        className={"table-dark"}>
-        <thead>
-          <tr>
+        className={"table-dark"} style={{width: '50%', marginLeft:'25%'}}>
+        <thead style={{marginTop:'10%'}}>
+          <tr style={{textAlign: 'center'}}>
             <th>#</th>
-            <th>Category Name</th>
+            <th>Subject</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +43,7 @@ export default function MyTable2() {
           })}
         </tbody>
       </Table>
+      </div>
     </>
   );
 }

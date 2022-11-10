@@ -4,21 +4,28 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../store/actionCreator";
 import Swal from "sweetalert2";
 import socket from "../configs/socket";
+import { useEffect, useState } from "react";
 
 export default function MyNavbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const isLogin = useSelector((state) => state.isLogin)
+  
 
   const submitLogout = (e) => {
     e.preventDefault();
     socket.disconnect();
     localStorage.clear();
     navigate("/welcome");
+    dispatch({
+      type: "status/login",
+      payload: false
+    });
     Swal.fire(
       "Success Logout!",
       "Thank you for using our services!",
@@ -27,7 +34,7 @@ export default function MyNavbar() {
     socket.disconnect();
   };
 
-  return (
+  if(isLogin){return (
     <Navbar
       variant="dark"
       expand="lg"
@@ -65,7 +72,7 @@ export default function MyNavbar() {
           <Link
             className={"m-3"}
             style={{ color: "white", fontSize: "20px" }}
-            to={"categories"}
+            to={"subjects"}
           >
             Subjects
           </Link>
@@ -83,13 +90,13 @@ export default function MyNavbar() {
           >
             Messages
           </Link>
-          <Link
+          {/* <Link
             className={"m-3"}
             style={{ color: "white", fontSize: "20px" }}
-            to={"register"}
+            to={"add-profile"}
           >
-            Teacher Registration
-          </Link>
+            Add Profile
+          </Link> */}
         </Nav>
         <Button
           className={"btn-danger"}
@@ -101,5 +108,7 @@ export default function MyNavbar() {
       </Navbar.Collapse>
       {/* </Container> */}
     </Navbar>
-  );
+  );}
+
+  
 }

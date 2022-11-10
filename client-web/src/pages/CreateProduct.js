@@ -205,9 +205,9 @@ function CreateClass() {
                                 <div key={index}>
                                     <label className="input-group mt-2" key={index}>
                                         <div className="avatar">
-                                            <div className="mask mask-squircle w-12 h-12 d-flex">
-                                                <p>{new Date(el.startDate).toLocaleDateString('id-ID', options)}  =</p>
-                                                <p className="mx-3">{new Date(el.startDate).toLocaleTimeString()} - {new Date(el.endDate).toLocaleTimeString()}</p>
+                                            <div className="mask mask-squircle w-12 h-12 d-flex" style={{backgroundColor:'rgba(50, 150, 200, 0.5)', borderRadius: '10%px',}}>
+                                                <p className="my-3 mx-1">{new Date(el.startDate).toLocaleDateString('id-ID', options)}:</p>
+                                                <p className="my-3 mx-3">{new Date(el.startDate).toLocaleTimeString()} - {new Date(el.endDate).toLocaleTimeString()}</p>
                                                 <Button variant="danger" onClick={handleRemoveSchInput}>
                                                     Delete
                                                 </Button>
