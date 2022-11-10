@@ -21,14 +21,11 @@ class Controller {
         throw { name: "forbidden" };
       }
       const { ClassId } = req.params;
-      // console.log(ClassId, "class id");
       const UserId = req.user.id;
-      // console.log(UserId, "INI USERID");
       const StudentFound = await Student.findOne(
         { where: { UserId } },
         { transaction: t }
       );
-      console.log(StudentFound, "ini student found");
       const classFound = await Class.findOne(
         { where: { id: ClassId } },
         { transaction: t }

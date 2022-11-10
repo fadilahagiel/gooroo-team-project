@@ -70,7 +70,6 @@ class Controller {
       );
       res.status(200).json({ message: `Schedule has been update` });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
