@@ -23,7 +23,6 @@ class Controller {
   static async showMyDetail(req, res, next) {
     try {
       const { id } = req.user;
-      console.log(id, "ini id");
       const teacher = await Teacher.findOne({
         where: { UserId: id },
         include: {
@@ -57,7 +56,6 @@ class Controller {
       }
       res.status(200).json(teacher);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
