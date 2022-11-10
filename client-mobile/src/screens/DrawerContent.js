@@ -199,11 +199,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     marginTop: 3,
-    fontWeight: "bold",
   },
   caption: {
     fontSize: 14,
     lineHeight: 14,
+    textTransform: 'capitalize'
   },
   row: {
     marginTop: 20,

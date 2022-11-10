@@ -16,10 +16,11 @@ import colors from "../config/colors";
 import Icon from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
 import * as Animatable from "react-native-animatable";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { serverUrl } from "../config/url";
 import { addContact, fetchContacts } from "../actions";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ClassDetail({ navigation, route }) {
   const { id } = route.params;
@@ -59,10 +60,16 @@ export default function ClassDetail({ navigation, route }) {
       console.log(error);
     }
   };
+  useFocusEffect(
+    useCallback(() => {
+      fetchTeacher();
+      fetchTransaction();
+      }, [])
+  );
 
   useEffect(() => {
-    fetchTeacher();
-    fetchTransaction();
+        fetchTeacher();
+        fetchTransaction();
   }, []);
 
   const handleChat = async (id) => {
