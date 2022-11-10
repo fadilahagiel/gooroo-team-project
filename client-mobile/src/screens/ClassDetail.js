@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   AsyncStorage,
   Alert,
+  Linking,
 } from "react-native";
 import { Modalize } from "react-native-modalize";
 import colors from "../config/colors";
@@ -219,8 +220,13 @@ export default function ClassDetail({ navigation, route }) {
           </View>
           <View style={[styles.wrapper, { justifyContent: "flex-end" }]}>
             {isBuy ? (
-              <View style={styles.buttonWrapperTrue}>
-                <Text style={styles.buttonTextTrue}>Already Enroll</Text>
+              <View>
+                <TouchableOpacity
+                  style={styles.buttonWrapperTrue}
+                  onPress={() => Linking.openURL(oneClass?.url)}
+                >
+                  <Text style={styles.buttonTextTrue}>JOIN ZOOM</Text>
+                </TouchableOpacity>
               </View>
             ) : (
               <TouchableOpacity
@@ -336,7 +342,7 @@ const styles = StyleSheet.create({
   buttonWrapperTrue: {
     marginHorizontal: 20,
     marginTop: 40,
-    backgroundColor: "grey",
+    backgroundColor: colors.primary,
     alignItems: "center",
     paddingVertical: 15,
     borderRadius: 10,
