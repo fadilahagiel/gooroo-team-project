@@ -33,6 +33,15 @@ export const oneClassFetchSuccess = (data) => {
     type: "oneClass/fetchSuccess",
     payload: data,
   };
+  console.log(data, "<<< DATA DI ACTION");
+};
+
+export const oneClassStudentsFetchSuccess = (data) => {
+  return {
+    type: "oneClassStudents/fetchSuccess",
+    payload: data,
+  };
+  console.log(data, "<<< DATA DI ACTION");
 };
 
 export const fetchCategory = () => {
@@ -114,7 +123,7 @@ export const fetchProducts = () => {
 export const fetchTeacherProfile = () => {
   return (dispatch, getState) => {
     const access_token = localStorage.getItem("access_token");
-    fetch("http://localhost:3000/teachers/detail", {
+    fetch(`${serverApp}teachers/detail`, {
       method: "GET",
       headers: {
         access_token,
@@ -138,7 +147,7 @@ export const fetchTeacherProfile = () => {
 export const fetchClasses = () => {
   return (dispatch, getState) => {
     const access_token = localStorage.getItem("access_token");
-    fetch("http://localhost:3000/classes/myClasses", {
+    fetch(`${serverApp}classes/myClasses`, {
       method: "GET",
       headers: {
         access_token,
@@ -159,10 +168,37 @@ export const fetchClasses = () => {
   };
 };
 
+// http://localhost:3000/classes/myStudent/1
+
+export const fetchOneClassStudents = (id) => {
+  return (dispatch, getState) => {
+    const access_token = localStorage.getItem("access_token");
+    fetch(`${serverApp}classes/myStudent/${id}`, {
+      method: "GET",
+      headers: {
+        access_token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("hardcoded error");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data, "<<<DATA");
+        dispatch(oneClassStudentsFetchSuccess(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 export const fetchOneClass = (id) => {
   return (dispatch, getState) => {
     const access_token = localStorage.getItem("access_token");
-    fetch(`http://localhost:3000/classes/${id}`, {
+    fetch(`${serverApp}classes/${id}`, {
       method: "GET",
       headers: {
         access_token,
@@ -227,6 +263,7 @@ export const postClass = (payload) => {
         respon.json();
       })
       .then((data) => {
+        console.log(data);
         return data;
       })
       .catch((err) => {
@@ -238,53 +275,51 @@ export const postClass = (payload) => {
 export const createClass = (classForm) => {
   return (dispatch) => {
     const access_token = localStorage.getItem("access_token");
-    return (
-      fetch("http://localhost:3001/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          access_token,
-        },
-        body: JSON.stringify(classForm),
+    return fetch(`${serverApp}products`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+      body: JSON.stringify(classForm),
+    })
+      .then((res) => {
+        console.log("<< MASUK ACTION 2");
+        if (!res.ok) {
+          throw new Error(res);
+        }
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("hadrcoded Error");
-          }
-          return res.json();
-        })
-        // .then((body) => )
-        .catch((err) => {
-          console.log(err);
-        })
-    );
+      .then((body) => console.log(body))
+      .catch((err) => {
+        console.log(err);
+      });
   };
 };
 
 export const registerAdmin = (registerForm) => {
   return (dispatch) => {
     const access_token = localStorage.getItem("access_token");
-    return (
-      fetch("http://localhost:3000/users/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          access_token,
-        },
-        body: JSON.stringify(registerForm),
+    return fetch(`${serverApp}users/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        access_token,
+      },
+      body: JSON.stringify(registerForm),
+    })
+      .then((res) => {
+        console.log(res, "<< MASUK ACTION 2");
+        if (!res.ok) {
+          throw new Error("hadrcoded Error");
+        }
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("hadrcoded Error");
-          }
-          return res.json();
-        })
-        // .then((body) => )
-        .catch((err) => {
-          console.log(err);
-          throw err;
-        })
-    );
+      .then((body) => console.log(body))
+      .catch((err) => {
+        console.log(err);
+        throw err;
+      });
   };
 };
 
@@ -292,7 +327,7 @@ export const createCategory = (categoryForm) => {
   return (dispatch) => {
     const access_token = localStorage.getItem("access_token");
     return (
-      fetch("http://localhost:3001/categories", {
+      fetch(`${serverApp}categories`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -316,7 +351,7 @@ export const createCategory = (categoryForm) => {
 
 export const login = (loginForm) => {
   return (dispatch) => {
-    return fetch("http://localhost:3000/users/login", {
+    return fetch(`${serverApp}users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -333,6 +368,10 @@ export const login = (loginForm) => {
       .then((data) => {
         localStorage.access_token = data.access_token;
         localStorage.id = data.id;
+        dispatch({
+          type: "status/login",
+          payload: true,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -344,7 +383,7 @@ export const deleteClass = (id) => {
   return (dispatch) => {
     const access_token = localStorage.getItem("access_token");
     return (
-      fetch("http://localhost:3001/products/" + id, {
+      fetch(`${serverApp}products/` + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -370,7 +409,7 @@ export const deleteCategory = (id) => {
   return (dispatch) => {
     const access_token = localStorage.getItem("access_token");
     return (
-      fetch("http://localhost:3001/categories/" + id, {
+      fetch(`${serverApp}categories/` + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -405,7 +444,7 @@ export const updateClass = ({
   imgUrl3,
 }) => {
   return (dispatch) => {
-    return fetch(`http://localhost:3001/products/` + id, {
+    return fetch(`${serverApp}products/` + id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -445,6 +484,7 @@ export const fetchContacts = () => {
         method: "get",
         headers: { access_token },
       });
+      console.log("Data di action", access_token, data);
       dispatch({
         type: "contacts/fetch",
         payload: data.contacts,
@@ -455,6 +495,7 @@ export const fetchContacts = () => {
         role: data.role,
         avatar: data.avatar,
       };
+      // console.log("Di action creator - user", user);
       dispatch({
         type: "user/fetch",
         payload: user,

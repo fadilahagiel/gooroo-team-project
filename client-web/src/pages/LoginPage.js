@@ -23,7 +23,7 @@ function LoginPage() {
     dispatch(login(loginForm)).then(() => {
       navigate("/");
       dispatch(fetchContacts()).then((user) => {
-        // console.log("user di homepage", user);
+        console.log("user di homepage", user);
         socket.auth = user;
         socket.connect();
       });
