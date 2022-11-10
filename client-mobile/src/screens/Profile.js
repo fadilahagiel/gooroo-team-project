@@ -361,52 +361,7 @@ export default function Profile({ navigation, route }) {
                   </View>
                 );
               })}
-              {/* <View style={styles.classWarpper2}>
-                <View style={{ flex: 1 }}>
-                  <View>
-                    <View>
-                      <Text
-                        style={{
-                          color: colors.primary,
-                          fontSize: 20,
-                        }}>
-                        Class's Name
-                      </Text>
-                    </View>
-                    <View>
-                      <Text
-                        style={{
-                          color: colors.secondaty2,
-                          fontSize: 16,
-                        }}>
-                        By, Class's Teacher
-                      </Text>
-                    </View>
-
-                    <View
-                      style={{
-                        alignItems: "flex-end",
-                        justifyContent: "center",
-                      }}>
-                      <TouchableOpacity
-                        style={{
-                          marginTop: 10,
-                          backgroundColor: colors.green2,
-                          width: 120,
-                          height: 30,
-                          alignItems: "center",
-                          justifyContent: "center",
-                          borderRadius: 30,
-                        }}
-                        onPress={() => navigation.navigate("Response")}>
-                        <Text style={{ color: colors.white }}>
-                          Give Response
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                </View>
-              </View> */}
+             
             </ScrollView>
           </View>
         </ScrollView>
