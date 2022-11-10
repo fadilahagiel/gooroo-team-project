@@ -35,7 +35,7 @@ export default function Login({ navigation }) {
 
   const submitLogin = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await fetch(`${serverUrl}/users/login`, {
         method: "POST",
         headers: {
@@ -48,7 +48,7 @@ export default function Login({ navigation }) {
       if (dataTes.message) {
         throw dataTes.message;
       }
-      setIsLoading(false)
+      setIsLoading(false);
 
       await AsyncStorage.setItem("access_token", dataTes.access_token);
       await AsyncStorage.setItem("user", JSON.stringify(dataTes));
@@ -102,6 +102,7 @@ export default function Login({ navigation }) {
         <ActivityIndicator size="large" />
       </View>
     );
+    F;
   }
   return (
     <ImageBackground
