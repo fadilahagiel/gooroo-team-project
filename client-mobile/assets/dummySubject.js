@@ -2,52 +2,52 @@ const subjects = [
   {
     "id": 1,
     "name": "Matematika Dasar",
-    "image": "https://i.imgur.com/exCifuB.png"
+    "image": "https://i.imgur.com/l2fs1Gj.png"
   },
   {
     "id": 2,
     "name": "Matematika Saintek",
-    "image": "https://i.imgur.com/TODqSlb.png"
+    "image": "https://i.imgur.com/OneWUDC.png"
   },
   {
     "id": 3,
     "name": "Fisika",
-    "image": "https://i.imgur.com/mAA4k0V.png"
+    "image": "https://imgur.com/FnjDbAR.png"
   },
   {
     "id": 4,
     "name": "Kimia",
-    "image": "https://i.imgur.com/JuSQT5f.png"
+    "image": "https://i.imgur.com/11HDo0D.png"
   },
   {
     "id": 5,
     "name": "Biologi",
-    "image": "https://i.imgur.com/jN1Pvl4.png"
+    "image": "https://i.imgur.com/R8d51x9.png"
   },
   {
     "id": 6,
     "name": "Ekonomi",
-    "image": "https://i.imgur.com/BA0FvMx.png"
+    "image": "https://imgur.com/SoD6ud4.png"
   },
   {
     "id": 7,
     "name": "Geografi",
-    "image": "https://i.imgur.com/K5nA59J.png"
+    "image": "https://imgur.com/9PaM8B2.png"
   },
   {
     "id": 8,
     "name": "Akuntansi",
-    "image": "https://i.imgur.com/aHdTPsJ.png"
+    "image": "https://imgur.com/mKU2CgE.png"
   },
   {
     "id": 9,
     "name": "Sosiologi",
-    "image": "https://i.imgur.com/zfxe5Rd.png"
+    "image": "https://imgur.com/Nwd16ET.png"
   },
   {
     "id": 10,
     "name": "Sejarah",
-    "image": "https://imgur.com/zYZKGnS.png"
+    "image": "https://imgur.com/XGvbNV4.png"
   },
   {
     "id": 11,
