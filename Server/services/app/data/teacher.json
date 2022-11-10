@@ -1,0 +1,23 @@
+[
+  {
+    "fullName": "Ahmad Sobirin" ,
+    "image": "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "UserId": 2,
+    "bio": "Good teacher with many experience",
+    "averageRating": 7
+  },
+  {
+    "fullName": "Sri Mul",
+    "image": "https://i.imgur.com/xAp6kLg.png",
+    "UserId": 3,
+    "bio": "Learning everyday",
+    "averageRating": 7.5
+  },
+  {
+    "fullName": "Yanto Nurrahmani",
+    "image": "https://imgur.com/5qBoOia.png",
+    "UserId": 4,
+    "bio": "Berpengalaman 10 tahun menjadi guru",
+    "averageRating": 8
+  }
+]

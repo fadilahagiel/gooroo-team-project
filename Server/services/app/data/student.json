@@ -1,0 +1,17 @@
+[
+    {
+        "fullName": "Budi Maulana",
+        "image": "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "UserId": 1
+    },
+    {
+        "fullName": "Giovanni Septriadi",
+        "image": "https://media-exp1.licdn.com/dms/image/C4D03AQHw5rBGzgvxlw/profile-displayphoto-shrink_800_800/0/1646813133699?e=1669852800&v=beta&t=PK43TD0b6AoOnD1lxnh1QVsrI-mPLy-xKojcB_cBzr0",
+        "UserId": 5
+    },
+    {
+        "fullName": "Fachmi Maulana",
+        "image": "https://media-exp1.licdn.com/dms/image/C4D03AQHw5rBGzgvxlw/profile-displayphoto-shrink_800_800/0/1646813133699?e=1669852800&v=beta&t=PK43TD0b6AoOnD1lxnh1QVsrI-mPLy-xKojcB_cBzr0",
+        "UserId": 6
+    }
+]
