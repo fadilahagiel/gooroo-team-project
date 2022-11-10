@@ -16,6 +16,7 @@ export default function MyNavbar() {
 
   const submitLogout = (e) => {
     e.preventDefault();
+    socket.disconnect();
     localStorage.clear();
     navigate("/welcome");
     Swal.fire(
@@ -74,6 +75,13 @@ export default function MyNavbar() {
             to={"teacher-profile"}
           >
             My Profile
+          </Link>
+          <Link
+            className={"m-3"}
+            style={{ color: "white", fontSize: "20px" }}
+            to={"chat"}
+          >
+            Messages
           </Link>
           <Link
             className={"m-3"}

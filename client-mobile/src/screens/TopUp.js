@@ -9,6 +9,7 @@ import {
   Alert,
   AsyncStorage,
 } from "react-native";
+import colors from "../config/colors";
 import axios from "axios";
 import { serverUrl } from "../config/url";
 export default function TopUp({ navigation }) {
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
   containerPhoto: {
     flex: 1,
     padding: 10,
+    backgroundColor: colors.primary,
   },
   userView: {
     width: "80%",
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   hallo: {
-    color: "#2B377F",
+    color: colors.white,
     fontWeight: "700",
     fontSize: 20,
     marginBottom: 2,
@@ -98,8 +100,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,
-    backgroundColor: "white",
-    borderColor: "#a0acda",
+    backgroundColor: colors.white,
+    borderColor: colors.green2,
     width: "100%",
     marginLeft: 60,
   },
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 10,
     borderRadius: 10,
-    backgroundColor: "#2B377F",
+    backgroundColor: colors.green2,
     marginTop: 10,
     marginHorizontal: 30,
   },
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   description: {
-    color: "#ec5f58",
+    color: "yellow",
     fontSize: 12,
     marginBottom: 10,
     paddingRight: 30,

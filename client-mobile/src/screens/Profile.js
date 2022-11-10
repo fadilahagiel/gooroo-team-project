@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TextInput,
+  SafeAreaView,
 } from "react-native";
 import colors from "../config/colors";
 import Feather from "react-native-vector-icons/Feather";
@@ -22,8 +23,8 @@ import { useFocusEffect } from "@react-navigation/native";
 export default function Profile({ navigation, route }) {
   const [student, setStudent] = useState({});
   const [myClasses, setMyClasses] = useState([]);
-  const [enrolledClasses, setEnrolledClasses] = useState([])
-  const [finishedClasses, setFinishedClasses] = useState([])
+  const [enrolledClasses, setEnrolledClasses] = useState([]);
+  const [finishedClasses, setFinishedClasses] = useState([]);
   const [data, setData] = useState({
     rating: "",
     testimoni: "",
@@ -55,10 +56,14 @@ export default function Profile({ navigation, route }) {
         },
       });
       setMyClasses(data);
-      const arr = data.filter(el => el.status != 'done' && el.status != 'collected')
-      setEnrolledClasses(arr)
-      const arrFinished = data.filter(el => el.status == 'done' || el.status == 'collected')
-      setFinishedClasses(arrFinished)
+      const arr = data.filter(
+        (el) => el.status != "done" && el.status != "collected"
+      );
+      setEnrolledClasses(arr);
+      const arrFinished = data.filter(
+        (el) => el.status == "done" || el.status == "collected"
+      );
+      setFinishedClasses(arrFinished);
     } catch (error) {
       console.log(error);
     }
@@ -91,315 +96,329 @@ export default function Profile({ navigation, route }) {
       url: `${serverUrl}/transactions/response/${id}`,
       headers: {
         access_token,
-      }, 
-    })
-    const transactionId = data.id
-    // const response = await axios({
-    //   method: "put",
-    //   url: `${serverUrl}/transactions/${transactionId}`,
-    //   headers: {
-    //     access_token,
-    //   },
-    // })
-    }
+      },
+    });
+    const transactionId = data.id;
+  };
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
-        <View style={styles.inner}>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{ alignSelf: "center" }}>
-              <View style={styles.profileImage}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.inner}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={{ alignSelf: "center" }}>
+            <View style={styles.profileImage}>
+              {student !== null ? (
                 <Image
                   source={{ uri: student.image }}
                   style={styles.image}
                   resizeMode="center"
                 />
-              </View>
+              ) : (
+                <Image
+                  source={require("../assets/defaultpict.jpg")}
+                  style={styles.image}
+                  resizeMode="center"
+                />
+              )}
+            </View>
+            {student !== null ? (
+              <View></View>
+            ) : (
               <TouchableOpacity
                 style={styles.edit}
                 onPress={() => navigation.navigate("AddProfile")}
               >
                 <Feather name="edit-2" size={20} color={colors.white} />
               </TouchableOpacity>
-            </View>
+            )}
+          </View>
 
-            <View style={[styles.infoContainer]}>
-              <Text style={styles.textTitle}>{student.fullName}</Text>
-              <Text style={styles.text}>{student?.User?.username}</Text>
-            </View>
+          <View style={[styles.infoContainer]}>
+            <Text style={styles.textTitle}>
+              {student?.fullName ? student?.fullName : ""}
+            </Text>
+            <Text style={styles.text}>
+              {student?.User?.username ? student.User?.username : ""}
+            </Text>
+          </View>
 
-            <View style={[styles.statContainer]}>
-              <View style={styles.StatBox}>
-                <Text style={styles.textTitle}>
-                  {student?.Wishlists?.length}
-                </Text>
-                <Text style={[styles.text]}>Bookmarks</Text>
-              </View>
-              <View
-                style={[
-                  styles.StatBox,
-                  {
-                    borderColor: colors.secondary1,
-                    borderLeftWidth: 1,
-                    borderRightWidth: 1,
-                  },
-                ]}
-              >
-                <Text style={styles.textTitle}>{myClasses.length}</Text>
-                <Text style={[styles.text]}>Class Enrolled</Text>
-              </View>
-              <View style={styles.StatBox}>
+          <View style={[styles.statContainer]}>
+            <View style={styles.StatBox}>
+              <Text style={styles.textTitle}>
+                {student?.Wishlists?.length ? student?.Wishlists?.length : 0}
+              </Text>
+              <Text style={[styles.text]}>Bookmarks</Text>
+            </View>
+            <View
+              style={[
+                styles.StatBox,
+                {
+                  borderColor: colors.secondary1,
+                  borderLeftWidth: 1,
+                  borderRightWidth: 1,
+                },
+              ]}
+            >
+              <Text style={styles.textTitle}>
+                {myClasses?.length ? myClasses?.length : 0}
+              </Text>
+              <Text style={[styles.text]}>Class Enrolled</Text>
+            </View>
+            <View style={styles.StatBox}>
+              {student !== null ? (
                 <Text style={styles.textTitle}>
                   Rp{" "}
                   {student?.User?.saldo
                     ?.toString()
                     .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
                 </Text>
-                <Text style={[styles.text]}>Balance</Text>
-              </View>
+              ) : (
+                <Text style={styles.textTitle}>Rp. 0</Text>
+              )}
+
+              <Text style={[styles.text]}>Balance</Text>
             </View>
+          </View>
 
-            <TouchableOpacity
-              style={[styles.topUpButton]}
-              onPress={() => navigation.navigate("TopUp")}
-            >
-              <Text style={{ color: colors.white, fontWeight: "bold" }}>
-                TopUp
-              </Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.topUpButton]}
+            onPress={() => navigation.navigate("TopUp")}
+          >
+            <Text style={{ color: "yellow", fontWeight: "bold" }}>TopUp</Text>
+          </TouchableOpacity>
 
-            <View
-              style={{
-                marginTop: 10,
-              }}
+          <View
+            style={{
+              marginTop: 10,
+            }}
+          >
+            <Text style={{ color: colors.secondaty2, marginLeft: 20 }}>
+              ENROLLED CLASS
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={{ height: 170 }}
             >
-              <Text style={{ color: colors.secondary1, marginLeft: 20 }}>
-                ENROLLED CLASS
-              </Text>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={{ height: 170 }}
-              >
-                {enrolledClasses.map((el) => {
-                  return (
-                    <View key={el.id} style={styles.classWarpper}>
-                      <View style={{ flex: 1 }}>
+              {enrolledClasses.map((el) => {
+                return (
+                  <View key={el.id} style={styles.classWarpper}>
+                    <View style={{ flex: 1 }}>
+                      <View
+                        style={{
+                          flex: 2,
+                          // justifyContent: "space-between",
+                        }}
+                      >
+                        <View>
+                          <Text
+                            style={{
+                              color: colors.white,
+                              fontSize: 20,
+                            }}
+                          >
+                            {el.name}
+                          </Text>
+                        </View>
+                        <View>
+                          <Text
+                            style={{
+                              color: colors.secondaty2,
+                              fontSize: 16,
+                            }}
+                          >
+                            By, {el?.Teacher?.fullName}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={styles.infoWrapper}>
                         <View
                           style={{
-                            flex: 2,
-                            // justifyContent: "space-between",
-                          }}
-                        >
-                          <View>
-                            <Text
-                              style={{
-                                color: colors.primary,
-                                fontSize: 20,
-                              }}
-                            >
-                              {el.name}
-                            </Text>
-                          </View>
-                          <View>
-                            <Text
-                              style={{
-                                color: colors.secondaty2,
-                                fontSize: 16,
-                              }}
-                            >
-                              By, {el?.Teacher?.fullName}
-                            </Text>
-                          </View>
-                        </View>
-                        <View style={styles.infoWrapper}>
-                          <View
-                            style={{
-                              justifyContent: "flex-end",
-                              alignItems: "flex-end",
-                            }}
-                          >
-                            <Text style={styles.infoTitle}>PRICE</Text>
-                            <View style={styles.infoTextWrapper}>
-                              <Text>{el?.price}</Text>
-                              <Text style={styles.infoSubText}></Text>
-                            </View>
-                          </View>
-                          <View
-                            style={{
-                              justifyContent: "flex-end",
-                              alignItems: "flex-end",
-                            }}
-                          >
-                            <Text style={styles.infoTitle}>QUOTA</Text>
-                            <View style={styles.infoTextWrapper}>
-                              <Text>{el?.Transactions?.length}</Text>
-                              <Text style={styles.infoSubText}>
-                                {" "}
-                                /{el?.quota}
-                              </Text>
-                            </View>
-                          </View>
-                          <View
-                            style={{
-                              justifyContent: "flex-end",
-                              alignItems: "flex-end",
-                            }}
-                          >
-                            <Text style={styles.infoTitle}>DURATION</Text>
-                            <View style={styles.infoTextWrapper}>
-                              <Text>{el?.Schedules?.length}</Text>
-                              <Text style={styles.infoSubText}> Sessions</Text>
-                            </View>
-                          </View>
-                        </View>
-                        <TouchableOpacity
-                          onPress={() =>
-                            navigation.navigate("ClassDetail", {
-                              id: el.id,
-                            })
-                          }
-                          style={{
-                            flex: 1,
                             justifyContent: "flex-end",
                             alignItems: "flex-end",
                           }}
                         >
-                          <View>
-                            <Text style={{ color: colors.green1 }}>
-                              See More
-                            </Text>
+                          <Text style={styles.infoTitle}>PRICE</Text>
+                          <View style={styles.infoTextWrapper}>
+                            <Text style={{ color: "yellow" }}>{el?.price}</Text>
+                            <Text style={styles.infoSubText}></Text>
                           </View>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  );
-                })}
-              </ScrollView>
-              <Text style={{ color: colors.secondary1, marginLeft: 20 }}>
-                FINISHED CLASS
-              </Text>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={{ height: 350 }}
-              >
-                {finishedClasses.map((el) => {
-                  return (
-                    <View style={styles.classWarpper2}>
-                      <View style={{ flex: 1 }}>
+                        </View>
                         <View
                           style={{
-                            flex: 2,
+                            justifyContent: "flex-end",
+                            alignItems: "flex-end",
                           }}
                         >
-                          <View>
-                            <Text
-                              style={{
-                                color: colors.primary,
-                                fontSize: 20,
-                              }}
-                            >
-                              {el.name}
+                          <Text style={styles.infoTitle}>QUOTA</Text>
+                          <View style={styles.infoTextWrapper}>
+                            <Text style={{ color: "yellow" }}>
+                              {el?.Transactions?.length}
+                            </Text>
+                            <Text style={styles.infoSubText}>
+                              {" "}
+                              /{el?.quota}
                             </Text>
                           </View>
-                          <View>
-                            <Text
-                              style={{
-                                color: colors.secondaty2,
-                                fontSize: 16,
-                              }}
-                            >
-                              By {el?.Teacher?.fullName}
+                        </View>
+                        <View
+                          style={{
+                            justifyContent: "flex-end",
+                            alignItems: "flex-end",
+                          }}
+                        >
+                          <Text style={styles.infoTitle}>DURATION</Text>
+                          <View style={styles.infoTextWrapper}>
+                            <Text style={{ color: "yellow" }}>
+                              {el?.Schedules?.length}
                             </Text>
-                          </View>
-                          <View style={{ flex: 1, marginTop: 10 }}>
-                            <Text style={{ color: colors.secondaty2 }}>RATING</Text>
-                            <TextInput
-                              placeholder="rate between 1-10"
-                              placeholderTextColor={colors.secondaty2}
-                              editable={true}
-                              onChangeText={(val) => textInputChange(val)}
-                              value={data.rating}
-                              keyboardType="numeric"
-                              style={{
-                                height: 40,
-                                borderWidth: 1,
-                                borderColor: colors.primary,
-                                padding: 10,
-                                borderRadius: 10,
-                                marginTop: 5,
-                                backgroundColor: colors.white,
-                              }}
-                            />
-                          </View>
-
-                          <View style={{ flex: 2, marginTop: 20 }}>
-                            <Text style={{ color: colors.secondaty2 }}>REVIEW</Text>
-                            <TextInput
-                              placeholder="state your review"
-                              placeholderTextColor={colors.secondaty2}
-                              multiline
-                              onChangeText={(val) => testimoniInputChange(val)}
-                              value={data.testimoni}
-                              numberOfLines={4}
-                              editable={true}
-                              style={{
-                                height: 80,
-                                borderWidth: 1,
-                                borderColor: colors.primary,
-                                paddingLeft: 10,
-                                marginTop: 5,
-                                backgroundColor: colors.white,
-                                borderRadius: 10,
-                              }}
-                            />
-                          </View>
-
-                          <View
-                            style={{
-                              flex: 1,
-                              alignItems: "flex-end",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <TouchableOpacity
-                              style={{
-                                marginTop: 10,
-                                backgroundColor: colors.green2,
-                                width: 80,
-                                height: 30,
-                                alignItems: "center",
-                                justifyContent: "center",
-                                borderRadius: 30,
-                              }}
-                              onPress={() => {  response(el.id) }}
-                            >
-                              <Text style={{ color: colors.white }}>Submit</Text>
-                            </TouchableOpacity>
+                            <Text style={styles.infoSubText}> Sessions</Text>
                           </View>
                         </View>
                       </View>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigation.navigate("ClassDetail", {
+                            id: el.id,
+                          })
+                        }
+                        style={{
+                          flex: 1,
+                          justifyContent: "flex-end",
+                          alignItems: "flex-end",
+                        }}
+                      >
+                        <View>
+                          <Text style={{ color: "yellow" }}>See More</Text>
+                        </View>
+                      </TouchableOpacity>
                     </View>
-                  )
-                })
-                }
-              </ScrollView>
-            </View>
-          </ScrollView>
-        </View>
-      {/* </TouchableWithoutFeedback> */}
-    </KeyboardAvoidingView>
+                  </View>
+                );
+              })}
+            </ScrollView>
+            {/* CLASS FINISHED */}
+            <Text style={{ color: colors.secondaty2, marginLeft: 20 }}>
+              FINISHED CLASS
+            </Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              style={{ height: 140 }}
+            >
+              {finishedClasses.map((el) => {
+                return (
+                  <View key={el.id} style={styles.classWarpper2}>
+                    <View style={{ flex: 1 }}>
+                      <View>
+                        <View>
+                          <Text
+                            style={{
+                              color: colors.white,
+                              fontSize: 20,
+                            }}
+                          >
+                            {el.name}
+                          </Text>
+                        </View>
+                        <View>
+                          <Text
+                            style={{
+                              color: colors.secondaty2,
+                              fontSize: 16,
+                            }}
+                          >
+                            By, {el?.Teacher?.fullName}
+                          </Text>
+                        </View>
+
+                        <View
+                          style={{
+                            alignItems: "flex-end",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <TouchableOpacity
+                            style={{
+                              marginTop: 10,
+                              backgroundColor: colors.green1,
+                              width: 120,
+                              height: 30,
+                              alignItems: "center",
+                              justifyContent: "center",
+                              borderRadius: 30,
+                            }}
+                            onPress={() =>
+                              navigation.navigate("Response", { id: el?.id })
+                            }
+                          >
+                            <Text style={{ color: "yellow" }}>
+                              Give Response
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                );
+              })}
+              {/* <View style={styles.classWarpper2}>
+                <View style={{ flex: 1 }}>
+                  <View>
+                    <View>
+                      <Text
+                        style={{
+                          color: colors.primary,
+                          fontSize: 20,
+                        }}>
+                        Class's Name
+                      </Text>
+                    </View>
+                    <View>
+                      <Text
+                        style={{
+                          color: colors.secondaty2,
+                          fontSize: 16,
+                        }}>
+                        By, Class's Teacher
+                      </Text>
+                    </View>
+
+                    <View
+                      style={{
+                        alignItems: "flex-end",
+                        justifyContent: "center",
+                      }}>
+                      <TouchableOpacity
+                        style={{
+                          marginTop: 10,
+                          backgroundColor: colors.green2,
+                          width: 120,
+                          height: 30,
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: 30,
+                        }}
+                        onPress={() => navigation.navigate("Response")}>
+                        <Text style={{ color: colors.white }}>
+                          Give Response
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View> */}
+            </ScrollView>
+          </View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.secondaty2,
+    backgroundColor: colors.primary,
     height: "100%",
   },
   inner: {
@@ -411,7 +430,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   text: {
-    color: colors.secondary1,
+    color: colors.secondaty2,
     fontSize: 16,
     marginTop: 5,
   },
@@ -428,7 +447,7 @@ const styles = StyleSheet.create({
     width: undefined,
   },
   edit: {
-    backgroundColor: colors.secondary1,
+    backgroundColor: colors.secondaty2,
     position: "absolute",
     bottom: 0,
     right: 10,
@@ -457,7 +476,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "flex-end",
-    backgroundColor: colors.green2,
+    backgroundColor: colors.green1,
     marginRight: 25,
     marginTop: 15,
     height: 30,
@@ -465,7 +484,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
   },
   classWarpper: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.secondary1,
     height: 140,
     width: 250,
     marginTop: 10,
@@ -481,8 +500,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   classWarpper2: {
-    backgroundColor: colors.white,
-    height: 300,
+    backgroundColor: colors.secondary1,
+    height: 110,
     width: 250,
     marginTop: 10,
     marginLeft: 20,
@@ -498,7 +517,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-
     borderColor: colors.primary,
     paddingLeft: 10,
     color: colors.primary,
@@ -509,7 +527,7 @@ const styles = StyleSheet.create({
   },
   infoTitle: {
     fontSize: 12,
-    color: colors.secondaty2,
+    color: colors.white,
   },
   infoTextWrapper: {
     flexDirection: "row",
@@ -522,6 +540,6 @@ const styles = StyleSheet.create({
   },
   infoSubText: {
     fontSize: 14,
-    color: colors.secondaty2,
+    color: colors.white,
   },
 });

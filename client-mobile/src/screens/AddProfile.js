@@ -7,25 +7,69 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  Platform,
+  AsyncStorage
 } from "react-native";
 import colors from "../config/colors";
+import * as ImagePicker from "expo-image-picker";
+import React from "react";
+import axios from 'axios'
+import { serverUrl } from "../config/url";
+const options = {
+  title: "click image",
+  type: "library",
+  options: {
+    maxHeight: 200,
+    maxWidth: 200,
+    selectionLimit: 1,
+    mediaType: "photo",
+    includeBase64: false,
+  },
+};
 
-export default function AddProfile() {
+export default function AddProfile({navigation}) {
+  const [photo, setPhoto] = React.useState("");
+  const [fullName, setFullName] = React.useState("");
 
-  const handleUploadPhoto = () => {
-    fetch(`${SERVER_URL}/api/upload`, {
-      method: 'POST',
-      body: createFormData(photo, { userId: '123' }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        console.log('response', response);
-      })
-      .catch((error) => {
-        console.log('error', error);
+  const pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
       });
+      if (!result.cancelled) {
+        setPhoto(result.uri);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-  
+
+  const handelAdd = async (uri, name) => {
+    try {
+      const formData = new FormData()
+      formData.append('image', {
+        name: `${uri}`,
+        uri: photo,
+        type: 'image/png'
+      })
+      const access_token = await AsyncStorage.getItem("access_token")
+      
+      const { data } = await axios.post(`${serverUrl}/students`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          access_token,
+          fullName
+        }
+      })
+      navigation.push('Profile')
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -42,14 +86,16 @@ export default function AddProfile() {
             ADD PHOTO
           </Text>
           <View style={{ alignSelf: "center" }}>
-            <TouchableOpacity style={styles.profileImage}>
-              <Image
-                source={{
-                  uri: "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg",
-                }}
-                style={styles.image}
-                resizeMode="center"
-              />
+            <TouchableOpacity onPress={pickImage} style={styles.profileImage}>
+              {photo ? <Image source={{ uri: photo }} style={styles.image}
+                resizeMode="center" /> :
+                <Image
+                  source={{
+                    uri: "https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg",
+                  }}
+                  style={styles.image}
+                  resizeMode="center"
+                />}
             </TouchableOpacity>
           </View>
         </View>
@@ -64,6 +110,7 @@ export default function AddProfile() {
           <TextInput
             placeholder="My Full Name"
             placeholderTextColor={colors.secondaty2}
+            onChangeText={setFullName}
             editable={true}
             style={{
               height: 45,
@@ -84,6 +131,9 @@ export default function AddProfile() {
                 height: 45,
                 width: 70,
                 borderRadius: 20,
+              }}
+              onPress={() => {
+                handelAdd(photo, fullName);
               }}
             >
               <Text style={{ fontSize: 18, color: colors.white }}>ADD</Text>

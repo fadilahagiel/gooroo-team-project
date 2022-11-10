@@ -16,7 +16,6 @@ import socket from "../config/socket";
 import { useFocusEffect } from "@react-navigation/native";
 
 export function DrawerContent(props) {
-  console.log();
   const { signOut } = React.useContext(AuthContext);
   const [user, setUser] = useState({});
   const [student, setStudent] = useState({});
@@ -67,7 +66,15 @@ export function DrawerContent(props) {
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image source={{ uri: student?.image }} size={50} />
+              {student !== null ? (
+                <Avatar.Image source={{ uri: student?.image }} size={50} />
+              ) : (
+                <Avatar.Image
+                  source={require("../assets/defaultpict.jpg")}
+                  size={50}
+                />
+              )}
+
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
                 <Title style={styles.title}>{user.username}</Title>
                 <Caption style={styles.caption}>
@@ -121,7 +128,7 @@ export function DrawerContent(props) {
                 props.navigation.navigate("Contacts");
               }}
             />
-            <DrawerItem
+            {/* <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (
                 <Icon
@@ -134,7 +141,7 @@ export function DrawerContent(props) {
               onPress={() => {
                 props.navigation.navigate("ChatScreen");
               }}
-            />
+            /> */}
             <DrawerItem
               style={{ marginTop: 10 }}
               icon={({ color, size }) => (

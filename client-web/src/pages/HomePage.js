@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import ClassRow from "../components/ClassRow";
 import Header from "../components/Header";
-import { fetchContacts, fetchClasses } from "../store/actionCreator";
-import socket from "../configs/socket";
+import { fetchClasses } from "../store/actionCreator";
 import { Container } from "react-bootstrap";
 
 export default function MyTable() {
   const classes = useSelector((state) => state.classes);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,11 +22,7 @@ export default function MyTable() {
         <Header />
         <br></br>
         <br></br>
-        <Table
-          striped
-          bordered
-          hover
-          className={"table-dark"}>
+        <Table striped bordered hover className={"table-dark"}>
           <thead style={{ textAlign: "center" }}>
             <tr>
               <th>#</th>
@@ -41,11 +37,7 @@ export default function MyTable() {
           <tbody>
             {classes.map((oneClass, i) => {
               return (
-                <ClassRow
-                  key={oneClass.id}
-                  oneClass={oneClass}
-                  index={i + 1}
-                />
+                <ClassRow key={oneClass.id} oneClass={oneClass} index={i + 1} />
               );
             })}
           </tbody>

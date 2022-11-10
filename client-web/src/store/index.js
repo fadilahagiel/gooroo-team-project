@@ -9,6 +9,7 @@ let initialState = {
   teachers: [],
   schedules: [],
   contacts: {},
+  user: {},
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -43,6 +44,13 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         contacts: action.payload,
       };
+    case "user/fetch":
+      return {
+        ...state,
+        user: action.payload,
+      };
+    default:
+      return { ...state };
   }
   return state;
 };

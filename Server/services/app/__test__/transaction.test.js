@@ -500,6 +500,36 @@ describe(`GET check Transactions /transactions/cek/:ClassId`, () => {
                 done(err);
             });
     })
+})
 
+describe(`GET find One Transactions /transactions/:ClassId`, () => {
+    test(`success GET check transaction`, (done) => {
+        request(app)
+            .get('/transactions/response/1')
+            .set("access_token", validToken)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(200);
+                return done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
+})
 
+describe(`GET my Transactions teacher /transactions/teacher/:TeacherId`, () => {
+    test(`success GET my transaction`, (done) => {
+        request(app)
+            .get('/transactions/teacher/1')
+            .set("access_token", validToken)
+            .then((response) => {
+                const { body, status } = response
+                expect(status).toBe(200);
+                return done();
+            })
+            .catch((err) => {
+                done(err);
+            });
+    })
 })
