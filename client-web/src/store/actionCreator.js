@@ -34,6 +34,14 @@ export const oneClassFetchSuccess = (data) => {
   console.log(data, "<<< DATA DI ACTION");
 };
 
+export const oneClassStudentsFetchSuccess = (data) => {
+  return {
+    type: "oneClassStudents/fetchSuccess",
+    payload: data,
+  };
+  console.log(data, "<<< DATA DI ACTION");
+};
+
 export const fetchCategory = () => {
   return (dispatch, getState) => {
     const access_token = localStorage.getItem("access_token");
@@ -157,6 +165,33 @@ export const fetchClasses = () => {
       .then((data) => {
         console.log(data, "<<<DATA");
         dispatch(classesFetchSuccess(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+// http://localhost:3000/classes/myStudent/1
+
+export const fetchOneClassStudents = (id) => {
+  return (dispatch, getState) => {
+    const access_token = localStorage.getItem("access_token");
+    fetch(`${serverApp}classes/myStudent/${id}`, {
+      method: "GET",
+      headers: {
+        access_token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("hardcoded error");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data, "<<<DATA");
+        dispatch(oneClassStudentsFetchSuccess(data));
       })
       .catch((err) => {
         console.log(err);

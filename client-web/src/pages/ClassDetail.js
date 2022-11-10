@@ -1,15 +1,18 @@
 import { Container, Row, Col, Table, Button } from "react-bootstrap";
-import ProductRow from "../components/ClassRow";
+import StudentRow from "../components/StudentRow";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchOneClass } from "../store/actionCreator";
+import { fetchOneClass, fetchOneClassStudents } from "../store/actionCreator";
 import { useParams } from "react-router-dom";
 import StudentProfile from "./StudentProfile";
 
 export default function ClassDetail() {
   const navigate = useNavigate();
   const oneClass = useSelector((state) => state.oneClass);
+  const oneClassStudents = useSelector((state) => state.oneClassStudents)
+
+
   // const teacher = useSelector((state) => state.oneClass.Teacher)
   const dispatch = useDispatch();
   const params = useParams();
@@ -21,6 +24,9 @@ export default function ClassDetail() {
 
   useEffect(() => {
     dispatch(fetchOneClass(id));
+  }, []);
+  useEffect(() => {
+    dispatch(fetchOneClassStudents(id));
   }, []);
 
   return (
@@ -64,7 +70,7 @@ export default function ClassDetail() {
           <h1 style={{ marginTop: "50px" }}>
             Rating: {oneClass.averageRating}
           </h1>
-          <h1 style={{ marginTop: "50px" }}>Current Student: x/x</h1>
+          <h1 style={{ marginTop: "50px" }}>Quota: {oneClass.quota}</h1>
           <h1 style={{ marginTop: "50px", marginBottom: "25px" }}>
             Students List
           </h1>
@@ -83,8 +89,13 @@ export default function ClassDetail() {
                         })} */}
             {/* </tbody> */}
             <tbody>
+            {oneClassStudents.map((oneClassStudent, i) => {
+                        return <StudentRow key={oneClassStudent.id}oneClassStudent={oneClassStudent} index={i + 1}/>
+                        })}
+            </tbody>
+            <tbody>
               <tr>
-                <td>cek</td>
+                <td>{oneClassStudents.id}</td>
                 <td>cek</td>
                 <td>cek</td>
                 <td>
