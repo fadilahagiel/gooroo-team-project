@@ -14,8 +14,8 @@ export default function PageLayout() {
         }}
       >
         <Outlet />
-      </div>
       <Footer />
+      </div>
     </div>
   );
 }

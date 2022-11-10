@@ -45,7 +45,7 @@ export default function ClassRow({ oneClass, index }) {
         >
           Details
         </Button>
-        <Button
+        {/* <Button
           onClick={() => navigate(`/edit-class/${oneClass.id}`)}
           className={"btn-sm btn-success m-2"}
         >
@@ -53,7 +53,7 @@ export default function ClassRow({ oneClass, index }) {
         </Button>
         <Button onClick={deleteClassButton} className={"btn-sm btn-danger m-2"}>
           Delete
-        </Button>
+        </Button> */}
       </td>
     </tr>
   );

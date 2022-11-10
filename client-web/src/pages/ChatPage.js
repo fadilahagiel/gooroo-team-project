@@ -160,7 +160,7 @@ export default function ChatPage() {
             }
           })}
           <textarea
-            style={{ width: "800px", position: "absolute", bottom: "0" }}
+            style={{ width: "65%", position: "absolute", bottom: "0" }}
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
           ></textarea>

@@ -43,8 +43,8 @@ export default function ClassDetail() {
             <img
               src={teachers.image}
               style={{
-                maxHeight: "400px",
-                maxWidth: "100%",
+                maxHeight: "30%",
+                maxWidth: "80%",
                 borderRadius: "200px",
                 marginBottom: "40px",
               }}

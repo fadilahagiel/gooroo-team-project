@@ -1,4 +1,4 @@
-import Button from "react-bootstrap/Button";
+import {Container, Button} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { fetchContacts, login } from "../store/actionCreator";
@@ -32,7 +32,17 @@ function LoginPage() {
   };
   return (
     <>
-      <div className="loginBox">
+    <Container
+    style={{
+          flex: "1",
+          width: "60%",
+          height: "100%",
+          marginTop: "",
+          paddingBottom: "10vh",
+          textAlign: "center",
+          borderRadius: "5%",
+        }}>
+      <div className="loginBox" style={{height: "100%"}}>
         <div className="sub-loginBox">
           <Form style={{ width: "60%", margin: "auto" }} onSubmit={submitLogin}>
             <h1 className="mt-3 mb-5" style={{ textAlign: "center" }}>
@@ -85,6 +95,7 @@ function LoginPage() {
           </Form>
         </div>
       </div>
+      </Container>
     </>
   );
 }
