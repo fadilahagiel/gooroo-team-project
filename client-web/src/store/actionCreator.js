@@ -123,7 +123,7 @@ export const fetchProducts = () => {
 export const fetchTeacherProfile = () => {
   return (dispatch, getState) => {
     const access_token = localStorage.getItem("access_token");
-    fetch("http://localhost:3000/teachers/detail", {
+    fetch(`${serverApp}teachers/detail`, {
       method: "GET",
       headers: {
         access_token,
@@ -275,7 +275,7 @@ export const postClass = (payload) => {
 export const createClass = (classForm) => {
   return (dispatch) => {
     const access_token = localStorage.getItem("access_token");
-    return fetch("http://localhost:3001/products", {
+    return fetch(`${serverApp}products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -327,7 +327,7 @@ export const createCategory = (categoryForm) => {
   return (dispatch) => {
     const access_token = localStorage.getItem("access_token");
     return (
-      fetch("http://localhost:3001/categories", {
+      fetch(`${serverApp}categories`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -351,7 +351,7 @@ export const createCategory = (categoryForm) => {
 
 export const login = (loginForm) => {
   return (dispatch) => {
-    return fetch("http://localhost:3000/users/login", {
+    return fetch(`${serverApp}users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -370,8 +370,8 @@ export const login = (loginForm) => {
         localStorage.id = data.id;
         dispatch({
           type: "status/login",
-          payload: true
-        })
+          payload: true,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -383,7 +383,7 @@ export const deleteClass = (id) => {
   return (dispatch) => {
     const access_token = localStorage.getItem("access_token");
     return (
-      fetch("http://localhost:3001/products/" + id, {
+      fetch(`${serverApp}products/` + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -409,7 +409,7 @@ export const deleteCategory = (id) => {
   return (dispatch) => {
     const access_token = localStorage.getItem("access_token");
     return (
-      fetch("http://localhost:3001/categories/" + id, {
+      fetch(`${serverApp}categories/` + id, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -444,7 +444,7 @@ export const updateClass = ({
   imgUrl3,
 }) => {
   return (dispatch) => {
-    return fetch(`http://localhost:3001/products/` + id, {
+    return fetch(`${serverApp}products/` + id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -21,7 +21,7 @@ export default function ClassDetail() {
       <Container
         style={{
           flex: "1",
-          width: "100%",
+          width: "60%",
           height: "100%",
           marginTop: "",
           paddingBottom: "10vh",

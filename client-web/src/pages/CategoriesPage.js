@@ -15,7 +15,7 @@ export default function MyTable2() {
 
   return (
     <>
-      <div style={{height: '80vh'}}>
+      <div style={{height: '100%'}}>
         <br></br>
         <br></br>
         <br></br>
