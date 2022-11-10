@@ -2,7 +2,7 @@ const { Class, Transaction, Student, Teacher, User } = require("../models");
 const axios = require("axios");
 const getImage = require("../helpers/getImage");
 
-const CHAT_API = "http://localhost:3030";
+const CHAT_API = "https://gooroo-chat.herokuapp.com";
 
 class ChatController {
   static async findAllContacts(req, res, next) {
