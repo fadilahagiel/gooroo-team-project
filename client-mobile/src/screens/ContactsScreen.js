@@ -7,11 +7,12 @@ import {
   TouchableOpacity,
   View,
   FlatList,
+  SafeAreaView,
 } from "react-native";
 import { fetchContacts } from "../actions";
 import colors from "../config/colors";
 import CardContact from "../components/CardContact";
-import FeatherIcon from "react-native-vector-icons/Feather";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default function ContactsScreen({ navigation }) {
   const [contacts, setContacs] = useState([]);
@@ -48,26 +49,32 @@ export default function ContactsScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <FeatherIcon name="arrow-left" color={colors.primary} size={30} />
-        </TouchableOpacity>
-        <TextInput
-          style={styles.search}
-          onChangeText={(input) => handleSearch(input)}
-          value={search}
-          placeholder="Search Contact"
-        />
+    <SafeAreaView style={styles.container}>
+      <View>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icon name="ios-arrow-back" color={colors.primary} size={20} />
+          </TouchableOpacity>
+          <View style={{ marginTop: 30 }}>
+            <TextInput
+              style={styles.search}
+              onChangeText={(input) => handleSearch(input)}
+              value={search}
+              placeholder="Search Contact"
+            />
+          </View>
+          <View style={{ marginTop: 20 }}>
+            <FlatList
+              data={filteredContacts}
+              keyExtractor={(item, index) => item.roomId}
+              renderItem={({ item }) => {
+                return <CardContact contact={item} />;
+              }}
+            />
+          </View>
+        </View>
       </View>
-      <FlatList
-        data={filteredContacts}
-        keyExtractor={(item, index) => item.roomId}
-        renderItem={({ item }) => {
-          return <CardContact contact={item} />;
-        }}
-      />
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -78,17 +85,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
+    // flexDirection: "row",
+    // alignItems: "center",
     marginVertical: 10,
     marginBottom: 20,
   },
   search: {
     borderWidth: 2,
-    width: 300,
+    width: 320,
+    marginHorizontal: 15,
     // marginVertical: 20,
-    marginLeft: 15,
-    padding: 5,
+    // marginLeft: 15,
+    padding: 10,
     borderRadius: 10,
   },
   contacts: {

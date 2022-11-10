@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     height: 60,
     margin: 5,
     alignItems: "center",
-    borderWidth: 2,
+    // borderWidth: 2,
     borderRadius: 10,
   },
   contactImg: {

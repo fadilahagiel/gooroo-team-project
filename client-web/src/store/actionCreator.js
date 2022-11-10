@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const serverApp = `http://localhost:3000/`;
+const serverApp = `https://gooroo-app.herokuapp.com/`;
 
 export const classesFetchSuccess = (data) => {
   return {

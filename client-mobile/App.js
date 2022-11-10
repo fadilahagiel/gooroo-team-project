@@ -8,6 +8,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import RootStackScreen from "./src/screens/RootStackScreen";
 import ProfileScreen from "./src/screens/ProfileStackScreen";
 import MainTabScreen from "./src/screens/MainTabScreen";
+import AddProfile from "./src/screens/AddProfile";
+import Profile from "./src/screens/Profile";
 import Bookmark from "./src/screens/BookMark";
 import History from "./src/screens/History";
 import ContactsScreen from "./src/screens/ContactsScreen";
@@ -107,6 +109,8 @@ const App = () => {
           >
             <Drawer.Screen name="Home" component={MainTabScreen} />
             <Drawer.Screen name="My Profile" component={ProfileScreen} />
+            <Drawer.Screen name="AddProfile" component={AddProfile} />
+            <Drawer.Screen name="Profile" component={Profile} />
             <Drawer.Screen name="Bookmark" component={Bookmark} />
             <Drawer.Screen name="Contacts" component={ContactsScreen} />
             <Drawer.Screen name="History" component={History} />

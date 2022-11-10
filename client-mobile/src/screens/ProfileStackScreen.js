@@ -36,7 +36,7 @@ const ProfileStackScreen = ({ navigation }) => {
             />
           ),
         }}
-        name="Profile"
+        name="MyProfile"
         component={Profile}
       />
 
@@ -48,7 +48,7 @@ const ProfileStackScreen = ({ navigation }) => {
               name="ios-arrow-back"
               backgroundColor={colors.primary}
               onPress={() => {
-                navigation.navigate("Profile");
+                navigation.navigate("MyProfile");
               }}
             />
           ),

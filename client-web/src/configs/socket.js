@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const serverChat = "http://localhost:3030";
+const serverChat = "https://gooroo-chat.herokuapp.com";
 
 const socket = io(serverChat, { autoConnect: false });
 
