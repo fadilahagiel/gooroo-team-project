@@ -368,6 +368,10 @@ export const login = (loginForm) => {
       .then((data) => {
         localStorage.access_token = data.access_token;
         localStorage.id = data.id;
+        dispatch({
+          type: "status/login",
+          payload: true
+        })
       })
       .catch((err) => {
         console.log(err);
@@ -480,6 +484,7 @@ export const fetchContacts = () => {
         method: "get",
         headers: { access_token },
       });
+      console.log("Data di action", access_token, data);
       dispatch({
         type: "contacts/fetch",
         payload: data.contacts,
@@ -490,6 +495,7 @@ export const fetchContacts = () => {
         role: data.role,
         avatar: data.avatar,
       };
+      // console.log("Di action creator - user", user);
       dispatch({
         type: "user/fetch",
         payload: user,

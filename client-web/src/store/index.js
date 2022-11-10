@@ -10,10 +10,16 @@ let initialState = {
   schedules: [],
   contacts: {},
   user: {},
+  isLogin: false
 };
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
+    case "status/login":
+      return {
+        ...state,
+        isLogin: action.payload,
+      };
     case "classes/fetchSuccess":
       return {
         ...state,
