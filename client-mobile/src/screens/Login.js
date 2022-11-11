@@ -15,7 +15,7 @@ import Feather from "react-native-vector-icons/Feather";
 import colors from "../config/colors";
 
 import axios from "axios";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, ActivityIndicator } from "react-native";
 import { AuthContext } from "../components/context";
 import { serverUrl } from "../config/url";
 import { fetchContacts } from "../actions";
@@ -24,6 +24,7 @@ import socket from "../config/socket";
 const { height } = Dimensions.get("window");
 
 export default function Login({ navigation }) {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [data, setData] = React.useState({
     email: "",
     password: "",
@@ -34,6 +35,7 @@ export default function Login({ navigation }) {
 
   const submitLogin = async () => {
     try {
+      setIsLoading(true);
       const response = await fetch(`${serverUrl}/users/login`, {
         method: "POST",
         headers: {
@@ -46,6 +48,7 @@ export default function Login({ navigation }) {
       if (dataTes.message) {
         throw dataTes.message;
       }
+      setIsLoading(false);
 
       await AsyncStorage.setItem("access_token", dataTes.access_token);
       await AsyncStorage.setItem("user", JSON.stringify(dataTes));
@@ -93,6 +96,14 @@ export default function Login({ navigation }) {
       secureTextEntry: !data.secureTextEntry,
     });
   };
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+    F;
+  }
   return (
     <ImageBackground
       source={require("../assets/a71e16012a4afef2f46af95065a5623f.jpg")}

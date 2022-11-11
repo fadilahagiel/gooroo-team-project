@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   TextInput,
   Platform,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator
 } from "react-native";
 import colors from "../config/colors";
 import * as ImagePicker from "expo-image-picker";
@@ -27,7 +28,8 @@ const options = {
   },
 };
 
-export default function AddProfile({navigation}) {
+export default function AddProfile({ navigation }) {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [photo, setPhoto] = React.useState("");
   const [fullName, setFullName] = React.useState("");
 
@@ -56,7 +58,7 @@ export default function AddProfile({navigation}) {
         type: 'image/png'
       })
       const access_token = await AsyncStorage.getItem("access_token")
-      
+      setIsLoading(true)
       const { data } = await axios.post(`${serverUrl}/students`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -64,11 +66,20 @@ export default function AddProfile({navigation}) {
           fullName
         }
       })
-      navigation.push('Profile')
+      setIsLoading(false)
+      navigation.navigate('Profile')
     } catch (error) {
       console.log(error);
     }
   };
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>

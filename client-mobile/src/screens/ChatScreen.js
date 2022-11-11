@@ -3,6 +3,8 @@ import {
   AsyncStorage,
   Button,
   Image,
+  KeyboardAvoidingView,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,7 +14,7 @@ import {
 } from "react-native";
 import { GiftedChat } from "react-native-gifted-chat";
 import { fetchChatLogs } from "../actions";
-import FeatherIcon from "react-native-vector-icons/Feather";
+import Icon from "react-native-vector-icons/Ionicons";
 import uuid from "react-native-uuid";
 import socket from "../config/socket";
 import colors from "../config/colors";
@@ -94,69 +96,83 @@ export default function ChatScreen({ navigation, route }) {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.roomInfo}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <FeatherIcon name="arrow-left" color={colors.white} size={30} />
-        </TouchableOpacity>
-        <Image
-          source={{ uri: otherUser.avatar }}
-          style={styles.contactAvatar}
-        />
-        <View style={styles.contactInfo}>
-          <Text style={styles.contactName}>{otherUser.name}</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <SafeAreaView style={{ backgroundColor: colors.secondary1 }}>
+        <View style={styles.container}>
+          <View style={styles.roomInfo}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Icon name="ios-arrow-back" color={colors.white} size={20} />
+            </TouchableOpacity>
+            <Image
+              source={{ uri: otherUser.avatar }}
+              style={styles.contactAvatar}
+            />
+            <View style={styles.contactInfo}>
+              <Text style={styles.contactName}>{otherUser.name}</Text>
+            </View>
+          </View>
+          <ScrollView
+            style={styles.chatBox}
+            ref={scrollViewRef}
+            onContentSizeChange={() =>
+              scrollViewRef.current.scrollToEnd({ animated: true })
+            }
+          >
+            {chatLogs.map((el, index) => {
+              return user._id === el.user._id ? (
+                <View key={index} style={styles.sentBox}>
+                  <View style={styles.sentMsg}>
+                    <Text style={{ fontSize: 16 }}>{el.text}</Text>
+                  </View>
+                </View>
+              ) : (
+                <View key={index} style={styles.receivedBox}>
+                  <View style={styles.receivedMsg}>
+                    <Text style={{ fontSize: 16 }}>{el.text}</Text>
+                  </View>
+                </View>
+              );
+            })}
+          </ScrollView>
+          <View style={styles.inputBox}>
+            <TextInput
+              style={styles.inputText}
+              onChangeText={(input) => setMsgInput(input)}
+              value={msgInput}
+              placeholder="Type here"
+            />
+            <TouchableOpacity
+              onPress={() => handleSendMsg("sent")}
+              style={styles.sendButton}
+            >
+              <Text style={{ fontWeight: "bold", color: colors.white }}>
+                SEND
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <ScrollView
-        style={styles.chatBox}
-        ref={scrollViewRef}
-        onContentSizeChange={() =>
-          scrollViewRef.current.scrollToEnd({ animated: true })
-        }
-      >
-        {chatLogs.map((el, index) => {
-          return user._id === el.user._id ? (
-            <View key={index} style={styles.sentBox}>
-              <Text style={styles.sentMsg}>{el.text}</Text>
-            </View>
-          ) : (
-            <View key={index} style={styles.receivedBox}>
-              <Text style={styles.receivedMsg}>{el.text}</Text>
-            </View>
-          );
-        })}
-      </ScrollView>
-      <View style={styles.inputBox}>
-        <TextInput
-          style={styles.inputText}
-          onChangeText={(input) => setMsgInput(input)}
-          value={msgInput}
-          placeholder="Type here"
-        />
-        <Button
-          onPress={() => handleSendMsg("sent")}
-          title="Send"
-          color={colors.primary}
-        />
-      </View>
-    </View>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     backgroundColor: colors.secondaty2,
-    alignItems: "center",
+    height: "100%",
+    // alignItems: "center",
     justifyContent: "center",
   },
   roomInfo: {
     height: 70,
-    width: "90%",
-    borderWidth: 2,
-    borderRadius: 20,
+    width: "100%",
+    // borderWidth: 2,
+    // borderRadius: 20,
     backgroundColor: colors.secondary1,
-    margin: 5,
+    // margin: 5,
     padding: 10,
     alignItems: "center",
     flexDirection: "row",
@@ -182,6 +198,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputBox: {
+    backgroundColor: colors.secondary1,
     justifyContent: "center",
     flexDirection: "row",
     padding: 20,
@@ -189,13 +206,21 @@ const styles = StyleSheet.create({
   inputText: {
     maxHeight: 40,
     padding: 10,
-    borderWidth: 2,
     borderRadius: 10,
-    borderColor: colors.primary,
+    borderColor: colors.white,
+    backgroundColor: colors.white,
     // width: "80%",
-    width: "80%",
+    width: "85%",
     marginRight: 10,
     color: "#1D1D1D",
+  },
+  sendButton: {
+    backgroundColor: colors.green2,
+    justifyContent: "center",
+    alignItems: "center",
+    height: 40,
+    width: 60,
+    borderRadius: 10,
   },
   chatBox: {
     // backgroundColor: "red",
@@ -209,8 +234,8 @@ const styles = StyleSheet.create({
   },
   sentMsg: {
     backgroundColor: colors.green2,
-    fontSize: 15,
-    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
@@ -227,11 +252,12 @@ const styles = StyleSheet.create({
   },
   receivedMsg: {
     backgroundColor: colors.secondary1,
-    fontSize: 15,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
   receivedFooter: {
     fontSize: 11,

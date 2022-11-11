@@ -10,6 +10,7 @@ import {
   TextInput,
   FlatList,
   ScrollView,
+  ActivityIndicator
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -23,6 +24,7 @@ import axios from "axios";
 import {serverUrl} from "../config/url";
 
 export default function Login({ navigation }) {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [data, setData] = React.useState({
     username: "",
     email: "",
@@ -32,6 +34,7 @@ export default function Login({ navigation }) {
     secureTextEntry: true,
   });
   const register = async () => {
+    setIsLoading(true)
     fetch(`${serverUrl}/users/register`, {
       method: "POST",
       headers: {
@@ -49,6 +52,7 @@ export default function Login({ navigation }) {
           throw data.message;
         }
         navigation.navigate("Login");
+        setIsLoading(false)
         return data
       })
       .catch((error) => {
@@ -107,6 +111,14 @@ export default function Login({ navigation }) {
       secureTextEntry: !data.secureTextEntry,
     });
   };
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
   return (
     <ImageBackground
       source={require("../assets/a71e16012a4afef2f46af95065a5623f.jpg")}
